@@ -1,14 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'domiflorencia'
-            keyPassword 'Sj8KY7vP3&uF'
-            storeFile file('C:/Estrategia Movil MX/producto/keystore/domiflorencia/keystore_domiflorencia.jks')
-            storePassword 'Sj8KY7vP3&uF'
-        }
-    }
+
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
 
