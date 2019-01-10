@@ -1,0 +1,37 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/content"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.NumExtFragment">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_header_add_shipping_address" android:layout_height="wrap_content" android:layout_width="match_parent"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="horizontal"
+                  android:padding="16dp"
+                  android:weightSum="1"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/text_num_ext"
+            android:hint="@string/promt_hint_num_ext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/checkbox_no_num"
+            android:layout_width="wrap_content"
+            android:text="@string/promt_hint_no_num"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>

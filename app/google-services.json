@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "500275190206",
+    "firebase_url": "https://domiflorencia-4a12c.firebaseio.com",
+    "project_id": "domiflorencia-4a12c",
+    "storage_bucket": "domiflorencia-4a12c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500275190206:android:c484486c1053daa8",
+        "android_client_info": {
+          "package_name": "com.delivery.estrategiamovilmx.domiciliosflorencia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500275190206-u5f2mu2ra6486k4k5gbf8j7m52o30h00.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delivery.estrategiamovilmx.domiciliosflorencia",
+            "certificate_hash": "3eb7aa03a726b2be1eb494ca39c10fca811c0b4d"
+          }
+        },
+        {
+          "client_id": "500275190206-aeinrr1jbeono85vmbkc4u5emcm1bdls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuSYjTNFNNuFEQ2gbkfE0HktA2uVs90D4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500275190206-aeinrr1jbeono85vmbkc4u5emcm1bdls.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

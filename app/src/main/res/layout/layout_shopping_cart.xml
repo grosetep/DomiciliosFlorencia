@@ -1,0 +1,109 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+
+    <FrameLayout
+        android:id="@+id/container_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            style="?android:progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_weight="1"
+        android:layout_above="@+id/layout_actions"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:scrollbarThumbVertical="@drawable/scrolling"
+        android:scrollbars="horizontal"
+        android:fadeScrollbars="true"
+        android:scrollbarSize="4dp"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"/>
+
+
+
+    <!-- Buttons-->
+    <LinearLayout
+        android:id="@+id/layout_actions"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:weightSum="100"
+        android:showDividers="middle"
+        android:background="@color/colorAccent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="@color/colorSecondary"
+            android:layout_width="match_parent"
+            android:layout_weight="40"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:padding="@dimen/activity_horizontal_margin1"
+                android:text="@string/title_total"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/text_total"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold"
+                android:padding="@dimen/activity_horizontal_margin1"
+                android:text="$ 5600.90"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent" android:id="@+id/button_next"
+            android:orientation="horizontal"
+            android:layout_weight="60"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_height="match_parent">
+
+
+            <android.support.v7.widget.AppCompatButton
+
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:enabled="false"
+            android:paddingTop="@dimen/activity_horizontal_margin1"
+            android:paddingBottom="@dimen/activity_horizontal_margin1"
+            android:layout_width="wrap_content"
+            android:textColor="@android:color/white"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/text_button_order"
+            android:layout_height="wrap_content"/>
+
+            <ProgressBar
+                android:id="@+id/pbLoading"
+                android:visibility="invisible"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                style="?android:attr/progressBarStyleSmall"
+                android:indeterminateTint="@color/white"
+                android:indeterminateTintMode="src_in"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

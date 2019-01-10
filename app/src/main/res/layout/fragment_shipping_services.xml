@@ -1,0 +1,244 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    tools:context="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.ShippingServicesFragment">
+
+    <LinearLayout
+        android:id="@+id/layout_services_1"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_send_something"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            card_view:cardUseCompatPadding="true"
+            card_view:cardCornerRadius="6dp"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:weightSum="2"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/shipping"
+                        android:adjustViewBounds="true"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/activity_horizontal_margin1"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:paddingBottom="@dimen/activity_horizontal_margin1"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/gradient_menus"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="ENVIAR ALGO"
+                        android:textStyle="bold"
+                        android:textColor="@color/white_all"
+                        android:gravity="start"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_drogstore"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            card_view:cardUseCompatPadding="true"
+            card_view:cardCornerRadius="6dp"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:weightSum="2"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/supermarkets"
+                        android:adjustViewBounds="true"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/activity_horizontal_margin1"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:paddingBottom="@dimen/activity_horizontal_margin1"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/gradient_menus"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="SUPER"
+                        android:textStyle="bold"
+                        android:textColor="@color/white_all"
+                        android:gravity="start"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_services_2"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_super"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            card_view:cardUseCompatPadding="true"
+            card_view:cardCornerRadius="6dp"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:weightSum="2"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/pharmacy"
+                        android:adjustViewBounds="true"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/activity_horizontal_margin1"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:paddingBottom="@dimen/activity_horizontal_margin1"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/gradient_menus"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="FARMACIA"
+                        android:textStyle="bold"
+                        android:textColor="@color/white_all"
+                        android:gravity="start"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_restaurants"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            card_view:cardUseCompatPadding="true"
+            card_view:cardCornerRadius="6dp"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:weightSum="2"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/restaurant"
+                        android:adjustViewBounds="true"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/activity_horizontal_margin1"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:paddingBottom="@dimen/activity_horizontal_margin1"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/gradient_menus"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="RESTAURANTES"
+                        android:textStyle="bold"
+                        android:textColor="@color/white_all"
+                        android:gravity="start"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

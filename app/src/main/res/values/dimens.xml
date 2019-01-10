@@ -1,5 +1,48 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="header_congrats_height">190dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="subtext_text_top_padding">16dp</dimen>
+    <dimen name="primary_rigth_left_padding">16dp</dimen>
+    <dimen name="primary_text_size">18sp</dimen>
+    <dimen name="primary_text_title">20sp</dimen>
+    <dimen name="icon_bar_cardview_size">35dip</dimen>
+    <dimen name="detail_backdrop_height">246dp</dimen>
+    <dimen name="card_margin">16dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin1">8dp</dimen>
+    <dimen name="activity_vertical_margin1">8dp</dimen>
+    <dimen name="activity_horizontal_margin2">24dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="status_deliver_length">4dp</dimen>
+
+    <dimen name="list_shipping_width_selected">140dp</dimen>
+    <dimen name="item_image_publication_selected">130dp</dimen>
+    <dimen name="item_shipping_heigth_selected">120dp</dimen>
+    <dimen name="item_shipping_width_selected">330dp</dimen>
+
+    <dimen name="icon_layout_location_size">35dip</dimen>
+
+    <dimen name="contact_layout_size">80dip</dimen>
+
+    <dimen name="order_layout_size">60dip</dimen>
+
+    <dimen name="item_profile_size">60dp</dimen>
+    <dimen name="list_item_category_size">30dp</dimen>
+    <dimen name="drive_item_size">70dp</dimen>
+
+    <!-- dimensiones de la imagen de firma -->
+    <dimen name="signature_width">150dp</dimen>
+    <dimen name="signature_height">150dp</dimen>
+
+    <dimen name="budget_item_icons">32dp</dimen>
+    <dimen name="destination_item_size">70dp</dimen>
+
 </resources>

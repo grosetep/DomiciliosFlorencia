@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+
+
+
+    <LinearLayout
+        android:id="@+id/container_list_method"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+
+                    android:layout_height="@dimen/header_congrats_height">
+                    <ImageView
+                        android:layout_width="280dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/logo"
+                        android:src="@mipmap/titulo_domiflorencia"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="0dp"
+                        />
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_prompt_location"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/tip1_text2"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                        android:textAlignment="center"
+                        android:layout_below="@+id/logo"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        />
+
+
+                    <ProgressBar
+                        android:id="@+id/loading_start"
+                        android:layout_marginTop="24dp"
+                        android:visibility="visible"
+                        android:layout_below="@+id/tip1_text2"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:indeterminate="true"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent" android:orientation="vertical"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/text_location"
+                        android:layout_width="match_parent"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingTop="24dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/text_shipping_message_extra_info"
+                        android:layout_width="match_parent"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+
+                        android:textColor="@color/colorPrimary"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_height="wrap_content"/>
+
+
+                    <ImageButton
+                        android:id="@+id/button_drive"
+                        android:layout_width="@dimen/drive_item_size"
+                        android:layout_height="@dimen/drive_item_size"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:tint="@android:color/white"
+                        android:background="@drawable/rounded_border_button_filled"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_directions"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+    <!-- Buttons-->
+
+</RelativeLayout>

@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.SelectShippingPointFragment">
+
+    <include layout="@layout/layout_header_add_shipping_address" android:layout_height="wrap_content" android:layout_width="match_parent"/>
+
+    <include layout="@layout/layout_shipping_new"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_centerInParent="true"
+             />
+
+
+    <include layout="@layout/no_connection_layout"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_centerInParent="true"
+             />
+
+</LinearLayout>

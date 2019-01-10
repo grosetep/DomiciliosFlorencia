@@ -1,19 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.delivery.estrategiamovilmx.domiciliosflorencia" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.delivery.estrategiamovilmx.domiciliosflorencia">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <permission
+        android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.permission.C2D_MESSAGE" />
+
+    <permission
+        android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    
     <application
         android:allowBackup="true"
+        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
+
+        <!--
+            The API key for Google Maps-based APIs is defined as a string resource.
+            (See the file "res/values/google_maps_api.xml").
+            Note that the API key is linked to the encryption key used to sign the APK.
+            You need a different API key for each encryption key, including the release key that is used to
+            sign the APK for publishing.
+            You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+       -->
+        
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.StartActivity"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.DetailPublicationActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.GalleryActivity"
+            android:theme="@style/AppTheme.Gallery" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.ShippingActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.AddShippingAddressActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+
+        <service
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.gmaps.GeocodeAddressIntentService"
+            android:exported="false" />
+
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.SelectShippingPointActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.ContactActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.AddContactActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.PaymentMethodActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.ReviewActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.CongratsActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.ShoppingCartActivity"
+            android:label="@string/title_activity_shopping_cart"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.OrdersActivity"
+            android:label="@string/title_activity_orders_client"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.LocationActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.SignOutActivity" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.ChangePasswordActivity"
+            android:label="@string/prompt_password_change_title"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.OrderDetailActivity"
+            android:label="@string/promt_title_activity_detail_order"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.OrdersDeliverActivity"
+            android:label="@string/action_shipping"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <!-- [START firebase_service] -->
+        <service android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.notifications.MyFirebaseMessagingService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- [END firebase_service] -->
+        <!-- [START firebase_iid_service] -->
+        <service android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.notifications.MyFirebaseInstanceIDService" >
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- [END firebase_iid_service] -->
+        <activity android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.FCMPluginActivity" />
+        <activity android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.ReplyActivity" >
+        </activity>
+        <activity android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.SubscriptionActivity" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.MapsActivity"
+            android:label="@string/title_activity_maps" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.NewOrderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.BudgetActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.SignatureActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.ManageLocationsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/title_fav">
         </activity>
     </application>
 

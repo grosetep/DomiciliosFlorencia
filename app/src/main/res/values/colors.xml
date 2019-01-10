@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#4e5f70</color>
+    <color name="colorPrimaryDark">#37474F</color>
+    <color name="colorAccent">#00afd1</color>
+    <color name="colorAccentSecondary">#f89070</color>
+    <color name="colorSecondary">#f26391</color>
+
+    <!-- gradients colors-->
+    <color name="colorHightligth">#05b5dd</color>
+    <color name="colorHightligthGreen">#0ce8c8</color>
+    <color name="colorHightligthPurple">#6a9ddd</color>
+    <color name="negro_semitransparente">#B2000000</color>
+    <color name="negro_transparente">#33000000</color>
+    <color name="negro_label">#50000000</color>
+    <color name="negro">#000000</color>
+    <color name="gray">#898989</color>
+    <color name="gray_medium">#cacaca</color>
+    <color name="gray_ligth">#EBEBEB</color>
+    <color name="white">#fafafa</color>
+    <color name="white_all">#ffffff</color>
+
+
+    <!--swiperefreshlayout -->
+    <color name="s1">@color/colorAccent</color>
+    <color name="s2">@color/colorSecondary</color>
+    <color name="s3">#ffef18</color>
+    <color name="s4">#AA66CC</color>
+
+    <!-- other colors #00397F, #0AAEEF -->
+    <color name="white_transparent">#ffffffff</color>
+    <color name="white_blur_80">#80ffffff</color>
+    <color name="white_blur_90">#90ffffff</color>
 </resources>

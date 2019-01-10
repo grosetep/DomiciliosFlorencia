@@ -1,3 +1,323 @@
-<resources>
-    <string name="app_name">DomiciliosFlorencia</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Domicilios Florencia</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_cart">Carrito</string>
+    <string name="action_refresh">Actualizar</string>
+    <string name="action_days">Días a mostrar</string>
+    <string name="action_session">Inicia Sesión o Regístrate</string>
+    <string name="action_edit_profile">Perfil</string>
+    <string name="action_location">Ubicación</string>
+    <string name="action_orders">Pedidos</string>
+    <string name="action_shipping">Entregas</string>
+    <string name="action_close">Cerrar Sesión</string>
+    <string name="prompt_send_something">Enviar algo</string>
+    <string name="action_new_order_courier_express">Puedes mover casi cualquier objeto de un lugar a otro en tu ciudad. Tarifa justa por distacia.</string>
+    <string name="action_init">Inicio</string>
+    <string name="action_info">Como funciona</string>
+
+
+    <string name="promt_search_services">Buscar...</string>
+    <string name="promt_category_search">Categorías...</string>
+    <string name="detail_title_category">Categoría</string>
+    <string name="detail_title_availability">Existencias</string>
+    <string name="text_description_detail_title">Descripción</string>
+
+    <string name="no_connection">No hemos podido conectar con el Servidor, inténtalo nuevamente.</string>
+    <string name="no_subscription_valid">Estamos en mantenimiento, disculpa las molestias.</string>
+    <string name="promt_publications_not_found">No hay productos por el momento</string>
+    <string name="prompt_action_retry_search">INTENTAR DE NUEVO</string>
+    <string name="prompt_action_exit">SALIR</string>
+    <string name="app_message_splash">Servicio de Paquetería Express</string>
+    <string name="app_message_splash_2"> ¡ Entrega ya !</string>
+    <string name="prompt_thanks">¡ Vamos para allá !</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Connection errors messages-->
+    <string name="generic_server_down">Ups, el servicio no esta disponible por el momento.</string>
+    <string name="generic_error">Servicio no disponible.</string>
+    <string name="generic_server_timeout">El servicio no esta disponible o puede estar experimentando problemas de conexión.</string>
+    <string name="auth_failed">Error de autenticación al conectarse.</string>
+    <string name="no_network_connection">Verifique que tiene señal de red</string>
+    <string name="validation_errors">Verifique la información</string>
+    <string name="parsing_failed">Error de procesamiendo de datos</string>
+
+
+    <string name="text_promt_out_of_stock">AGOTADA</string>
+    <string name="no_internet">Verifique que tiene acceso a Internet y vuelva a intentar.</string>
+
+    <string name="text_promt_in">"En "</string>
+
+    <string name="text_title_shipping">Dirección de envío</string>
+
+    <!-- Buttons -->
+    <string name="text_button_next">Siguiente</string>
+    <string name="text_button_previous">Anterior</string>
+    <string name="text_button_done">Confirmar</string>
+    <string name="text_button_budget">Cotizar</string>
+    <string name="text_button_orders">Ver Pedidos</string>
+    <string name="text_button_order">Hacer pedido</string>
+
+    <!-- labels -->
+    <string name="promt_results_not_found">No se encontraron registros</string>
+    <string name="promt_where">¿Donde quieres recibirlo?</string>
+    <string name="promt_new_location_title">Añade una dirección</string>
+    <string name="promt_num_int_title">Núm. interior (opcional)</string>
+    <string name="promt_reference_title"> Indica algo que nos ayude a llegar</string>
+    <string name="promt_more_locations">"Ver más >"</string>
+    <string name="promt_location_ok">Tu pedido será enviado a:</string>
+    <string name="title_template_step">Step <xliff:g id="step_number">%1$d</xliff:g>: Lorem
+        Ipsum</string>
+    <string name="promt_hint_cp">Código Postal</string>
+    <string name="promt_hint_street">Calle</string>
+    <string name="promt_hint_num_ext">Número Exterior</string>
+    <string name="promt_hint_no_num">Sin número</string>
+    <string name="promt_hint_int">Num int (Edif. 2 depto 6 ) (opcional)</string>
+    <string name="promt_hint_between_streets">Entre calles (opcional)</string>
+    <string name="promt_hint_reference">Referencia</string>
+    <string name="promt_hint_colony">Colonia</string>
+    <string name="promt_hint_gmaps_point">Elije lugar</string>
+    <string name="promt_hint_name">Nombre</string>
+    <string name="promt_hint_number">Teléfono de contacto</string>
+
+    <!-- Contact -->
+    <string name="promt_who">¿Quién recibirá el paquete?</string>
+    <string name="promt_who_message">Deja un contacto para que en caso de tener algún problema con la entrega podamos avisarte</string>
+    <!-- Payment-->
+    <string name="promt_payment_method_question">¿Como quieres pagar?</string>
+    <!-- Review-->
+    <string name="promt_review_title">Confirma tu Compra</string>
+    <string name="promt_loading_create_order">Enviando pedido...\nEstará listo en breve</string>
+    <string name="promt_review_error">Ups, álgo salió mal, por favor intenta nuevamente</string>
+    <!-- buttons -->
+    <string name="text_add_locations_edit_1">Agrega</string>
+    <string name="text_add_locations_edit">Nueva</string>
+    <string name="text_add_locations_manage">Añadir dirección</string>
+    <string name="text_prompt_address_origin">¿Dónde recogemos?</string>
+    <string name="text_prompt_address_destiny">¿Dónde entregamos?</string>
+
+    <string name="text_add_contact_edit_1">Nuevo</string>
+    <string name="text_add_contact_edit">Contacto</string>
+
+
+    <string name="title_activity_maps">Map</string>
+    <string name="prompt_loading_map">Cargando Mapa...</string>
+
+    <string name="promt_button_ready">Listo</string>
+
+    <!-- Error messages-->
+    <string name="error_field_required">Campo obligatorio</string>
+    <string name="error_no_data">Sin información</string>
+
+    <!-- Confirm -->
+    <string name="title_conf_shipping">Entrega</string>
+    <string name="title_conf_contact">Contactar a</string>
+    <string name="title_conf_payment_method">Método de pago</string>
+    <string name="title_conf_total">Total a pagar</string>
+    <!-- Congrats-->
+    <string name="shipping_message">Te avisaremos el progreso de la entrega a los <xliff:g id="shipping_address">%1$s</xliff:g> destinos registrados</string>
+    <string name="shipping_phone">5569736383</string>
+    <string name="shipping_customer_care_title">Atención a Clientes</string>
+    <string name="shipping_call">Llamar</string>
+    <string name="shipping_address">los destinos indicados</string>
+    <string name="congrats_order">Orden de Entrega No. <xliff:g id="order">%1$s</xliff:g></string>
+    <!-- Shopping cart-->
+    <string name="promt_shopping_cart_empty">Carrito vacío</string>
+    <string name="title_activity_shopping_cart">Carrito</string>
+    <string name="button_text_activity_shopping_cart">Ver Carrito</string>
+    <string name="title_out_of_stock">Agotado</string>
+    <string name="title_total">Gran Total /</string>
+    <!-- orders-->
+    <string name="title_activity_orders_client">Mis Pedidos</string>
+    <string name="title_activity_orders_deliver_man">Pedidos por entregar</string>
+    <string name="title_activity_orders_admin">Administrar pedidos</string>
+    <string name="promt_review">En revision</string>
+    <string name="promt_accepted">Aceptado</string>
+    <string name="promt_rejected">Rechazado</string>
+    <string name="promt_on_way">En Camino</string>
+    <string name="promt_no_delivered">No entregado</string>
+    <string name="promt_no_signature">Debe registrar la firma de cliente para notificar entrega</string>
+    <string name="promt_signature">Firme aquí</string>
+    <string name="promt_signature_ok">Firma registrada</string>
+    <string name="promt_delivered">Entregado</string>
+    <string name="promt_cancel">Cancelado</string>
+    <string name="promt_num_order">Orden de entrega: <xliff:g id="order">%1$s</xliff:g></string>
+    <string name="promt_button_accept_order">Aceptar</string>
+    <string name="promt_button_recject_order">Rechazar</string>
+    <string name="promt_button_take_order">Tomar</string>
+    <string name="promt_button_delivered_order">Listo</string>
+    <string name="promt_button_no_delivered_order">No Entregado</string>
+    <string name="promt_button_cancel_order">Cancelar pedido</string>
+    <string name="promt_error">Ha ocurrido un error, inicie sesión nuevamente</string>
+    <string name="promt_hint_comment">Agrega comentario</string>
+    <string name="promt_hint_accepted_comment">Pedido aceptado !, si desea rechazar agregue comentario para el cliente</string>
+    <string name="promt_days">Días</string>
+    <string name="promt_filter_orders_title">Filtrar</string>
+    <string name="promt_origin_hours_html"><![CDATA[Recoger paquete desde <strong><xliff:g id="order">%1$s</xliff:g> </strong> hasta <strong><xliff:g id="order">%2$s</xliff:g> </strong>]]>
+    </string>
+    <string name="promt_total_destinations">Destinos: <xliff:g id="order">%1$s</xliff:g></string>
+    <string name="promt_content">Contenido: <xliff:g id="order">%1$s</xliff:g></string>
+    <string name="promt_origin">Origen</string>
+    <string name="title_total_commission">Remuneración</string>
+    <string name="promt_total_deliverman_commision">Remuneración: <xliff:g id="total">%1$s</xliff:g></string>
+    <!-- login-->
+    <string name="hint_text_email">Email</string>
+    <string name="hint_text_pwd">Password</string>
+    <string name="prompt_show_password">Mostrar Password</string>
+    <string name="action_sign_in">Entrar</string>
+    <string name="prompt_button_signup">Crear Cuenta</string>
+    <string name="prompt_link_password"><u>Password</u></string>
+    <string name="promt_password_recovery_title">Restablecer contraseña</string>
+    <string name="error_invalid_password">Proporcione contraseña válida (De 4 a 21 caract.)</string>
+    <string name="error_invalid_password_not_equal">Constraseñas no coinciden</string>
+    <string name="error_incorrect_password">Password incorrecto</string>
+    <string name="error_invalid_email">Correo inválido</string>
+    <string name="promt_password_recovery_text">Proporciona tu email registrado para poder enviarte instrucciones</string>
+    <string name="send_notification">Enviar</string>
+    <string name="error_invalid_login"><xliff:g id="error">%1$s</xliff:g></string>
+    <string name="error_generic">Algo salió mal</string>
+    <string name="promt_loading">Estará listo en breve\nPor favor espera..</string>
+    <string name="text_user_guess">Invitado</string>
+    <string name="text_user_guess_tip">Completa tu perfil</string>
+    <string name="promt_password_recovery_message">Instruccines para recuperar tu acceso han sido enviadas a tu correo.</string>
+
+    <!-- profile -->
+    <string name="title_activity_profile">Edita tu perfil</string>
+    <string name="number_locations_title_general">General</string>
+    <string name="prompt_profile_security">Seguridad</string>
+    <string name="prompt_password_change_title">Cambiar contraseña</string>
+    <string name="prompt_your_name">Nombre</string>
+    <string name="prompt_your_cel">y teléfono</string>
+    <string name="pick_image_intent_text">Foto de perfil</string>
+    <string name="text_prompt_profile_updated">Actualización exitosa</string>
+    <string name="prompt_password_new">Clave nueva</string>
+    <string name="prompt_password_new_confirm">Repetir clave nueva</string>
+    <string name="action_change_password">Modificar</string>
+    <string name="text_prompt_image_error">Imagen no actualizada, por favor intenta nuevamente</string>
+    <string name="text_prompt_image_updated">Imagen de perfíl actualizada</string>
+
+    <!-- location -->
+    <string name="text_prompt_location">Nuestra ubicación</string>
+
+    <!--Notifications -->
+    <string name="action_notify_reply">Ver Pedidos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- signuot-->
+    <string name="promt_loading_signout">Bye...</string>
+
+    <!-- detail order-->
+    <string name="promt_title_activity_detail_order">Detalle de la orden</string>
+    <string name="order_detail_title">Orden</string>
+    <string name="order_detail_shipping">Estatus</string>
+    <string name="order_detail_client">Cliente</string>
+    <string name="order_detail_">Cliente</string>
+    <string name="order_address">Punto recolección y Destinos</string>
+    <string name="order_contact">Contacto a la entrega</string>
+    <string name="order_breakdown">Detalle</string>
+    <string name="title_activity_maps2">Map</string>
+    <string name="promt_times">Recolección de <xliff:g id="error">%1$s</xliff:g> a <xliff:g id="error">%2$s</xliff:g></string>
+    <string name="promt_contact_data">Contactar a <xliff:g id="error">%1$s</xliff:g></string>
+
+    <!-- how to-->
+    <string name="promt_how_to"><![CDATA[
+            <h5><font color="#FFA000"> Entrega de paquetería express</font></h5>
+
+    <p style="color: #000000; font-size: 11px;">
+    Tenemos disponibles repartidores a pie o en bici, moto o camioneta segun el tamaño de tu paquete
+    </p>
+
+
+
+    <p style="color: #000000; font-size: 11px;">
+    Condiciones del servicio
+    </p>
+
+
+
+    <h5><font color="#FFA000">¿Porque enviar con nosotros?</font></h5>
+    <p style="color: #000000; font-size: 11px;">
+    Hacemos envíos diariamente de lunes a domingo y pagas a la entrega.
+    </p>
+    ]]>
+    </string>
+
+    <!-- new order -->
+    <string name="prompt_order_comment">¿Que debe hacer el mensajero en esta dirección?</string>
+    <string name="prompt_order_from">Desde las</string>
+    <string name="prompt_order_to">Hasta</string>
+    <string name="title_origin">Origen</string>
+    <string name="title_destination">Destino <xliff:g id="error">%1$s</xliff:g></string>
+    <string name="done">Aceptar</string>
+    <string name="clear">Limpiar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="title_alert_dialog_times">Horario de llegada <xliff:g id="error">%1$s</xliff:g></string>
+    <string name="prompt_from">de</string>
+    <string name="prompt_to">a</string>
+    <string name="prompt_discart_promt_title">Se descartarán todos los cambios</string>
+    <string name="prompt_discart_promt">Descartar Cambios</string>
+    <string name="prompt_action_discart">DESCARTAR</string>
+    <string name="prompt_content_hint">Contenido del paquete,. Ej. Documentos, regalo, flores, maleta, sobre, etc.</string>
+    <string name="prompt_vehicle_type_hint">Tipo vehículo</string>
+    <string name="prompt_weigth_hint">Peso</string>
+    <string name="prompt_select_vehicle">Seleccione tipo de vehículo</string>
+    <string name="prompt_select_weigth">Indique peso</string>
+    <string name="prompt_add_destiny">Añadir destino</string>
+    <string name="prompt_del_destiny">Quitar destino</string>
+    <string name="prompt_circular_tour">Agregar regreso</string>
+    <string name="prompt_error_field_required">Revise la información proporcionada</string>
+    <string name="title_budget">Confirmar orden de entrega</string>
+    <string name="title_total_budget">Costo de entrega:</string>
+
+    <string name="title_circular_tour">Ida y vuelta</string>
+    <string name="title_destinies">Destinos</string>
+
+    <!-- locations-->
+    <string name="title_fav">Favoritos</string>
+    <string name="prompt_interior">"Interior "</string>
+
+
+    <!-- send something -->
+    <string name="prompt_base_rate">Tarifa base:</string>
+    <string name="prompt_case_distance">incluye  <xliff:g id="km">%1$s</xliff:g> km</string>
+    <string name="prompt_understood">Entendido</string>
+    <string name="title_send_something_tip">Enviar algo</string>
+
+
+    <!-- Vehicles -->
+    <string-array name="vehicles">
+        <item>Bici / Transp. público</item>
+        <item>Auto</item>
+        <item>Moto</item>
+        <item>Camioneta</item>
+    </string-array>
+
+    <!-- weigth bike -->
+    <string-array name="weigth_bike">
+        <item>Max. 5kg</item>
+        <item>Max. 10kg</item>
+        <item>Max. 15kg</item>
+    </string-array>
+    <!-- weigth car -->
+    <string-array name="weigth_car">
+        <item>Max. 50kg</item>
+        <item>Max. 100kg</item>
+        <item>Max. 150kg</item>
+        <item>Max. 200kg</item>
+    </string-array>
+    <!-- weigth moto -->
+    <string-array name="weigth_moto">
+        <item>Max. 5kg</item>
+        <item>Max. 10kg</item>
+        <item>Max. 15kg</item>
+    </string-array>
+    <!-- weigth truck -->
+    <string-array name="weigth_trunk">
+        <item>Max. 200kg</item>
+        <item>Max. 300kg</item>
+        <item>Max. 400kg</item>
+        <item>Max. 500kg</item>
+    </string-array>
+
 </resources>

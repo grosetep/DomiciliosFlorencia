@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:layout_width="match_parent"
+    android:gravity="center|start"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_marginRight="@dimen/activity_horizontal_margin1"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:text="@string/prompt_base_rate"
+            android:textColor="@color/gray"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/text_base_rate"
+            android:text="$45"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/text_base_distance"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:layout_width="wrap_content"
+            android:text="incluye"
+            android:textColor="@color/gray"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/text_vehicle_selected"
+            android:layout_width="wrap_content"
+            android:text="en Moto"
+            android:textColor="@color/gray"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/image_info"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_action_info"
+        android:tint="@color/colorAccent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>

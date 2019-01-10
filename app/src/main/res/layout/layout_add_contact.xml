@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="vertical"
+              android:padding="@dimen/activity_horizontal_margin"
+              android:clickable="true"
+              android:background="?android:attr/selectableItemBackground"
+              android:foreground="?android:attr/selectableItemBackground"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view_add"
+    android:clickable="false"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_width="@dimen/contact_layout_size"
+    android:layout_height="@dimen/contact_layout_size"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="6dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_account_circle_big"
+            android:tint="@android:color/darker_gray"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"/>
+
+</android.support.v7.widget.CardView>
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@color/negro"
+            android:paddingTop="@dimen/activity_horizontal_margin1"
+            android:paddingLeft="@dimen/activity_horizontal_margin1"
+            android:paddingRight="@dimen/activity_horizontal_margin1"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/image"
+            android:text="@string/text_add_contact_edit_1"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/text_available"
+            android:textColor="@color/negro"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/text_add_contact_edit"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>

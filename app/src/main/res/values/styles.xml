@@ -6,6 +6,82 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogCustom</item>
+        <item name="android:dialogTheme">@style/AppTheme.DialogTheme</item>
+        <item name="android:datePickerDialogTheme">@style/AppTheme.DialogTheme</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <!-- <item name="tabMaxWidth">40dp</item> -->
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabPaddingStart">12dp</item>
+        <item name="tabPaddingEnd">12dp</item>
+        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/colorAccent</item>
+    </style>
+    <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@android:color/white</item><!-- color de texto de tab no seleccionada-->
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="Widget.CardContent" parent="android:Widget">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="AppTheme.Gallery" parent="Theme.AppCompat.NoActionBar">
+    </style>
+
+
+    <!-- test-->
+    <style name="DarkTheme" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/DarkActionBar</item>
+    </style>
+
+    <style name="DarkActionBar" parent="android:Widget.Holo.ActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
+    </style>
+    <style name="MyActionBarTitleText" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme_Dark_Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="android:textColorPrimary">#CCCCCC</item>
+        <item name="android:background">@color/colorPrimary</item> <!-- #E43F3F -->
+    </style>
+
+
+    <style name="ToolbarColoredBackArrow" parent="AppTheme">
+        <item name="android:textColorPrimary">@color/negro</item>
+        <item name="android:textColorSecondary">@color/colorAccent</item>
+    </style>
+
+    <!-- estilos para dialogos -->
+    <style name="AppTheme.DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <!-- Put the two options, colorAccent and android:colorAccent. -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:headerBackground">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 </resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/layout_actions"
+
+    android:layout_width="match_parent"
+    android:weightSum="100"
+    android:showDividers="middle"
+    android:background="@drawable/gradient"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/button_previous"
+        android:layout_width="match_parent"
+        android:layout_weight="50"
+        android:textColor="@android:color/white"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="@string/text_button_previous"
+        android:layout_height="match_parent"/>
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/button_next"
+        android:layout_width="match_parent"
+        android:layout_weight="50"
+        android:textColor="@android:color/white"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="@string/text_button_next"
+        android:layout_height="match_parent"/>
+</LinearLayout>

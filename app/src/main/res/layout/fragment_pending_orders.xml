@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                xmlns:tools="http://schemas.android.com/tools"
+                tools:context="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.PendingOrdersFragment">
+
+
+<FrameLayout
+    android:id="@+id/container_loading"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        style="?android:progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+</FrameLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+           <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:scrollbarThumbVertical="@drawable/scrolling"
+                android:scrollbars="horizontal"
+                android:fadeScrollbars="true"
+                android:scrollbarSize="4dp"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <include layout="@layout/no_connection_layout"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_centerInParent="true"
+             android:layout_below="@+id/appbar"/>
+    <include layout="@layout/no_publications_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/appbar"/>
+
+</RelativeLayout>

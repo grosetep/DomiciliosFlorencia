@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="6dp"
+    android:foreground="?android:attr/selectableItemBackground">
+
+
+    <LinearLayout
+        android:id="@+id/layout_actions"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:elevation="1dp"
+        android:background="@drawable/gradient_menu_over"
+        android:padding="@dimen/activity_horizontal_margin1"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_edit"
+            android:elevation="1dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin2"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:src="@drawable/ic_action_edit"
+            android:tint="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/image_close"
+            android:clickable="true"
+            android:elevation="1dp"
+            android:background="?attr/selectableItemBackground"
+            android:src="@drawable/ic_action_cancel"
+            android:tint="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:padding="@dimen/activity_horizontal_margin1"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_height="wrap_content">
+        <!-- imagen-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_horizontal_margin1"
+            android:src="@drawable/ic_star"
+            android:tint="@color/gray"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"/>
+        <!-- direccion-->
+        <LinearLayout
+            android:layout_weight="3"
+            android:layout_width="wrap_content"
+
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/text_shipping_address"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/image"
+                android:text="Direccion..."
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/text_detail"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:textSize="12sp"
+                android:text="detalle"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <!-- puntos-->
+        <ImageView
+            android:id="@+id/overflow"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:tint="@color/gray"
+            android:padding="@dimen/activity_horizontal_margin1"
+            android:src="@drawable/ic_more_vert"/>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

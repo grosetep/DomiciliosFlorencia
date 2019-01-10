@@ -1,0 +1,414 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <include layout="@layout/layout_send_something" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:id="@+id/container_loading"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ProgressBar android:id="@+id/loading_spinner"
+            style="?android:progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:id="@+id/container_list"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1">
+        <!-- direccion
+        <LinearLayout android:visibility="visible"
+            android:layout_width="match_parent" android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="50">
+
+
+                <EditText android:id="@+id/text_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:textColor="@color/negro_semitransparente"
+                    android:enabled="false"
+                    android:isScrollContainer="true"
+                    android:hint="@string/promt_hint_gmaps_point"
+                    android:layout_weight="50"
+                    />
+                <EditText
+                    android:id="@+id/text_location_ltd"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:id="@+id/text_location_lng"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:id="@+id/text_cp"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:id="@+id/text_place_id"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:id="@+id/button_select_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:tint="@color/colorPrimary"
+                    android:layout_gravity="right|center"
+                    android:src="@drawable/ic_action_map"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout> -->
+        <!--<LinearLayout
+            android:id="@+id/layout_initial_location"
+            android:visibility="gone"
+            android:layout_width="match_parent" android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="50">
+
+
+                <EditText android:id="@+id/text_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:textColor="@color/negro_semitransparente"
+                    android:enabled="false"
+                    android:isScrollContainer="true"
+                    android:hint="@string/promt_hint_gmaps_point"
+                    android:layout_weight="50"
+                    />
+
+                <ImageView
+                    android:id="@+id/button_select_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:tint="@color/colorPrimary"
+                    android:layout_gravity="right|center"
+                    android:src="@drawable/ic_action_map"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout> -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text_more_locations"
+                android:visibility="gone"
+                android:clickable="true"
+                android:padding="@dimen/activity_horizontal_margin1"
+                android:background="?attr/selectableItemBackground"
+                android:layout_gravity="right"
+                android:textColor="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:text="@string/promt_more_locations"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_locations"
+                android:visibility="gone"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:scrollbarThumbVertical="@drawable/scrolling"
+                android:scrollbars="horizontal"
+                android:fadeScrollbars="true"
+                android:scrollbarSize="4dp"
+                android:layout_width="fill_parent"
+                android:background="@color/white_all"
+                android:layout_height="wrap_content"/>
+
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/card_view_address"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardCornerRadius="6dp"
+                android:foreground="?android:attr/selectableItemBackground">
+
+
+                <LinearLayout
+                    android:padding="@dimen/activity_horizontal_margin1"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:layout_height="@dimen/destination_item_size">
+                    <!-- imagen-->
+                    <ImageView
+                        android:id="@+id/image_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/activity_horizontal_margin1"
+                        android:src="@drawable/ic_location_on"
+                        android:scaleType="centerInside"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"/>
+                    <!-- direccion-->
+                    <LinearLayout
+                        android:id="@+id/layout_cliclable_1"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent">
+                        <EditText
+                            android:id="@+id/text_shipping_address"
+                            android:background="@android:color/transparent"
+                            android:clickable="true"
+                            android:focusable="false"
+                            android:inputType="none"
+                            android:layout_gravity="center"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="match_parent"
+                            android:text="@string/text_prompt_address_origin"
+                            android:layout_height="wrap_content"/>
+                        <EditText
+                            android:id="@+id/text_detail"
+                            android:background="@android:color/transparent"
+                            android:clickable="true"
+                            android:focusable="false"
+                            android:inputType="none"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_width="match_parent"
+                            android:textSize="12sp"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                    <!-- puntos-->
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+        <!-- contacto -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="50">
+            <EditText
+                android:id="@+id/text_name_profile"
+                android:layout_width="match_parent"
+                android:layout_weight="25"
+                android:textColor="@color/negro_semitransparente"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_your_name"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:singleLine="true"/>
+            <EditText
+                android:id="@+id/text_phone_profile"
+                android:layout_width="match_parent"
+                android:layout_weight="25"
+                android:textColor="@color/negro_semitransparente"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_your_cel"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"/>
+
+            <ImageView
+                android:id="@+id/button_done_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:tint="@color/colorPrimary"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_contacts"/>
+        </LinearLayout>
+
+        <!-- fecha -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+            <!-- date 1-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:tint="@color/gray"
+                    android:src="@drawable/ic_date_range"/>
+
+                <EditText android:id="@+id/text_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="date"
+                    android:singleLine="true"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/negro"
+                    android:clickable="true"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:isScrollContainer="true"
+                    android:hint="Fecha"/>
+
+            </LinearLayout>
+            <!--date 2-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:tint="@color/gray"
+                    android:src="@drawable/ic_access_time"/>
+
+                <EditText android:id="@+id/text_time_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="time"
+                    android:singleLine="true"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/negro"
+                    android:clickable="true"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:isScrollContainer="true"
+                    android:hint="@string/prompt_order_from"/>
+
+            </LinearLayout>
+
+            <!--date 3-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:tint="@color/gray"
+                    android:src="@drawable/ic_access_time"/>
+
+                <EditText android:id="@+id/text_time_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="time"
+                    android:singleLine="true"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/negro"
+                    android:clickable="true"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:isScrollContainer="true"
+                    android:hint="@string/prompt_order_to"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- comentarios-->
+        <EditText
+            android:id="@+id/text_comment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:isScrollContainer="true"
+            android:lines="4"
+            android:maxLength="500"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:hint="@string/prompt_order_comment"
+            />
+
+
+
+        <!-- Add destiny-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:weightSum="2"
+            android:layout_marginTop="@dimen/activity_horizontal_margin1"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin1"
+            android:layout_height="wrap_content">
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/layout_del_destiny"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/prompt_del_destiny"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackground"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:layout_weight="1"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorAccent"/>
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/layout_add_destiny"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/prompt_add_destiny"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackground"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:layout_weight="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorAccent"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

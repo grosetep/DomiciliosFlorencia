@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item android:id="@+id/nav_login" android:icon="@drawable/ic_action_users"
+              android:title="@string/action_session" />
+        <item android:id="@+id/nav_profile" android:icon="@drawable/ic_action_user"
+            android:title="@string/action_edit_profile" />
+        <item android:id="@+id/nav_location" android:icon="@drawable/ic_action_location"
+            android:title="@string/action_location" />
+        <item android:id="@+id/nav_orders" android:icon="@drawable/ic_local_shipping"
+            android:title="@string/action_orders" />
+        <!-- -->
+    </group>
+    <item android:title="">
+        <menu>
+            <item android:id="@+id/nav_exit" android:icon="@drawable/ic_exit_to_app"
+                  android:title="@string/action_close"/>
+        </menu>
+    </item>
+
+</menu>

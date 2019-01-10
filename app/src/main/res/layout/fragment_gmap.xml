@@ -1,0 +1,49 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/content"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.GmapFragment">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/text_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textAlignment="center"
+            android:layout_below="@+id/container_loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/negro_semitransparente"
+            android:text="@string/promt_location_ok"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_ligth" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:padding="@dimen/activity_horizontal_margin"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/text_coordinate"
+            android:layout_width="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Aqui confirma la direccion con los datos introducidos...."
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>

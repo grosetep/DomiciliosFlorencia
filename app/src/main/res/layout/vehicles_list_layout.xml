@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="4"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+<android.support.v7.widget.CardView
+    android:id="@+id/card_view_bici"
+    android:layout_weight="1"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/drive_item_size"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="6dp"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:padding="8dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <!-- center aparece como ML-->
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_location_on"
+            android:tint="@android:color/darker_gray"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"/>
+
+      <!--  <TextView
+            android:id="@+id/text_shipping_address_2"
+            android:textColor="@color/gray"
+            android:paddingTop="@dimen/activity_horizontal_margin1"
+            android:paddingLeft="@dimen/activity_horizontal_margin1"
+            android:paddingRight="@dimen/activity_horizontal_margin1"
+            android:textStyle="normal"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/image"
+            android:text="Direccion..."
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/text_available_2"
+            android:textColor="@color/negro"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:layout_height="wrap_content"/> -->
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+<android.support.v7.widget.CardView
+    android:id="@+id/card_view_moto"
+    android:layout_weight="1"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/drive_item_size"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="6dp"
+    android:foreground="?android:attr/selectableItemBackground">
+
+<LinearLayout
+    android:padding="8dp"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <!-- center aparece como ML-->
+    <ImageView
+        android:id="@+id/image_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_location_on"
+        android:tint="@android:color/darker_gray"
+        android:scaleType="centerInside"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"/>
+
+  <!--  <TextView
+        android:id="@+id/text_shipping_address"
+        android:textColor="@color/gray"
+        android:paddingTop="@dimen/activity_horizontal_margin1"
+        android:paddingLeft="@dimen/activity_horizontal_margin1"
+        android:paddingRight="@dimen/activity_horizontal_margin1"
+        android:textStyle="normal"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/image"
+        android:text="Direccion..."
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/text_available_2"
+        android:textColor="@color/negro"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:textSize="12sp"
+        android:layout_height="wrap_content"/> -->
+</LinearLayout>
+
+</android.support.v7.widget.CardView>
+<android.support.v7.widget.CardView
+    android:id="@+id/card_view_auto"
+    android:layout_weight="1"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/drive_item_size"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="6dp"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:padding="8dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <!-- center aparece como ML-->
+        <ImageView
+            android:id="@+id/image_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_location_on"
+            android:tint="@android:color/darker_gray"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"/>
+
+    <!--    <TextView
+            android:id="@+id/text_shipping_address_3"
+            android:textColor="@color/gray"
+            android:paddingTop="@dimen/activity_horizontal_margin1"
+            android:paddingLeft="@dimen/activity_horizontal_margin1"
+            android:paddingRight="@dimen/activity_horizontal_margin1"
+            android:textStyle="normal"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/image"
+            android:text="Direccion..."
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/text_available"
+            android:textColor="@color/negro"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:layout_height="wrap_content"/> -->
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+<android.support.v7.widget.CardView
+    android:id="@+id/card_view_truck"
+    android:layout_weight="1"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/drive_item_size"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="6dp"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:padding="8dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <!-- center aparece como ML-->
+        <ImageView
+            android:id="@+id/image_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_location_on"
+            android:tint="@android:color/darker_gray"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"/>
+
+       <!-- <TextView
+            android:id="@+id/text_shipping_address_4"
+            android:textColor="@color/gray"
+            android:paddingTop="@dimen/activity_horizontal_margin1"
+            android:paddingLeft="@dimen/activity_horizontal_margin1"
+            android:paddingRight="@dimen/activity_horizontal_margin1"
+            android:textStyle="normal"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/image"
+            android:text="Direccion..."
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/text_available_4"
+            android:textColor="@color/negro"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:textSize="12sp"
+            android:layout_height="wrap_content"/> -->
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+</LinearLayout>

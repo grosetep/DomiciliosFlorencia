@@ -1,0 +1,122 @@
+<LinearLayout
+    android:padding="@dimen/activity_horizontal_margin1"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:showDividers="middle"
+    android:background="@color/gray_ligth"
+    android:layout_height="wrap_content"
+    android:weightSum="2"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- distance-->
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="@dimen/budget_item_icons"
+                android:src="@mipmap/road"
+                android:tint="@color/colorAccent"
+                android:layout_height="@dimen/budget_item_icons" />
+
+            <TextView
+                android:id="@+id/text_distance"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/negro"
+                android:text="2.3 km"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Aprox."
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- time-->
+    <!--<LinearLayout
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="@dimen/budget_item_icons"
+                android:src="@mipmap/time"
+                android:paddingRight="@dimen/activity_horizontal_margin1"
+                android:tint="@color/colorAccent"
+                android:layout_height="@dimen/budget_item_icons" />
+
+            <TextView
+                android:id="@+id/text_time_estimated"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/negro"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Estimado"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+    </LinearLayout> -->
+    <!-- destinies-->
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="@dimen/budget_item_icons"
+                android:src="@mipmap/locations"
+                android:layout_gravity="center"
+                android:paddingRight="@dimen/activity_horizontal_margin1"
+                android:tint="@color/colorAccent"
+                android:layout_height="@dimen/budget_item_icons" />
+
+            <TextView
+                android:id="@+id/text_destinies"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/negro"
+                android:text="3"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_type_shipping"
+            android:layout_width="wrap_content"
+            android:text="Ida y Vuelta"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

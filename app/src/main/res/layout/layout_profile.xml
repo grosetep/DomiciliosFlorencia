@@ -1,0 +1,224 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+
+    <FrameLayout
+        android:id="@+id/container_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            style="?android:progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/header_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_info"
+            android:orientation="horizontal"
+            android:background="@color/gray_ligth"
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/header_imageview"
+                    android:layout_width="@dimen/item_profile_size"
+                    android:layout_height="@dimen/item_profile_size"
+                    android:src="@drawable/ic_account_circle"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:layout_marginLeft="@dimen/nav_header_vertical_spacing"
+                    android:layout_marginRight="@dimen/nav_header_vertical_spacing"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin1"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin1"
+
+                    />
+
+                <ImageButton
+                    android:id="@+id/button_add_photo"
+                    android:layout_width="@dimen/list_item_category_size"
+                    android:layout_height="@dimen/list_item_category_size"
+                    android:src="@drawable/ic_action_camera"
+                    android:layout_alignRight="@+id/header_imageview"
+                    android:layout_alignEnd="@+id/header_imageview"
+                    android:layout_alignBottom="@+id/header_imageview"
+                    android:background="@drawable/shape_icon"
+                    />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/text_name_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="@color/negro"
+                    android:text="Nombre Paterno Maternno"/>
+
+                <TextView
+                    android:id="@+id/text_email_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textColor="@color/gray"
+                    android:text="dfasfasdf@fsfsdf.com"/>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+        <View
+            android:id="@+id/profile_division"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_ligth"
+            android:layout_below="@+id/profile_info"/>
+
+
+        <!-- Titulo General-->
+
+        <TextView
+            android:id="@+id/form_division"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/profile_division"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="match_parent"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:layout_height="wrap_content"
+            android:text="@string/number_locations_title_general"
+            android:textColor="@color/colorPrimaryDark"/>
+
+
+
+        <!--                                                                                            Formulario-->
+        <LinearLayout
+            android:id="@+id/container_form"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/form_division"
+            >
+
+
+
+            <!-- name Label -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="8dp"
+                android:weightSum="50">
+                <EditText
+                    android:id="@+id/text_name_profile"
+                    android:layout_width="match_parent"
+                    android:layout_weight="50"
+                    android:enabled="false"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_your_name"
+                    android:imeActionId="@+id/login"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textCapWords"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+                <ImageView
+                    android:id="@+id/button_edit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="8dp"
+                    android:tint="@color/colorPrimaryDark"
+                    android:clickable="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@drawable/ic_action_edit"/>
+                <ImageView
+                    android:id="@+id/button_done_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="8dp"
+                    android:tint="@android:color/holo_green_light"
+                    android:clickable="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@drawable/ic_done"/>
+            </LinearLayout>
+
+
+            <View
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_ligth"
+                />
+            <!--cambio de passord -->
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="match_parent"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:layout_height="wrap_content"
+                android:text="@string/prompt_profile_security"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <LinearLayout
+                android:id="@+id/layout_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:paddingBottom="@dimen/activity_horizontal_margin1"
+                android:paddingTop="@dimen/activity_horizontal_margin1"
+                android:clickable="true" android:background="?android:attr/selectableItemBackground"
+                android:orientation="horizontal"
+                android:weightSum="50">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:tint="@color/colorPrimaryDark"
+                    android:src="@drawable/ic_announcement"/>
+                <TextView
+                    android:layout_weight="50"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/negro"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:text="@string/prompt_password_change_title"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

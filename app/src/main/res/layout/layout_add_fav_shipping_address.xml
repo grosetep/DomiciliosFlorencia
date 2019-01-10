@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view_add"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="6dp"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+        <!-- center aparece como ML-->
+        <ImageView
+            android:id="@+id/image"
+            android:padding="@dimen/activity_horizontal_margin1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_location"
+            android:tint="@android:color/darker_gray"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"/>
+
+        <TextView
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="normal"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:text="@string/text_add_locations_manage"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
