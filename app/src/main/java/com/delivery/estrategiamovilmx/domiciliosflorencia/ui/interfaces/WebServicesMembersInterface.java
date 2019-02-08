@@ -1,5 +1,7 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.ui.interfaces;
 
+
+
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.SubscriptionStatusResponse;
 
 import retrofit2.Call;

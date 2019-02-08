@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_business"
+    android:paddingLeft="@dimen/activity_horizontal_margin1"
+    android:paddingRight="@dimen/activity_horizontal_margin1"
+    android:paddingBottom="@dimen/activity_horizontal_margin4"
+    android:paddingTop="@dimen/activity_horizontal_margin4"
+    android:clickable="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_image"
+            android:layout_width="@dimen/list_item_image_size_width"
+            android:layout_height="@dimen/list_item_image_size_heigth"
+            android:layout_margin="6dp"
+            card_view:cardCornerRadius="5dp"
+            >
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="@dimen/list_item_image_size_width"
+                android:layout_height="@dimen/list_item_image_size_heigth"
+                android:scaleType="centerCrop"
+                android:gravity="center"
+                android:layout_marginRight="8dp"
+                />
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="8dp"
+            android:layout_gravity="center|center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/text_bussiness_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Teatro del centro libanes"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"/>
+
+
+                <TextView
+                    android:id="@+id/text_outstanding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Tacos / New"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+                    <TextView
+                        android:id="@+id/text_shipping_cost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textAlignment="textStart"
+                        android:layout_gravity="start"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Envío $15.00"
+                        android:layout_weight="50"
+                        />
+                    <TextView
+                        android:id="@+id/text_delivery_prom_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textStart"
+                        android:layout_gravity="start"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="34-40 min"
+                        android:layout_weight="50"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,6 +1,5 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.model;
 
-
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.google.gson.annotations.SerializedName;
 

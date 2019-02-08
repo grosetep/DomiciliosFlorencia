@@ -22,8 +22,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.items.CategoryItem;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ApiException;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.CategoryViewModel;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.PublicationCardViewModel;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.AddProductRequest;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GenericResponse;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.retrofit.RestServiceWrapper;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ApplicationPreferences;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Connectivity;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
@@ -40,7 +46,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,7 +65,7 @@ public class OfferFragment extends Fragment {
     private Gson gson = new Gson();
     private static final int SELECT_CATEGORY = 1;
     public final boolean load_initial = true;
-    private static HashMap<String, String> params = new HashMap<>();
+    private static CategoryItem params = null;
     private CategoryViewModel category;
     private OfferAdapter adapter;
     private AppCompatButton button_retry_search;
@@ -65,12 +73,12 @@ public class OfferFragment extends Fragment {
     public OfferFragment() {
         // Required empty public constructor
     }
-    public static OfferFragment createInstance(HashMap<String, String> arguments) {
+    public static OfferFragment createInstance(CategoryItem arguments) {
         OfferFragment fragment = new OfferFragment();
         fragment.setParams(arguments);
         return fragment;
     }
-    public static void setParams(HashMap<String, String> params) {
+    public static void setParams(CategoryItem params) {
         OfferFragment.params = params;
     }
 
@@ -102,7 +110,7 @@ public class OfferFragment extends Fragment {
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        Log.d(TAG,"REFRESH DATA.....");
+                        Log.d(TAG, "REFRESH DATA.....");
                         setupListItems(null, Constants.cero, Constants.load_more_tax, load_initial,true);
                     }
                 }
@@ -145,27 +153,28 @@ public class OfferFragment extends Fragment {
     }
     private void updateUI(final boolean connection_error){
         getActivity().runOnUiThread(new
-                Runnable() {
-                    @Override
-                    public void run() {
-                        if (connection_error) {
-                            no_connection_layout.setVisibility(View.VISIBLE);
-                            recList_offers.setVisibility(View.GONE);
-                            layout_no_publications.setVisibility(View.GONE);
-                            pbLoading_offers.setVisibility(View.GONE);
-                        }else if (getProducts()!=null && getProducts().size()>0) {Log.d(TAG,"Mostrar resultados !!!!!");
-                            no_connection_layout.setVisibility(View.GONE);
-                            recList_offers.setVisibility(View.VISIBLE);
-                            layout_no_publications.setVisibility(View.GONE);
-                            pbLoading_offers.setVisibility(View.GONE);
-                        }else{
-                            no_connection_layout.setVisibility(View.GONE);
-                            recList_offers.setVisibility(View.GONE);
-                            layout_no_publications.setVisibility(View.VISIBLE);
-                            pbLoading_offers.setVisibility(View.GONE);
-                        }
-                    }
-                });
+                                            Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    if (connection_error) {
+                                                        no_connection_layout.setVisibility(View.VISIBLE);
+                                                        recList_offers.setVisibility(View.GONE);
+                                                        layout_no_publications.setVisibility(View.GONE);
+                                                        pbLoading_offers.setVisibility(View.GONE);
+                                                    }else if (getProducts()!=null && getProducts().size()>0) {
+                                                        Log.d(TAG, "Mostrar resultados !!!!!");
+                                                        no_connection_layout.setVisibility(View.GONE);
+                                                        recList_offers.setVisibility(View.VISIBLE);
+                                                        layout_no_publications.setVisibility(View.GONE);
+                                                        pbLoading_offers.setVisibility(View.GONE);
+                                                    }else{
+                                                        no_connection_layout.setVisibility(View.GONE);
+                                                        recList_offers.setVisibility(View.GONE);
+                                                        layout_no_publications.setVisibility(View.VISIBLE);
+                                                        pbLoading_offers.setVisibility(View.GONE);
+                                                    }
+                                                }
+                                            });
     }
 
     public ArrayList<PublicationCardViewModel> getProducts() {
@@ -182,7 +191,7 @@ public class OfferFragment extends Fragment {
         String newUrl = Constants.GET_PRODUCTS;
         Log.d(TAG, "setupListItems PRODUCTOS---------------------------------------------load_initial:" + load_initial);
         //validation
-        VolleyGetRequest(newUrl + "?method=getAllOffers" + "&start=" + start + "&end=" + end, load_initial,isRefresh);
+        VolleyGetRequest(newUrl + "?method=getAllOffers" + "&start=" + start + "&end=" + end, load_initial, isRefresh);
     }
 
     public void VolleyGetRequest(final String url, boolean load_initial,boolean isRefresh) {
@@ -210,30 +219,32 @@ public class OfferFragment extends Fragment {
                                     @Override
                                     public void onResponse(final JSONObject response) {
                                         if (isRefresh) {//only update list
-                                            processingResponse(response,isRefresh);
+                                            processingResponse(response, isRefresh);
                                             swipeRefresh_offers.setRefreshing(false);
-                                        }else if (load_initial) {
+                                        } else if (load_initial) {
                                             processingResponseInit(response);
-                                        }else {
+                                        } else {
                                             products.remove(products.size() - 1);//delete loading..
                                             adapter.notifyItemRemoved(products.size());
-                                            processingResponse(response,isRefresh);
+                                            processingResponse(response, isRefresh);
                                         }
                                     }
                                 },
                                 new Response.ErrorListener() {
                                     @Override
-                                    public void onErrorResponse(VolleyError error){
+                                    public void onErrorResponse(VolleyError error) {
                                         error.printStackTrace();
-                                        if(isRefresh){
+                                        if (isRefresh) {
                                             swipeRefresh_offers.setRefreshing(false);
-                                            ShowConfirmations.showConfirmationMessage(getResources().getString(R.string.no_internet),getActivity());
-                                        }else if(!load_initial) {
+                                            ShowConfirmations.showConfirmationMessage(getResources().getString(R.string.no_internet), getActivity());
+                                        } else if (!load_initial) {
                                             products.remove(products.size() - 1);//delete loading..
                                             adapter.notifyItemRemoved(products.size());
                                             notifyListChanged();
-                                            ShowConfirmations.showConfirmationMessage(getResources().getString(R.string.no_internet),getActivity());
-                                        }else{updateUI(true);}
+                                            ShowConfirmations.showConfirmationMessage(getResources().getString(R.string.no_internet), getActivity());
+                                        } else {
+                                            updateUI(true);
+                                        }
                                     }
                                 }
 
@@ -288,7 +299,8 @@ public class OfferFragment extends Fragment {
     private void addNewElements(ArrayList<PublicationCardViewModel> new_publications,boolean isRefresh){
         if (new_publications!=null && new_publications.size()>Constants.cero) {
             Log.d(TAG, "new_publications:" + new_publications.size());
-            if (isRefresh){Log.d(TAG, "isRefresh..");
+            if (isRefresh){
+                Log.d(TAG, "isRefresh..");
                 products.clear();
                 products.addAll(new_publications);
             }else{
@@ -339,7 +351,7 @@ public class OfferFragment extends Fragment {
 
     private void setupAdapter(){
         if (recList_offers.getAdapter()==null) {
-            adapter = new OfferAdapter(getActivity(),getProducts(), recList_offers);
+            adapter = new OfferAdapter(getActivity(),getProducts(), recList_offers, this);
             recList_offers.setAdapter(adapter);
             //load more functionallity
             adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -357,5 +369,65 @@ public class OfferFragment extends Fragment {
         }
     }
 
+    public  void addToCart( final int position, final View v) {
+        UserItem user = GeneralFunctions.getCurrentUser(getContext());
+        AddProductRequest request = new AddProductRequest();
+        request.setId_product(products.get(position).getIdProduct());
+        request.setId_user(user != null ? user.getIdUser() : "0");
+        request.setUnits("1");
+        request.setOperation("add");
+        if (products.get(position).getOfferPrice()!=null && !products.get(position).getOfferPrice().isEmpty()) {
+            request.setTotal(products.get(position).getOfferPrice());
+            request.setPrice_product(products.get(position).getOfferPrice());
+        }else{
+            request.setTotal(products.get(position).getRegularPrice());
+            request.setPrice_product(products.get(position).getRegularPrice());
+        }
+
+        RestServiceWrapper.shoppingCart(request, new Callback<GenericResponse>() {
+            @Override
+            public void onResponse(Call<GenericResponse> call, retrofit2.Response<GenericResponse> response) {
+                Log.d(TAG, "Respuesta: " + response);
+                if (response != null && response.isSuccessful()) {
+                    GenericResponse cart_response = response.body();
+                    if (cart_response != null && cart_response.getStatus().equals(Constants.success)) {
+
+                        PublicationCardViewModel product = products.get(position);
+                        product.setAdded(true);
+                        adapter.notifyItemChanged(position);
+                        ShowConfirmations.showConfirmationMessage(cart_response.getResult().getMessage(), getActivity());
+
+                    } else if (cart_response != null && cart_response.getStatus().equals(Constants.no_data)) {
+                        String response_error = response.body().getMessage();
+                        Log.d(TAG, "Mensage:" + response_error);
+                        ShowConfirmations.showConfirmationMessage(response_error, getActivity());
+                    } else {
+                        String response_error = response.message();
+                        Log.d(TAG, "Error:" + response_error);
+                        ShowConfirmations.showConfirmationMessage(response_error, getActivity());
+                    }
+
+                } else {
+                    ShowConfirmations.showConfirmationMessage(getString(R.string.error_invalid_login, getString(R.string.error_generic)), getActivity());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse> call, Throwable t) {
+                Log.d(TAG, "ERROR: " + t.getStackTrace().toString() + " --->" + t.getCause() + "  -->" + t.getMessage() + " --->");
+                ApiException apiException = new ApiException();
+                try {
+                    apiException.setMessage(t.getMessage());
+
+                } catch (Exception ex) {
+                    // do nothing
+                }
+            }
+        });
+
+
+
+
+    }
 
 }

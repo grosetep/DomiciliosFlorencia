@@ -465,7 +465,7 @@ public class PickupPointFragment extends Fragment {
         //inicializa lista
         final RecyclerView recyclerview_times = (RecyclerView) mView.findViewById(R.id.recyclerview_times);
         recyclerview_times.setItemAnimator(new DefaultItemAnimator());
-        recyclerview_times.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL) );
+        recyclerview_times.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL) );
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         if (recyclerview_times.getLayoutManager()==null){ recyclerview_times.setLayoutManager(llm);}

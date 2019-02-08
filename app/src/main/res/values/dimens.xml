@@ -18,8 +18,10 @@
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin1">8dp</dimen>
+    <dimen name="activity_horizontal_margin4">4dp</dimen>
     <dimen name="activity_vertical_margin1">8dp</dimen>
     <dimen name="activity_horizontal_margin2">24dp</dimen>
+    <dimen name="activity_horizontal_margin3">100dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="status_deliver_length">4dp</dimen>
 
@@ -45,4 +47,13 @@
     <dimen name="budget_item_icons">32dp</dimen>
     <dimen name="destination_item_size">70dp</dimen>
 
+    <!-- Default image height on list-->
+    <dimen name="list_item_image_size_width">100dp</dimen>
+    <dimen name="list_item_image_size_heigth">65dp</dimen>
+    <dimen name="icon_item">25dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="image_header_toolbar">200dp</dimen>
+    <dimen name="image_header_toolbar_min_heigth">150dp</dimen>
 </resources>

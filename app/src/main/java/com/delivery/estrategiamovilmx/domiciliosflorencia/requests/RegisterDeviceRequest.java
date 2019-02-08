@@ -1,6 +1,5 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.requests;
 
-
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.google.gson.annotations.SerializedName;
 

@@ -55,7 +55,7 @@ public class ReferenceFragment extends Fragment {
         text_area = (TextView) view.findViewById(R.id.text_area);
 
         if (address_editable!=null){//hay una direccion editable
-          text_reference.setText(address_editable.getReference());
+            text_reference.setText(address_editable.getReference());
         }
 
         text_head_value = view.findViewById(R.id.text_head_value);

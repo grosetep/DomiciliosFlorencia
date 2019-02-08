@@ -211,7 +211,7 @@ public class ShippingActivity extends AppCompatActivity {
                     if (getAddress_position_selected()!=-1) {//ya hay uno seleccionado
                         resetElement(getAddress_position_selected());
                     }
-                   //Reset de todos los elementos existentes a..no seleccionados
+                    //Reset de todos los elementos existentes a..no seleccionados
                     resetElementsNotSelected();
                     //create element on list
                     mAdapter.addItem(0,ship);

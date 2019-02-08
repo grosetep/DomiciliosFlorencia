@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.PrincipalMenuFragment">
+    tools:context="com.estrategiamovilmx.sales.weespareenvios.ui.fragments.PrincipalMenuFragment">
 
 
 <LinearLayout
@@ -17,56 +17,11 @@
 
         android:layout_width="match_parent" android:orientation="vertical"
         android:layout_height="wrap_content">
-        <!-- logo -->
-        <LinearLayout
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/order_layout_size"
-                    android:id="@+id/logo"
-                    android:src="@mipmap/titulo_domiflorencia"
-                    android:layout_marginBottom="0dp"
-                    />
-
-            <LinearLayout
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_marginBottom="16dp"
-                        android:layout_marginTop="24dp"
-                        android:showDividers="middle"
-                        android:background="@drawable/gradient"
-                        android:layout_height="wrap_content">
-                        <android.support.v7.widget.AppCompatButton
-                            android:id="@+id/button_new_order"
-                            style="?android:textAppearanceSmall"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:text="@string/prompt_send_something"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-            </LinearLayout>
-
-
-        </LinearLayout>
 
         <!--  titulo principal  -->
         <TextView
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:textStyle="bold"
             android:text="¿Que necesitas?"
@@ -75,12 +30,12 @@
             android:textAppearance="?android:textAppearanceMedium"
             android:layout_height="wrap_content" />
 
-        <!--  contenido principal  -->
+        <!--  contenido principal
 
         <android.support.v4.view.ViewPager
             android:id="@+id/photos_viewpager"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="match_parent">
 
         </android.support.v4.view.ViewPager>
 
@@ -93,7 +48,9 @@
             app:tabIndicatorHeight="0dp"
             app:tabMaxWidth="15dp"
             android:layout_height="wrap_content"/>
+ -->
 
+        <include layout="@layout/fragment_shipping_services" android:layout_width="match_parent" android:layout_height="match_parent"/>
     </LinearLayout>
 
 

@@ -6,7 +6,7 @@
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent"
                                                  android:fitsSystemWindows="true"
-                                                 tools:context="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.AddContactActivity">
+                                                 tools:context="com.estrategiamovilmx.sales.weespareenvios.ui.activities.AddContactActivity">
 <RelativeLayout android:layout_height="match_parent"
                 android:layout_width="match_parent">
 

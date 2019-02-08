@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:fitsSystemWindows="false"
+    tools:context="com.estrategiamovilmx.sales.weespareenvios.ui.activities.MainClassificationsActivity">
+
+
+<!-- poner en esta posicion el elemento que quiera ponerse como fondo para hacer un efecto de parallax-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:fitsSystemWindows="true"
+        android:background="@color/white"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            android:background="@color/white"
+            android:theme="@style/ToolbarColoredBackArrow"
+            android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        <!-- titulo servicio-->
+            <TextView
+                android:id="@+id/text_service"
+                android:layout_width="match_parent"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                android:paddingTop="@dimen/activity_horizontal_margin1"
+                android:paddingLeft="@dimen/activity_horizontal_margin1"
+                android:paddingBottom="@dimen/activity_horizontal_margin1"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"
+                android:layout_height="wrap_content" />
+
+            <!-- campo de busqueda-->
+            <LinearLayout
+                android:id="@+id/layout_searching_content"
+                android:paddingTop="@dimen/activity_horizontal_margin1"
+                android:paddingLeft="@dimen/activity_horizontal_margin1"
+                android:paddingRight="@dimen/activity_horizontal_margin1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="50">
+
+                <!-- campo de texto -->
+                <LinearLayout
+                    android:layout_weight="50"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="?android:attr/dividerVertical"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:id="@+id/layout_search"
+                        android:background="@drawable/layout_rounded_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_action_search"
+                            android:tint="@color/gray"
+                            android:layout_gravity="center"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/promt_search_services"
+                            android:textColor="@color/gray_medium"
+                            android:layout_gravity="center"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- filtros-->
+                <ImageButton
+                    android:id="@+id/button_select_filters"
+                    android:layout_width="@dimen/icon_layout_location_size"
+                    android:layout_height="@dimen/icon_layout_location_size"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:background="@android:color/transparent"
+                    android:tint="@color/colorAccent"
+                    android:layout_gravity="right|center"
+                    android:src="@drawable/ic_filter_list"
+                    />
+
+            </LinearLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/classifications_recycler"
+                android:padding="@dimen/activity_horizontal_margin1"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:scrollbarThumbVertical="@drawable/scrolling"
+                android:scrollbars="none"
+                android:fadeScrollbars="true"
+                android:scrollbarSize="4dp"
+                android:layout_width="fill_parent"
+                android:layout_height="?attr/actionBarSize"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+
+
+        <include layout="@layout/content_main_clasifications" />
+
+        <include layout="@layout/no_publications_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            />
+
+        <include layout="@layout/no_connection_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            />
+
+
+        <RelativeLayout
+            android:id="@+id/pbLoading_products"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:layout_marginTop="24dp"
+                android:layout_below="@+id/tip1_text2"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:indeterminate="true"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout >

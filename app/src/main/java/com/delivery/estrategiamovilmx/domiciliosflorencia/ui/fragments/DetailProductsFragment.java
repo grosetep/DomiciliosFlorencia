@@ -1,6 +1,7 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -33,15 +34,17 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ApiException;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.DetailPublication;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ImageSliderPublication;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ProductModel;
-import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.CartRequest;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.AddProductRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GenericResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.retrofit.RestServiceWrapper;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ApplicationPreferences;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ShowConfirmations;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.StringOperations;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.UtilPermissions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.VolleyErrorHelper;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.AddToCartActivity;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.GalleryActivity;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.LoginActivity;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.MainActivity;
@@ -71,15 +74,19 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
     private ProgressBar pb;
     private TextView text_cover;
     private TextView text_detail_availability;
+    private TextView title_detail_availability;
     private TextView text_price;
     private TextView text_category;
     private TextView detailed_description;
     private DetailPublication detail;
     private ProductModel product_detail;
+    private String flow;
     private AppCompatButton button_order;
     private static int METHOD_GET_PRODUCT_IMAGES = 1;
     private static int METHOD_SHIPPING = 2;
     private static String PRODUCT_DETAIL = "product_detail";
+    private static String TYPE_FLOW = "type_flow";
+    private String id_country = "";
     //Carroussell
     private ViewPager viewPager;
     private static final Integer DURATION = 3500;
@@ -95,7 +102,9 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         product_detail = (ProductModel) getArguments().getSerializable(PRODUCT_DETAIL);
+        id_country = ApplicationPreferences.getLocalStringPreference(getContext(),Constants.id_country);
 
+        flow = getArguments().getString(TYPE_FLOW);
         String[] PERMISSIONS = {Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE};
 
         if(!UtilPermissions.hasPermissions(getActivity(), PERMISSIONS)){
@@ -111,6 +120,7 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
         View v = inflater.inflate(R.layout.fragment_detail_products, container, false);
         detailed_description = (TextView) v.findViewById(R.id.detailed_description);
         text_detail_availability = (TextView) v.findViewById(R.id.text_detail_availability);
+        title_detail_availability = (TextView) v.findViewById(R.id.title_detail_availability);
         text_cover = (TextView) v.findViewById(R.id.text_cover);
         text_category = (TextView) v.findViewById(R.id.text_category);
         text_price = (TextView) v.findViewById(R.id.text_price);
@@ -222,10 +232,10 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
                                 Log.d(TAG, "Error Volley: " + error.getMessage() + "  " + error.getCause());
                                 //dismissProgressDialog();
                                 String mensaje2 = "Verifique su conexión a Internet.";
-                                Toast.makeText(
-                                        getActivity(),
-                                        mensaje2,
-                                        Toast.LENGTH_SHORT).show();
+
+                                if (getActivity() != null) {
+                                    ShowConfirmations.showConfirmationMessage(mensaje2, getActivity());
+                                }
                             }
                         }
 
@@ -240,7 +250,9 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
 
 
                     @Override
-                    public String getBodyContentType() {return "application/json; charset=utf-8" + getParamsEncoding();     }
+                    public String getBodyContentType() {
+                        return "application/json; charset=utf-8" + getParamsEncoding();
+                    }
                 }
         );
     }
@@ -274,13 +286,13 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
 
     }
     private void  onFailedImages(){
-         ImageSliderPublication img = new ImageSliderPublication();
+        ImageSliderPublication img = new ImageSliderPublication();
         img.setPath(product_detail.getPath());
         img.setImageName(product_detail.getImage());
         img.setEnableDeletion("false");
         img.setResource("remote");
 
-         images_publication[0] =img;
+        images_publication[0] =img;
         ((TextView)getActivity().findViewById(R.id.text_number_photos)).setText("0");
         if (viewPager != null) {// se ejcuta despues de gaber consultado
             setupViewPager(viewPager,images_publication);
@@ -304,18 +316,25 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
                     text_cover.setText(detail.getDescription());
                     text_detail_availability.setText(detail.getStock());
                     String label_text ="";
-                    if (detail.getOfferPrice()!=null && !detail.getOfferPrice().isEmpty()) {
-                        text_price.setText(StringOperations.getStringWithA(StringOperations.getAmountFormatWithNoDecimals(detail.getOfferPrice())));
+                    if (detail.getOfferPrice()!=null && !detail.getOfferPrice().isEmpty()) {//mostrar precio exacto
+                        text_price.setText(StringOperations.getStringWithA(StringOperations.getAmountFormat(detail.getOfferPrice(),id_country)));
                     }else{
-                        text_price.setText(StringOperations.getStringWithA(StringOperations.getAmountFormatWithNoDecimals(detail.getRegularPrice())));
+                        text_price.setText(StringOperations.getStringWithA(StringOperations.getAmountFormat(detail.getRegularPrice(),id_country)));
                     }
+                    //campo de existencias no se muestra para platillos
+                    if (flow.equals(ProductsFragment.FLOW_PRODUCTS)){
+                        text_detail_availability.setVisibility(View.GONE);
+                        title_detail_availability.setVisibility(View.GONE);
+                    }
+
+
                     principal_container_detail.setVisibility(View.VISIBLE);
                     pb.setVisibility(View.GONE);
                     break;
                 case "2"://no detail
                     pb.setVisibility(View.GONE);
                     String errorMessage = response.getString("message");
-                    Toast.makeText( getActivity(),  errorMessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
                     break;
             }
 
@@ -323,27 +342,54 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
             e.printStackTrace();
             pb.setVisibility(View.GONE);
             String errorMessage = getString(R.string.generic_error);
-            Toast.makeText( getActivity(),  errorMessage, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
         }
 
     }
-    public static DetailProductsFragment createInstance(ProductModel product) {
+    public static DetailProductsFragment createInstance(ProductModel product,String flow) {
         DetailProductsFragment fragment = new DetailProductsFragment();
         Bundle args = new Bundle();
         args.putSerializable(PRODUCT_DETAIL,product);
+        args.putString(TYPE_FLOW,flow);
         fragment.setArguments(args);
         return fragment;
     }
+    public void startAddToCartActivity(){
+        UserItem user = GeneralFunctions.getCurrentUser(getContext());
+        AddProductRequest request = new AddProductRequest();
+        request.setId_product(getDetail().getIdProduct());
+        request.setId_user(user != null ? user.getIdUser() : "0");
+        request.setUnits("1");
+        request.setOperation("add");
 
+        if (detail.getOfferPrice()!=null && !detail.getOfferPrice().isEmpty()) {
+            request.setPrice_product(detail.getOfferPrice());
+        }else{
+            request.setPrice_product(detail.getRegularPrice());
+        }
+
+        Intent intent = new Intent(getActivity(), AddToCartActivity.class);
+        Bundle args = new Bundle();
+        args.putSerializable(ProductsFragment.CART_OBJECT,request);
+        args.putString(ProductsFragment.PRODUCT_NAME,detail.getProduct());
+        intent.putExtras(args);
+        startActivityForResult(intent, ProductsFragment.ADD_TO_CART_INTENT);
+    }
     public  void addToCart() {
         UserItem user = GeneralFunctions.getCurrentUser(getContext());
-        CartRequest request = new CartRequest();
+        AddProductRequest request = new AddProductRequest();
         request.setId_product(getDetail().getIdProduct());
         request.setId_user(user!=null?user.getIdUser():"0");
         request.setUnits("1");
         request.setOperation("add");
-
-        RestServiceWrapper.shoppingCart(request,new Callback<GenericResponse>() {
+        if (getDetail().getOfferPrice()!=null && !getDetail().getOfferPrice().isEmpty()) {
+            request.setTotal(getDetail().getOfferPrice());
+            request.setPrice_product(getDetail().getOfferPrice());
+        }else{
+            request.setTotal(getDetail().getRegularPrice());
+            request.setPrice_product(getDetail().getRegularPrice());
+        }
+        RestServiceWrapper.shoppingCart(request, new Callback<GenericResponse>() {
             @Override
             public void onResponse(Call<GenericResponse> call, retrofit2.Response<GenericResponse> response) {
                 Log.d(TAG, "Respuesta: " + response);
@@ -353,24 +399,25 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
 
                         ShowConfirmations.showConfirmationMessage(cart_response.getResult().getMessage(), getActivity());
 
-                    } else if (cart_response != null && cart_response.getStatus().equals(Constants.no_data)){
+                    } else if (cart_response != null && cart_response.getStatus().equals(Constants.no_data)) {
                         String response_error = response.body().getMessage();
                         Log.d(TAG, "Mensage:" + response_error);
                         ShowConfirmations.showConfirmationMessage(response_error, getActivity());
-                    }else{
+                    } else {
                         String response_error = response.message();
                         Log.d(TAG, "Error:" + response_error);
                         ShowConfirmations.showConfirmationMessage(response_error, getActivity());
                     }
 
                     // onSuccess();
-                }else{
-                    ShowConfirmations.showConfirmationMessage(getString(R.string.error_invalid_login,getString(R.string.error_generic)),getActivity());
+                } else {
+                    ShowConfirmations.showConfirmationMessage(getString(R.string.error_invalid_login, getString(R.string.error_generic)), getActivity());
                 }
             }
+
             @Override
             public void onFailure(Call<GenericResponse> call, Throwable t) {
-                Log.d(TAG,"ERROR: " +t.getStackTrace().toString() + " --->" + t.getCause() + "  -->" + t.getMessage() + " --->");
+                Log.d(TAG, "ERROR: " + t.getStackTrace().toString() + " --->" + t.getCause() + "  -->" + t.getMessage() + " --->");
                 ApiException apiException = new ApiException();
                 try {
                     apiException.setMessage(t.getMessage());
@@ -410,23 +457,26 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
     }
     public void startSlider() {
         timer = new Timer();
-        if (getActivity()!=null) {
+        final Activity act = getActivity();
+        if (act!=null) {
             timer.scheduleAtFixedRate(new TimerTask() {
 
                 public void run() {
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            if (images_publication != null) {
-                                if (position > images_publication.length) { // longitud del arreglo de urls
-                                    position = 0;
-                                    viewPager.setCurrentItem(position++);
-                                } else {
-                                    viewPager.setCurrentItem(position++);
+                    if (act!=null) {
+                        act.runOnUiThread(new Runnable() {
+                            public void run() {
+                                if (images_publication != null) {
+                                    if (position > images_publication.length) { // longitud del arreglo de urls
+                                        position = 0;
+                                        viewPager.setCurrentItem(position++);
+                                    } else {
+                                        viewPager.setCurrentItem(position++);
+                                    }
                                 }
-                            }
 
-                        }
-                    });
+                            }
+                        });
+                    }
 
 
                 }
@@ -463,7 +513,7 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
     public static Spanned fromHtml(String html){
         Spanned result;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+            result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
         } else {
             result = Html.fromHtml(html);
         }

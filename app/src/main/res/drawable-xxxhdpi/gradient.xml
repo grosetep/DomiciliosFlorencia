@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+    <gradient
+        android:type="linear"
+        android:startColor="@color/colorHightligthGreen"
+        android:centerColor="@color/colorAccent"
+        android:endColor="@color/colorHightligthPurple"
+        android:angle="45"
+        />
+</shape>
+<!-- naranja rosa
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+    <gradient
+        android:type="linear"
+        android:startColor="#fda23f"
+        android:endColor="#ec6d82"
+        android:angle="225"
+        />
+</shape> -->
+<!-- verde azul
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+    <gradient
+        android:type="linear"
+        android:startColor="#1de1d0"
+        android:centerColor="#6a9ddd"
+        android:endColor="#9676e5"
+        android:angle="225"
+        />
+</shape>
+
+-->
+
+<!--
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+    <gradient
+        android:type="linear"
+        android:startColor="#ee45a7"
+        android:endColor="#ffba51"
+        android:angle="45"
+        />
+</shape>
+-->
+<!-- old
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+<gradient
+    android:type="linear"
+    android:startColor="#2f979c"
+    android:centerColor="#33a7ac"
+    android:endColor="#05c4dd"
+    android:angle="180"
+    />
+</shape>-->

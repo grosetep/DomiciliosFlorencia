@@ -1,0 +1,22 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
+            <!-- color de relleno cuando se presiona -->
+            <solid android:color="@color/gray_ligth" /> <!-- fff5f5f5 -->
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+    <item>
+        <!-- color de relleno de la figura -->
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/>
+            <corners android:radius="20dp" />
+
+            <!-- color de contorno de la figura -->
+            <stroke
+                android:width="1dp"
+                android:color="@color/colorAccent"
+                />
+        </shape>
+    </item>
+</selector>

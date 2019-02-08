@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = text_password.getText().toString().trim();
         String encryptedPassword = "";
         try {
-            encryptedPassword =  AESCrypt.encrypt(Constants.seedValue,password);//aqui
+            encryptedPassword =  AESCrypt.encrypt(Constants.seedValue, password);//aqui
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -233,7 +233,7 @@ public class LoginActivity extends AppCompatActivity {
             email = text_email.getText().toString().trim();
             password = text_password.getText().toString().trim();
             try {
-                encryptedPassword =  AESCrypt.encrypt(Constants.seedValue,password);//aqui
+                encryptedPassword =  AESCrypt.encrypt(Constants.seedValue, password);//aqui
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -353,7 +353,7 @@ public class LoginActivity extends AppCompatActivity {
                     String password = Constants.reset_password + (int)Math.floor((Math.random() * 365) + 1);
                     String encryptedPassword = "";
                     try {
-                        encryptedPassword =  AESCrypt.encrypt(Constants.seedValue,password);//aqui
+                        encryptedPassword =  AESCrypt.encrypt(Constants.seedValue, password);//aqui
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.CartProductItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.ConfigItem;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.items.MerchantItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ApiException;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.Contact;
@@ -25,6 +26,7 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ShoppingCart;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.CreateOrderRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.CreateOrderResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.retrofit.RestServiceWrapper;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ApplicationPreferences;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ShowConfirmations;
@@ -32,6 +34,7 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.StringOperations
 
 import retrofit2.Call;
 import retrofit2.Callback;
+
 
 public class ReviewActivity extends AppCompatActivity {
     private static final String TAG = ReviewActivity.class.getSimpleName();
@@ -44,6 +47,7 @@ public class ReviewActivity extends AppCompatActivity {
     private TextView text_shipping_description;
     private TextView text_contact_description;
     private TextView text_payment_description;
+    private TextView text_payment_extra_info;
     private TextView text_total_description;
     private TextView text_products;
     private RelativeLayout container_loading;
@@ -55,17 +59,20 @@ public class ReviewActivity extends AppCompatActivity {
     //actions
     private AppCompatButton button_previous;
     private AppCompatButton button_next;
+    private String id_country;
+    private MerchantItem merchant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
+        id_country = ApplicationPreferences.getLocalStringPreference(getApplicationContext(),Constants.id_country);
         Intent i = getIntent();
         shopping_cart = (ShoppingCart)i.getSerializableExtra(Constants.SELECTED_SHOPPING_CART);
         shipping = (ShippingAddress) i.getSerializableExtra(Constants.SELECTED_SHIPPING);
         contact = (Contact) i.getSerializableExtra(Constants.SELECTED_CONTACT);
         payment_method = (PaymentMethod) i.getSerializableExtra(Constants.SELECTED_PAYMENT_METHOD);
-
+        merchant = (MerchantItem) i.getSerializableExtra(Constants.MERCHANT_OBJECT);
         final Toolbar toolbar_shipping = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar_shipping);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -76,10 +83,10 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
     private void initProcess(boolean flag){
-        container_loading.setVisibility(flag?View.VISIBLE:View.GONE);
-        layout_actions.setVisibility(flag?View.GONE:View.VISIBLE);
-        container_review.setVisibility(flag?View.GONE:View.VISIBLE);
-        text_head.setVisibility(flag?View.GONE:View.VISIBLE);
+        container_loading.setVisibility(flag? View.VISIBLE: View.GONE);
+        layout_actions.setVisibility(flag ? View.GONE : View.VISIBLE);
+        container_review.setVisibility(flag ? View.GONE : View.VISIBLE);
+        text_head.setVisibility(flag ? View.GONE : View.VISIBLE);
         no_connection_layout.setVisibility(View.GONE);
     }
     private void setValues(){
@@ -87,19 +94,21 @@ public class ReviewActivity extends AppCompatActivity {
         text_shipping_description.setText(shipping.getAddressForUser());
         text_contact_description.setText(contact.getName().concat(" - ").concat(contact.getPhone()));
         text_payment_description.setText(payment_method.getMethod());
-        text_total_description.setText(StringOperations.getAmountFormat(String.valueOf(shopping_cart.getTotal())));
+        if (payment_method.getIdPaymentMethod().equals(String.valueOf(Constants.CASH))) {
+            text_payment_extra_info.setText(getString(R.string.promt_money_back_data, StringOperations.getAmountFormat(payment_method.getMoneyBack(),id_country)));
+        }
+        text_total_description.setText(StringOperations.getAmountFormat(String.valueOf(shopping_cart.getTotal()),id_country));
         if (shopping_cart!=null && shopping_cart.getProducts()!=null && shopping_cart.getProducts().size()>0) {
             StringBuffer products_list = new StringBuffer();
             for (CartProductItem p: shopping_cart.getProducts()){
-                String price = "";
-                if (p.getOfferPrice()!=null && !p.getOfferPrice().isEmpty()){
-                    price = StringOperations.getAmountFormat(p.getOfferPrice());
-                }else{
-                    price = StringOperations.getAmountFormat(p.getRegularPrice());
-                }
-                products_list.append(p.getProduct()+ " - "+ p.getUnits()+" X "+price+"\n");
-
+                //Log.d(TAG,"adicionales:"+p.getAdditionals()+" variante:"+p.getVariant());
+                products_list.append(p.getUnits()+ " - "+
+                        p.getProduct()+
+                        (p.getVariant()!=null?" ,"+p.getVariant():"")  +
+                        (p.getAdditionals()!=null?" "+p.getAdditionals():"")+" Total: "+p.getTotal()+"\n");
             }
+
+
             text_products.setText(products_list.toString());
         }
     }
@@ -113,6 +122,7 @@ public class ReviewActivity extends AppCompatActivity {
         text_shipping_description = (TextView) findViewById(R.id.text_shipping_description);
         text_contact_description = (TextView) findViewById(R.id.text_contact_description);
         text_payment_description = (TextView) findViewById(R.id.text_payment_description);
+        text_payment_extra_info = (TextView) findViewById(R.id.text_payment_extra_info);
         text_total_description = (TextView) findViewById(R.id.text_total_description);
         text_products = (TextView) findViewById(R.id.text_products);
         button_previous = (AppCompatButton) findViewById(R.id.button_previous);
@@ -139,75 +149,76 @@ public class ReviewActivity extends AppCompatActivity {
         ConfigItem config = GeneralFunctions.getConfiguration(getApplicationContext());
         if (shopping_cart!=null && shipping!=null && contact!=null && payment_method !=null){
             request.setId_order("0");
-            request.setId_user(user!=null?user.getIdUser():"0");
-
+            request.setId_user(user != null ? user.getIdUser() : "0");
+            request.setId_merchant(merchant!=null?merchant.getIdMerchant():0);
             request.setId_cart(shopping_cart.getId_cart());
             request.setTotal(String.valueOf(shopping_cart.getTotal()));
-            request.setId_payment_method(payment_method.getIdPaymentMethod());
+            request.setPayment_method(payment_method);
             request.setContact(contact);
             request.setShipping(shipping);
             request.setBusinessName(config!=null?config.getBusinessName():"");
             request.setNameUser(user!=null?user.getName():"");
-            request.setAmountFormatTotal(StringOperations.getAmountFormat(String.valueOf(shopping_cart.getTotal())));
+            request.setAmountFormatTotal(StringOperations.getAmountFormat(String.valueOf(shopping_cart.getTotal()),id_country));
             request.setToken(GeneralFunctions.getTokenUser(getApplicationContext()));
-            Log.d(TAG,"Enviar pedido:"+request.toString());
-            RestServiceWrapper.createOrder(request,new Callback<CreateOrderResponse>() {
+            //Log.d(TAG, "Enviar pedido:" + request.toString());
+            RestServiceWrapper.createOrder(request, new Callback<CreateOrderResponse>() {
                 @Override
                 public void onResponse(Call<CreateOrderResponse> call, retrofit2.Response<CreateOrderResponse> response) {
-                    Log.d(TAG, "Respuesta: " + response.body().getResult().toString());
+                    //Log.d(TAG, "Respuesta: " + response.body().getResult().toString());
                     if (response != null && response.isSuccessful()) {
                         CreateOrderResponse cart_response = response.body();
                         if (cart_response != null && cart_response.getStatus().equals(Constants.success)) {
                             if (cart_response.getResult().getStatus().equals(String.valueOf(Constants.uno))) {
                                 //check response
-                                Log.d(TAG,"\ncart_response:"+cart_response.getResult().toString());
+                                //Log.d(TAG, "\ncart_response:" + cart_response.getResult().toString());
 
                                 if (validId(cart_response.getResult().getNewAddress()) &&
                                         validId(cart_response.getResult().getNewContact()) &&
-                                            validId(cart_response.getResult().getNewOrder()) &&
-                                                validId(cart_response.getResult().getCartCleaned())) {
+                                        validId(cart_response.getResult().getNewOrder()) &&
+                                        validId(cart_response.getResult().getCartCleaned())) {
                                     initProcess(false);
                                     startCongratsActivity(cart_response.getResult().getNewOrder());
 
-                                }else{
-                                    Log.d(TAG,"\ncart_response:"+cart_response.getResult().toString());
+                                } else {
+                                    //Log.d(TAG, "\ncart_response:" + cart_response.getResult().toString());
                                     initProcess(false);
-                                    Snackbar.make(v,cart_response.getResult().getMessage(),Snackbar.LENGTH_LONG);
+                                    Snackbar.make(v, cart_response.getResult().getMessage(), Snackbar.LENGTH_LONG);
                                     //ShowConfirmations.showConfirmationMessage(cart_response.getResult().getMessage(), ReviewActivity.this);
-                                    Log.d(TAG,"Error response...................:"+cart_response.getResult().getMessage());
-                                    request.getContact().setIdContact(validId(cart_response.getResult().getNewContact())?cart_response.getResult().getNewContact():"0");
-                                    request.getShipping().setId_location(validId(cart_response.getResult().getNewAddress())?cart_response.getResult().getNewAddress():"0");
-                                    request.setId_order(validId(cart_response.getResult().getNewOrder())?cart_response.getResult().getNewOrder():"0");
+                                    Log.d(TAG, "Error response...................:" + cart_response.getResult().getMessage());
+                                    request.getContact().setIdContact(validId(cart_response.getResult().getNewContact()) ? cart_response.getResult().getNewContact() : "0");
+                                    request.getShipping().setId_location(validId(cart_response.getResult().getNewAddress()) ? cart_response.getResult().getNewAddress() : "0");
+                                    request.setId_order(validId(cart_response.getResult().getNewOrder()) ? cart_response.getResult().getNewOrder() : "0");
                                 }
 
 
-                            }else{
+                            } else {
                                 initProcess(false);
-                                Snackbar.make(v,cart_response.getResult().getMessage(),Snackbar.LENGTH_LONG);
+                                Snackbar.make(v, cart_response.getResult().getMessage(), Snackbar.LENGTH_LONG);
                                 ShowConfirmations.showConfirmationMessage(cart_response.getResult().getMessage(), ReviewActivity.this);
                             }
-                        } else if (cart_response != null && cart_response.getStatus().equals(Constants.no_data)){
+                        } else if (cart_response != null && cart_response.getStatus().equals(Constants.no_data)) {
                             String response_error = response.body().getMessage();
                             Log.d(TAG, "Mensage:" + response_error);
-                            Snackbar.make(v,response_error,Snackbar.LENGTH_LONG);
+                            Snackbar.make(v, response_error, Snackbar.LENGTH_LONG);
                             ShowConfirmations.showConfirmationMessage(response_error, ReviewActivity.this);
                             initProcess(false);
-                        }else{
+                        } else {
                             String response_error = response.message();
                             Log.d(TAG, "Error:" + response_error);
-                            Snackbar.make(v,response_error,Snackbar.LENGTH_LONG);
+                            Snackbar.make(v, response_error, Snackbar.LENGTH_LONG);
                             ShowConfirmations.showConfirmationMessage(response_error, ReviewActivity.this);
                             initProcess(false);
                         }
-                    }else{
+                    } else {
                         initProcess(false);
-                        ShowConfirmations.showConfirmationMessage(getString(R.string.error_invalid_login,getString(R.string.error_generic)),ReviewActivity.this);
+                        ShowConfirmations.showConfirmationMessage(getString(R.string.error_invalid_login, getString(R.string.error_generic)), ReviewActivity.this);
                     }
                 }
+
                 @Override
                 public void onFailure(Call<CreateOrderResponse> call, Throwable t) {
-                    initProcess(false);
-                    Log.d(TAG,"ERROR: " +t.getStackTrace().toString() + " --->" + t.getCause() + "  -->" + t.getMessage() + " --->");
+
+                    Log.d(TAG, "ERROR: " + t.getStackTrace().toString() + " --->" + t.getCause() + "  -->" + t.getMessage() + " --->");
                     ApiException apiException = new ApiException();
                     try {
                         apiException.setMessage(t.getMessage());
@@ -235,7 +246,7 @@ public class ReviewActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     public void startCongratsActivity(String order){
-        Intent i = new Intent(this,CongratsActivity.class);
+        Intent i = new Intent(this,CongratsPurchaseActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(Constants.SELECTED_SHIPPING,shipping);
         args.putString(Constants.ORDER_NO,order);

@@ -116,6 +116,21 @@ public class Constants {
     public static final boolean is_subscriber = true;
     public static final String merchant_key = "merchant_05012019_domiflorencia";
     public static final String system_date = "system_date";
+
+    /*Colors*/
+
+    public static final String gris_claro = "#90263238";
+    public static final String gris_fuerte = "#263238";
+    public static final String negro = "#000000";
+    public static final String color_accent = "#FF6F00";
+    public static final String color_secondary = "#03A9F4";
+
+    /* Metodos de pago */
+    public static final int TDC = 1;
+    public static final int CASH = 2;
+    public static final int PAYPAL = 3;
+    public static final int MERCADOPAGO = 4;
+
     /* type location: origin, destination*/
     public static final int ORIGIN_ADDRESS = 1;
     public static final int DESTINATION_ADDRESS = 2;
@@ -136,4 +151,17 @@ public class Constants {
 
     /*text help*/
     public static final String help_texts_list = "help_texts_list";
+
+    /*claves de giros generales*/
+    public static final String service_supers = "SPR";
+    public static final String service_restaurants = "RES";
+    public static final String service_custom = "ANY";
+    public static final String service_mototaxi = "TAX";
+    public static final String service_drugstore = "FAR";
+
+    /* Constantes de busquedas*/
+    public static final String get_all = "ALL";
+
+    public static final String MERCHANT_OBJECT = "merchant_object";
+    public static final String TYPE_SERVICE = "type_service";
 }

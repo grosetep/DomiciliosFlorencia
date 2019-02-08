@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.OrderItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ApplicationPreferences;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.StringOperations;
@@ -32,6 +33,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private OrdersActivity activity;
     private ArrayList<OrderItem> list;
     private UserItem current_user;
+    private String id_country = "";
     //
     private OnLoadMoreListener mOnLoadMoreListener;
     private RecyclerView.OnScrollListener listener;
@@ -50,6 +52,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         current_user = user;
         recyclerview = recycler;
         //
+         id_country = ApplicationPreferences.getLocalStringPreference(activity, Constants.id_country);
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerview.getLayoutManager();
         listener = new RecyclerView.OnScrollListener() {
             @Override
@@ -243,7 +246,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             text_day.setText(model.getReview_day());
             text_num_day.setText(model.getReview_num_day());
             text_num_order.setText(activity.getString(R.string.promt_num_order, model.getIdOrder()));
-            text_total.setText(StringOperations.getAmountFormat(model.getTotal()));
+            text_total.setText(StringOperations.getAmountFormat(model.getTotal(),id_country));
             //delivery fields
             text_total_destinations.setText(model.getTotalDestinations());
             text_origin_hours_html.setText( GeneralFunctions.fromHtml(activity.getString(R.string.promt_origin_hours_html, model.getTimeFromOrigin(), model.getTimeToOrigin())));

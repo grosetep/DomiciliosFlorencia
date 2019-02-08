@@ -1,6 +1,8 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.ui.interfaces;
 
-import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.CartRequest;
+
+
+import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.AddProductRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.ChangeStatusOrderRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.CreateOrderRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.RegisterDeviceRequest;
@@ -10,6 +12,8 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.UpdateLocatio
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.UpdateShoppingCartRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.UserOperationRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.BudgetResponse;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.CategoryResponse;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.ClassificationsResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.ConfigurationResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.CreateOrderResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GenericResponse;
@@ -19,7 +23,9 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetOrdersRes
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetPaymentMethodResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetProductsResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetShippingAddressResponse;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetVariantAdditionalResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.HelpTextsResponse;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.MerchantsByServiceResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.OrderDetailResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.RatesResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.UserResponse;
@@ -52,7 +58,7 @@ public interface WebServicesInterface {
 
     @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
     @POST("cartOperation")
-    Call<GenericResponse> shoppingCart(@Body CartRequest cart);
+    Call<GenericResponse> shoppingCart(@Body AddProductRequest cart);
 
     @GET("getShoppingCart/{id_user}")
     Call<GetCartResponse> getShoppingCart(
@@ -97,6 +103,9 @@ public interface WebServicesInterface {
     Call<OrderDetailResponse> getDetailOrder(
             @Path("id_order") String id_order);
 
+    @GET("getVariantsAditionals/{id_product}")
+    Call<GetVariantAdditionalResponse> getVariantsXProduct(@Path("id_product") String id_product);
+
     @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
     @POST("budget")
     Call<BudgetResponse> budget(@Body ShippingBudgetRequest request);
@@ -109,10 +118,24 @@ public interface WebServicesInterface {
     @POST("shippingAddressOperation")
     Call<GenericResponse> shippingAddressOperation(@Body UpdateLocationRequest request);
 
+    @GET("getCategories")
+    Call<CategoryResponse> getCategories();
 
     @GET("getInitialRate/{id_country}")
         Call<RatesResponse> getInitialRate(@Path("id_country") String id_country);
 
     @GET("getHelpTexts/{id_country}")
     Call<HelpTextsResponse> getHelpTexts(@Path("id_country") String id_country);
+
+    /*inicio cambios para domicilios*/
+    @GET("getClassificationsByService/{type_service}")
+    Call<ClassificationsResponse> getClassificationsByService(@Path("type_service") String type_service);
+
+    @GET("getMerchantsByService/{type_service}/{classificationKey}/{id_country}/{start}/{end}")
+    Call<MerchantsByServiceResponse> getMerchantsByService(@Path("type_service") String type_service,
+                                                           @Path("classificationKey") String classificationKey,
+                                                           @Path("id_country") String id_country,
+                                                           @Path("start") int start,
+                                                           @Path("end") int end);
+    /*fin cambios para domicilios*/
 }

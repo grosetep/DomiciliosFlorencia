@@ -206,6 +206,27 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/title_fav">
         </activity>
+        <activity
+            android:name=".ui.activities.MainClassificationsActivity"
+            android:label="@string/title_activity_main_clasifications"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ui.activities.StoreActivity"
+            android:label="@string/title_activity_store"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ui.activities.AddToCartActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ui.activities.SelectCategoryActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name=".ui.activities.CongratsPurchaseActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

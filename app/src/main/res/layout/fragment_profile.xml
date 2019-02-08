@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:background="@android:color/white"
-    tools:context="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.ProfileFragment">
+    tools:context="com.estrategiamovilmx.sales.weespareenvios.ui.fragments.ProfileFragment">
 
     <include layout="@layout/layout_profile"  android:layout_height="match_parent" android:layout_width="match_parent"/>
 

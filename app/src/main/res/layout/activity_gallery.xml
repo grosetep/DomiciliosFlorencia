@@ -5,7 +5,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:background="@color/negro"
              android:fitsSystemWindows="false"
-             tools:context="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.GalleryActivity">
+             tools:context="com.estrategiamovilmx.sales.weespareenvios.ui.activities.GalleryActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

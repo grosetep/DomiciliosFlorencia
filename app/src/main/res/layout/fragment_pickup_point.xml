@@ -3,7 +3,7 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.PickupPointFragment">
+tools:context="com.estrategiamovilmx.sales.weespareenvios.ui.fragments.PickupPointFragment">
 
 
 <include layout="@layout/layout_data_location"  android:layout_height="match_parent" android:layout_width="match_parent"/>

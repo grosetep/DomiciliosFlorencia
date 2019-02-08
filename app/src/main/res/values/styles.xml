@@ -29,11 +29,11 @@
         <item name="tabPaddingEnd">12dp</item>
         <item name="tabBackground">?attr/selectableItemBackground</item>
         <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
-        <item name="tabSelectedTextColor">@color/colorAccent</item>
+        <item name="tabSelectedTextColor">@color/colorPrimaryDark</item>
     </style>
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@android:color/white</item><!-- color de texto de tab no seleccionada-->
+        <item name="android:textColor">@color/gray</item><!-- color de texto de tab no seleccionada-->
         <item name="textAllCaps">false</item>
     </style>
 

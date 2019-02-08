@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.PublicationCardViewModel;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ApplicationPreferences;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.StringOperations;
@@ -44,7 +46,7 @@ public class PublicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private int pastVisibleItems, visibleItemCount, totalItemCount;
     private RecyclerView recyclerview;
     private static final String TAG = PublicationAdapter.class.getSimpleName();
-
+    private String id_country;
     private ProductsFragment fragment;
 
     public PublicationAdapter(Activity context, List<PublicationCardViewModel> itemList,RecyclerView list,ProductsFragment fr) {
@@ -52,7 +54,7 @@ public class PublicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.activity = context;
         recyclerview = list;
         fragment = fr;
-
+        id_country = ApplicationPreferences.getLocalStringPreference(activity,Constants.id_country);
         final StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) recyclerview.getLayoutManager();
         listener = new RecyclerView.OnScrollListener() {
             @Override
@@ -125,11 +127,11 @@ public class PublicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     .into(p_holder.image_card_cover);
 
             if (publications.get(position).getOfferPrice()!=null && !publications.get(position).getOfferPrice().isEmpty()) {//hay oferta, mostrar ambos precios
-                p_holder.text_priceOff.setText( StringOperations.getStringWithA(StringOperations.getAmountFormat(publications.get(position).getOfferPrice())));
-                p_holder.text_price.setText(StringOperations.getStringWithDe(StringOperations.getAmountFormat(publications.get(position).getRegularPrice())));
+                p_holder.text_priceOff.setText( StringOperations.getStringWithA(StringOperations.getAmountFormat(publications.get(position).getOfferPrice(),id_country)));
+                p_holder.text_price.setText(StringOperations.getStringWithDe(StringOperations.getAmountFormat(publications.get(position).getRegularPrice(),id_country)));
                 p_holder.text_price.setVisibility(View.VISIBLE);
             }else{//no hay oferta: mostrar solo precio regular EN EL PRECIO DE LA OFERTA PARA QUE SALGA RESALTADO
-                p_holder.text_priceOff.setText(StringOperations.getStringWithA(StringOperations.getAmountFormat(publications.get(position).getRegularPrice())));
+                p_holder.text_priceOff.setText(StringOperations.getStringWithA(StringOperations.getAmountFormat(publications.get(position).getRegularPrice(),id_country)));
                 p_holder.text_price.setVisibility(View.INVISIBLE);
             }
 
@@ -144,9 +146,9 @@ public class PublicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     UserItem user = GeneralFunctions.getCurrentUser(activity);
                     if (user!=null) {
                         if (fragment != null) {
-                            p_holder.image_action_add.setVisibility(View.GONE);
-                            p_holder.pbLoading.setVisibility(View.VISIBLE);
-                            fragment.addToCart(position, v);
+                            //p_holder.image_action_add.setVisibility(View.GONE);
+                            //p_holder.pbLoading.setVisibility(View.VISIBLE);
+                            fragment.startAddToCartActivity(position, v);
                         }
                     }else{
                         Intent i = new Intent(activity,LoginActivity.class);
@@ -157,17 +159,30 @@ public class PublicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             });
             //p_holder.text_availability.setText(publications.get(position).getStock());
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, DetailPublicationActivity.class);
-                    intent.putExtra(DetailPublicationActivity.EXTRA_PRODUCT, p_holder.mBoundString);
-                    intent.putExtra(DetailPublicationActivity.EXTRA_IMAGEPATH, ImagePath);
-                    intent.putExtra(DetailPublicationActivity.EXTRA_IMAGENAME, ImageName);
-                    context.startActivity(intent);
-                }
-            });
+            int stock = 0;
+            try{
+                stock = Integer.parseInt(publications.get(position).getStock());
+            }catch(NumberFormatException e){
+
+            }
+            if (stock <= 0) {
+                p_holder.layout_over.setVisibility(View.VISIBLE);
+                holder.itemView.setOnClickListener(null);
+            } else {
+                p_holder.layout_over.setVisibility(View.GONE);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, DetailPublicationActivity.class);
+                        intent.putExtra(DetailPublicationActivity.EXTRA_PRODUCT, p_holder.mBoundString);
+                        intent.putExtra(DetailPublicationActivity.EXTRA_IMAGEPATH, ImagePath);
+                        intent.putExtra(DetailPublicationActivity.EXTRA_IMAGENAME, ImageName);
+                        intent.putExtra(DetailPublicationActivity.EXTRA_FLOW, ProductsFragment.FLOW_PRODUCTS);
+                        context.startActivity(intent);
+                    }
+                });
+            }
 
 
         } else if (holder instanceof LoadingViewHolder) {
@@ -193,10 +208,12 @@ public class PublicationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public TextView text_price;
         public ImageView image_action_add;
         public ProgressBar pbLoading;
+        public RelativeLayout layout_over;
 
 
         public ViewHolder(View v) {
             super(v);
+            layout_over = (RelativeLayout) v.findViewById(R.id.layout_over);
             text_card_name = (TextView) v.findViewById(R.id.text_card_name);
             image_card_cover = (ImageView) v.findViewById(R.id.image_card_cover);
             //text_availability = (TextView) v.findViewById(R.id.text_availability);
