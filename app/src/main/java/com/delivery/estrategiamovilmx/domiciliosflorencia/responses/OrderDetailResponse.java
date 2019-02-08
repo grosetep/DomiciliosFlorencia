@@ -1,5 +1,7 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.responses;
 
+
+
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.OrderDetail;
 
 import java.io.Serializable;

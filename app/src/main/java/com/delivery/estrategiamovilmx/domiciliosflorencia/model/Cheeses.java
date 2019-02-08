@@ -1,7 +1,6 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.model;
 
 
-
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 
 import java.util.Random;

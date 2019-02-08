@@ -18,7 +18,6 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.ManageLo
  * A simple {@link Fragment} subclass.
  */
 public class NumIntFragment extends Fragment {
-
     private TextView text_area;
     private int mPageNumber;
     private EditText text_num_int;
@@ -56,7 +55,7 @@ public class NumIntFragment extends Fragment {
         text_num_int.requestFocus();
         text_area = (TextView) view.findViewById(R.id.text_area);
         if (address_editable!=null){//hay una direccion editable
-           text_num_int.setText(address_editable.getNum_int());
+            text_num_int.setText(address_editable.getNum_int());
         }
         text_head_value = (TextView) view.findViewById(R.id.text_head_value);
         text_head_value.setText(R.string.promt_num_int_title);

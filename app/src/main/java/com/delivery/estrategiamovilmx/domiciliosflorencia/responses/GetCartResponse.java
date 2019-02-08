@@ -1,5 +1,6 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.responses;
 
+
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.CartProductItem;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,10 +1,11 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.ui.adapters;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.Contact;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.ContactActivity;
 
 import java.util.ArrayList;
@@ -67,16 +69,33 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             image = (ImageView) v.findViewById(R.id.image);
         }
         public void bind(Contact model) {
-            Log.d(TAG,"isSelected:"+model.isSelected() + " isNew:"+ model.isNew());
+            //Log.d(TAG, "isSelected:" + model.isSelected() + " isNew:" + model.isNew());
             text_number.setText(model.getPhone());
             text_name.setText(model.getName());
-            if (model.isSelected()){Log.d(TAG,"-------selected");
-                image.setColorFilter(ContextCompat.getColor(activity, R.color.colorAccent));
-            } else if (model.isNew()){Log.d(TAG,"-------new");
-                image.setColorFilter(Color.parseColor(Constants.colorSuccess));
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Drawable clone = ContextCompat.getDrawable(activity, R.drawable.ic_account_circle_big).getConstantState().newDrawable().mutate();
+                if (model.isSelected()){
+                    image.setImageDrawable(GeneralFunctions.getTintedDrawable(clone, R.color.colorAccent, activity));
+                } else if (model.isNew()){
+                    image.setImageDrawable(GeneralFunctions.getTintedDrawable(clone, android.R.color.holo_green_light,activity));
+                }
+                else {image.setImageDrawable(GeneralFunctions.getTintedDrawable(clone, R.color.gray, activity));}
+            }else{
+                image.setImageResource(R.drawable.ic_account_circle_big);
+                if (model.isSelected()){
+                    //Log.d(TAG, "-------selected");
+                    image.setColorFilter(ContextCompat.getColor(activity, R.color.colorAccent));
+                } else if (model.isNew()){
+                    //Log.d(TAG, "-------new");
+                    image.setColorFilter(Color.parseColor(Constants.colorSuccess));
+                }
+                else {
+                    //Log.d(TAG, "-------nothing");
+                    image.setColorFilter(ContextCompat.getColor(activity, R.color.gray));}
             }
-            else {Log.d(TAG,"-------nothing");image.setColorFilter(ContextCompat.getColor(activity, R.color.gray));}
         }
+
     }
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {

@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity
         viewPager.setOffscreenPageLimit(3);//fragments in memory
     }*/
     private void initGUI(){
-        bottomNavigation = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        bottomNavigation = findViewById(R.id.bottom_navigation);
         //bottomNavigation.inflateMenu(R.menu.bottom_menu);
         fragmentManager = getSupportFragmentManager();
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

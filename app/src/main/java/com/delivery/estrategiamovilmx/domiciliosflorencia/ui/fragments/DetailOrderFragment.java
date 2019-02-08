@@ -102,13 +102,13 @@ public class DetailOrderFragment extends Fragment {
         //setting rates values
         Gson gson = new Gson();
         String rates_string_json = ApplicationPreferences.getLocalStringPreference(getContext(),Constants.initial_rate_object);
-
+        String id_country = ApplicationPreferences.getLocalStringPreference(getContext(), Constants.id_country);
         if (!rates_string_json.isEmpty()){
             FactorItem factor = gson.fromJson(rates_string_json, FactorItem.class);
             //se muestra por defecto el precio para moto, pero en la pantalla de detalle debera mostrar por el tipo de vehiculo seleccionado
             if (factor!=null){
                 text_base_distance.setText(getString(R.string.prompt_case_distance,Float.parseFloat(factor.getBaseDistanceMts())/1000));
-                text_base_rate.setText(StringOperations.getAmountFormat(factor.getBaseRate(),getContext()));
+                text_base_rate.setText(StringOperations.getAmountFormat(factor.getBaseRate(),id_country));
             }
         }
         return v;
@@ -218,7 +218,7 @@ public class DetailOrderFragment extends Fragment {
         //inicializa lista
         final RecyclerView recyclerview_times = (RecyclerView) mView.findViewById(R.id.recyclerview_times);
         recyclerview_times.setItemAnimator(new DefaultItemAnimator());
-        recyclerview_times.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL) );
+        recyclerview_times.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL) );
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         if (recyclerview_times.getLayoutManager()==null){ recyclerview_times.setLayoutManager(llm);}

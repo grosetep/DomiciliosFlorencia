@@ -17,10 +17,10 @@
             android:layout_marginBottom="16dp">
 
             <ImageView
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
                 android:id="@+id/logo"
-                android:src="@mipmap/titulo_domiflorencia"
+                android:src="@mipmap/logo_florencia"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitCenter"
                 />

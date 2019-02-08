@@ -8,6 +8,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.FCMPluginActivity">
+    tools:context="com.estrategiamovilmx.sales.weespareenvios.ui.activities.FCMPluginActivity">
 
 </RelativeLayout>

@@ -31,12 +31,13 @@
                 />
         </RelativeLayout>
         <LinearLayout
+            android:id="@+id/layout_data"
             android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_gravity="center"
             android:weightSum="1"
             android:orientation="horizontal"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <!-- center aparece como ML-->
             <ImageView
                 android:id="@+id/image_product"
@@ -73,70 +74,121 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textStyle="normal"
                     android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/text_variant"
+                    android:textColor="@color/colorSecondary"
+                    android:paddingLeft="@dimen/activity_horizontal_margin1"
+                    android:paddingRight="@dimen/activity_horizontal_margin1"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textStyle="normal"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"/>
 
                 <LinearLayout
                     android:layout_width="match_parent" android:orientation="horizontal"    android:layout_gravity="center" android:weightSum="100"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/text_price"
-                        android:textColor="@color/colorAccent"
-                        android:paddingLeft="@dimen/activity_horizontal_margin1"
-                        android:paddingRight="@dimen/activity_horizontal_margin1"
-                        android:layout_width="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textStyle="normal"
-                        android:layout_weight="50"
-                        android:layout_height="wrap_content"/>
 
-                    <!-- mas menos control-->
                     <LinearLayout
-                        android:id="@+id/layout_quantity"
-                        android:layout_weight="50"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="1"
-                        android:gravity="center_vertical">
-
-                        <ImageButton
-                            android:id="@+id/button_less"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:tint="@android:color/holo_red_light"
-                            android:src="@drawable/ic_remove_circle"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:layout_weight=".3"
-                            />
+                        android:layout_weight="50"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
                         <TextView
-                            android:id="@+id/text_quantity"
+                            android:id="@+id/text_price"
+                            android:textColor="@color/colorAccent"
+                            android:paddingLeft="@dimen/activity_horizontal_margin1"
+                            android:paddingRight="@dimen/activity_horizontal_margin1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="1"
-                            android:background="@android:color/white"
-                            android:textAlignment="center"
-                            android:gravity="center"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                            android:textColor="@color/negro"
-                            android:layout_weight=".3"
-                            />
-                        <ImageButton
-                            android:id="@+id/button_add"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="normal"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:id="@+id/text_additionals"
+                            android:visibility="gone"
+                            android:textColor="@color/colorSecondary"
+                            android:paddingLeft="@dimen/activity_horizontal_margin1"
+                            android:paddingRight="@dimen/activity_horizontal_margin1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_add_circle"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:tint="@android:color/holo_green_dark"
-                            android:layout_weight=".3"
-                            />
-
-
-
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="normal"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/text_total"
+                            android:textColor="@color/colorAccent"
+                            android:paddingLeft="@dimen/activity_horizontal_margin1"
+                            android:paddingRight="@dimen/activity_horizontal_margin1"
+                            android:layout_width="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="normal"
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
+
+
+
                 </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
+        <!-- mas menos control-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_below="@+id/layout_data"
+            android:weightSum="100"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_weight="70"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/layout_quantity"
+                android:layout_weight="30"
+                android:paddingBottom="@dimen/activity_horizontal_margin1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:gravity="center_vertical">
+
+                <ImageButton
+                    android:id="@+id/button_less"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tint="@android:color/holo_red_light"
+                    android:src="@drawable/ic_remove_circle"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_weight=".3"
+                    />
+                <TextView
+                    android:id="@+id/text_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:background="@android:color/white"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/negro"
+                    android:layout_weight=".3"
+                    />
+                <ImageButton
+                    android:id="@+id/button_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add_circle"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:tint="@android:color/holo_green_dark"
+                    android:layout_weight=".3"
+                    />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
     </RelativeLayout>
     <ImageView
         android:id="@+id/overflow"

@@ -148,12 +148,13 @@ public class BudgetActivity extends AppCompatActivity {
 
     private void showBudget(){
         //Redondear total a enteros
+        String id_country = ApplicationPreferences.getLocalStringPreference(BudgetActivity.this, Constants.id_country);
         Long total = 0L;
         if (result.getTotal()!=null){
             total = Math.round(result.getTotal());
             result.setTotal(Double.parseDouble(String.valueOf(total)));
         }
-        text_total_description.setText(getString(R.string.title_total_budget) + " " + StringOperations.getAmountFormat(total.toString()));
+        text_total_description.setText(getString(R.string.title_total_budget) + " " + StringOperations.getAmountFormat(total.toString(),id_country));
         //resume budget
         text_distance.setText(getFormattedDistance(result.getTotalDistance()));
         //text_time_estimated.setText("20 min");

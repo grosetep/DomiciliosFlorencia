@@ -9,7 +9,6 @@ import android.util.Log;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.notifications.MyFirebaseMessagingService;
 
-
 public class ReplyActivity extends AppCompatActivity {
     public static final String flow_notification = "notification";
     @Override

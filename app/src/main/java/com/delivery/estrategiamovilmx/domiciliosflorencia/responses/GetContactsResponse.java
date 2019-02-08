@@ -1,6 +1,7 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.responses;
 
 
+
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.Contact;
 
 import java.util.List;

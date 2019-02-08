@@ -15,11 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.Contact;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.NameFragment;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.NumberFragment;
-import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.ScreenSlidePageFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +116,7 @@ public class AddContactActivity extends AppCompatActivity {
 
             if (contact.getName()!=null && !contact.getName().isEmpty()){
                 if(contact.getPhone()!=null && !contact.getPhone().isEmpty()){
-                    Log.d(TAG,"Exito en validaciones, regresar a principal y crear nuevo contacto en lista....");
+                    Log.d(TAG, "Exito en validaciones, regresar a principal y crear nuevo contacto en lista....");
                     Intent intent = new Intent();
                     Bundle args = new Bundle();
                     Contact new_contact = getContact();

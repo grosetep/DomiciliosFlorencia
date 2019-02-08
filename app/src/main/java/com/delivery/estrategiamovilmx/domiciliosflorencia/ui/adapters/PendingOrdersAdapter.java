@@ -24,6 +24,7 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.OrderItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.DestinyBriefView;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ApplicationPreferences;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.StringOperations;
@@ -43,7 +44,7 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<RecyclerView.View
     private ArrayList<OrderItem> list;
     private UserItem current_user;
     private HashMap<String,DestinyBriefView> destinationsList;
-    //
+    private String id_country = "";
     //
     private OnLoadMoreListener mOnLoadMoreListener;
     private RecyclerView.OnScrollListener listener;
@@ -62,6 +63,7 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<RecyclerView.View
         this.fragment = fragment;
         recyclerview = recycler;
         destinationsList = new HashMap<>();
+        id_country = ApplicationPreferences.getLocalStringPreference(activity, Constants.id_country);
     //
     final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerview.getLayoutManager();
     listener = new RecyclerView.OnScrollListener() {
@@ -223,7 +225,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         layout_n.setVisibility(View.GONE);
         //reset colors
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
+            ;
         }else{
             image_review.setImageResource(R.drawable.ic_description);
             image_accepted.setImageResource(R.drawable.ic_assignment_turned_in);
@@ -325,9 +327,9 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         text_num_order.setText(activity.getString(R.string.promt_num_order, model.getIdOrder()));
         //total amount or commission based on user profile
         if (current_user.getProfile().equals(Constants.profile_deliver_man)) {
-            text_total.setText(StringOperations.getAmountFormat(model.getDeliverman_commision()));
+            text_total.setText(StringOperations.getAmountFormat(model.getDeliverman_commision(),id_country));
         }else{
-            text_total.setText(StringOperations.getAmountFormat(model.getTotal()));
+            text_total.setText(StringOperations.getAmountFormat(model.getTotal(),id_country));
         }
         //delivery fields
         //si hay valor en originalDestinations entonces ponerlo y sino poner totalDestinarions

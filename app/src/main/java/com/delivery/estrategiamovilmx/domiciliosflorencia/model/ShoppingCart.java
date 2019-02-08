@@ -1,7 +1,6 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.model;
 
 
-
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.CartProductItem;
 
 import java.io.Serializable;

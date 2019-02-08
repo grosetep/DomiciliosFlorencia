@@ -1,6 +1,8 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -13,8 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -22,11 +26,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.items.CategoryItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ApiException;
-import com.delivery.estrategiamovilmx.domiciliosflorencia.model.CategoryViewModel;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.PublicationCardViewModel;
-import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.CartRequest;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.AddProductRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GenericResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.retrofit.RestServiceWrapper;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ApplicationPreferences;
@@ -34,6 +38,8 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Connectivity;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ShowConfirmations;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.AddToCartActivity;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.SelectCategoryActivity;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.adapters.PublicationAdapter;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.interfaces.OnLoadMoreListener;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.web.VolleySingleton;
@@ -57,8 +63,8 @@ public class ProductsFragment extends Fragment {
     private ArrayList<PublicationCardViewModel> products = new ArrayList<>();
     private static RecyclerView recList;
     private SwipeRefreshLayout swipeRefresh_products;
-    //private TextView text_change_category;
-    //private LinearLayout change_products_container;
+    private TextView text_change_category;
+    private LinearLayout change_products_container;
     private AppCompatButton button_retry_search;
     private AppCompatButton button_retry;
     private RelativeLayout layout_no_publications;
@@ -68,10 +74,16 @@ public class ProductsFragment extends Fragment {
     private static final String TAG = ProductsFragment.class.getSimpleName();
     private Gson gson = new Gson();
     private static final int SELECT_CATEGORY = 1;
+    public static final int ADD_TO_CART_INTENT = 2;
+    public static final String FLOW_PRODUCTS = "flow_products";
+    public static final String TYPE_FLOW_CATEGORY = "type_flow_category";
+    public static final String CART_OBJECT = "cart_object";
+    public static final String PRODUCT_NAME = "product_name";
     public final boolean load_initial = true;
     private static HashMap<String, String> params = new HashMap<>();
-    private CategoryViewModel category;
+    private CategoryItem category;
     private PublicationAdapter adapter;
+
 
     public ProductsFragment() {
         // Required empty public constructor
@@ -97,7 +109,7 @@ public class ProductsFragment extends Fragment {
         recList.setItemAnimator(null);
         recList.setHasFixedSize(true);
 
-        llm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        llm = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
         if (recList.getLayoutManager() == null) {
@@ -114,29 +126,30 @@ public class ProductsFragment extends Fragment {
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        Log.d(TAG,"REFRESH DATA.....");
+                        Log.d(TAG, "REFRESH DATA.....");
                         setupListItems(null, Constants.cero, Constants.load_more_tax_extended, load_initial,true);
                     }
                 }
         );
-       /* text_change_category = (TextView) rootView.findViewById(R.id.text_change_category);
+        text_change_category = (TextView) rootView.findViewById(R.id.text_change_category);
         change_products_container = (LinearLayout) rootView.findViewById(R.id.change_products_container);
         change_products_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SelectCategoryActivity.class);
+                intent.putExtra(ProductsFragment.TYPE_FLOW_CATEGORY,ProductsFragment.FLOW_PRODUCTS);
                 startActivityForResult(intent, SELECT_CATEGORY);
             }
-        });*/
+        });
         button_retry = (AppCompatButton) rootView.findViewById(R.id.button_retry);
         button_retry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Connectivity.isNetworkAvailable(getContext())) {
                     products.clear();
-                    String category_string = ApplicationPreferences.getLocalStringPreference(getContext(), Constants.products_category_selected);
+                    //String category_string = ApplicationPreferences.getLocalStringPreference(getContext(), Constants.products_category_selected);
                     loadingView();
-                    setupListItems(null, Constants.cero, Constants.load_more_tax_extended, load_initial,false);
+                    setupListItems(category, Constants.cero, Constants.load_more_tax_extended, load_initial,false);
                 }
             }
         });
@@ -145,9 +158,9 @@ public class ProductsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 products.clear();
-                String category_string = ApplicationPreferences.getLocalStringPreference(getContext(), Constants.products_category_selected);
+                //String category_string = ApplicationPreferences.getLocalStringPreference(getContext(), Constants.products_category_selected);
                 loadingView();
-                setupListItems(null, Constants.cero, Constants.load_more_tax_extended, load_initial,false);
+                setupListItems(category, Constants.cero, Constants.load_more_tax_extended, load_initial,false);
             }
         });
 
@@ -163,27 +176,27 @@ public class ProductsFragment extends Fragment {
     }
     private void updateUI(final boolean connection_error){
         getActivity().runOnUiThread(new
-            Runnable() {
-                @Override
-                public void run() {
-                    if (connection_error) {
-                        no_connection_layout.setVisibility(View.VISIBLE);
-                        swipeRefresh_products.setVisibility(View.GONE);
-                        layout_no_publications.setVisibility(View.GONE);
-                        pbLoading_products.setVisibility(View.GONE);
-                    }else if (getProducts()!=null && getProducts().size()>0) {
-                        no_connection_layout.setVisibility(View.GONE);
-                        swipeRefresh_products.setVisibility(View.VISIBLE);
-                        layout_no_publications.setVisibility(View.GONE);
-                        pbLoading_products.setVisibility(View.GONE);
-                    }else{
-                        no_connection_layout.setVisibility(View.GONE);
-                        swipeRefresh_products.setVisibility(View.GONE);
-                        layout_no_publications.setVisibility(View.VISIBLE);
-                        pbLoading_products.setVisibility(View.GONE);
-                    }
-                }
-            });
+                                            Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    if (connection_error) {
+                                                        no_connection_layout.setVisibility(View.VISIBLE);
+                                                        swipeRefresh_products.setVisibility(View.GONE);
+                                                        layout_no_publications.setVisibility(View.GONE);
+                                                        pbLoading_products.setVisibility(View.GONE);
+                                                    }else if (getProducts()!=null && getProducts().size()>0) {
+                                                        no_connection_layout.setVisibility(View.GONE);
+                                                        swipeRefresh_products.setVisibility(View.VISIBLE);
+                                                        layout_no_publications.setVisibility(View.GONE);
+                                                        pbLoading_products.setVisibility(View.GONE);
+                                                    }else{
+                                                        no_connection_layout.setVisibility(View.GONE);
+                                                        swipeRefresh_products.setVisibility(View.GONE);
+                                                        layout_no_publications.setVisibility(View.VISIBLE);
+                                                        pbLoading_products.setVisibility(View.GONE);
+                                                    }
+                                                }
+                                            });
     }
 
     public ArrayList<PublicationCardViewModel> getProducts() {
@@ -196,17 +209,21 @@ public class ProductsFragment extends Fragment {
         layout_no_publications.setVisibility(View.GONE);
         pbLoading_products.setVisibility(View.VISIBLE);
     }
-    public void setupListItems(CategoryViewModel category, int start, int end, boolean load_initial, boolean isRefresh) {//obtener datos de la publicacion mas datos de las url de imagenes
+    public void setupListItems(CategoryItem category, int start, int end, boolean load_initial, boolean isRefresh) {//obtener datos de la publicacion mas datos de las url de imagenes
         String newUrl = Constants.GET_PRODUCTS;
         Log.d(TAG, "setupListItems PRODUCTOS---------------------------------------------load_initial:" + load_initial);
         //validation
-        VolleyGetRequest(newUrl + "?method=getAllProducts" + "&start=" + start + "&end=" + end, load_initial,isRefresh);
+        if (category!=null && !category.getIdCategory().equals("0")){
+            VolleyGetRequest(newUrl + "?method=getProductsByCategory" + "&start=" + start + "&end=" + end + "&id_category="+category.getIdCategory(), load_initial, isRefresh);
+        }else {
+            VolleyGetRequest(newUrl + "?method=getAllProducts" + "&start=" + start + "&end=" + end, load_initial, isRefresh);
+        }
     }
 
     public void VolleyGetRequest(final String url, boolean load_initial,boolean isRefresh) {
         Log.d(TAG, "VolleyGetRequest Products:" + url);
         if (isRefresh) {
-            makeRequest(url,load_initial,isRefresh);
+            makeRequest(url, load_initial, isRefresh);
         }else if (!load_initial) {
             addLoadingAndMakeRequest(url);
 
@@ -224,34 +241,35 @@ public class ProductsFragment extends Fragment {
                                 url,
                                 (String) null,
                                 new Response.Listener<JSONObject>() {
-
                                     @Override
                                     public void onResponse(final JSONObject response) {
                                         if (isRefresh) {//only update list
-                                            processingResponse(response,isRefresh);
+                                            processingResponse(response, isRefresh);
                                             swipeRefresh_products.setRefreshing(false);
-                                        }else if (load_initial) {
+                                        } else if (load_initial) {
                                             processingResponseInit(response);
-                                        }else {
+                                        } else {
                                             products.remove(products.size() - 1);//delete loading..
                                             adapter.notifyItemRemoved(products.size());
-                                            processingResponse(response,isRefresh);
+                                            processingResponse(response, isRefresh);
                                         }
                                     }
                                 },
                                 new Response.ErrorListener() {
                                     @Override
-                                    public void onErrorResponse(VolleyError error){
+                                    public void onErrorResponse(VolleyError error) {
                                         error.printStackTrace();
-                                        if(isRefresh){
+                                        if (isRefresh) {
                                             swipeRefresh_products.setRefreshing(false);
-                                            ShowConfirmations.showConfirmationMessage(getResources().getString(R.string.no_internet),getActivity());
-                                        }else if(!load_initial) {
+                                            ShowConfirmations.showConfirmationMessage(getResources().getString(R.string.no_internet), getActivity());
+                                        } else if (!load_initial) {
                                             products.remove(products.size() - 1);//delete loading..
                                             adapter.notifyItemRemoved(products.size());
                                             notifyListChanged();
-                                            ShowConfirmations.showConfirmationMessage(getResources().getString(R.string.no_internet),getActivity());
-                                        }else{updateUI(true);}
+                                            ShowConfirmations.showConfirmationMessage(getResources().getString(R.string.no_internet), getActivity());
+                                        } else {
+                                            updateUI(true);
+                                        }
                                     }
                                 }
 
@@ -262,7 +280,7 @@ public class ProductsFragment extends Fragment {
                 );
     }
     private void addLoadingAndMakeRequest(final String url) {
-        Log.d(TAG, "addLoading...");
+
         final boolean isRefresh = false;
         final boolean first_load= false;
 
@@ -279,20 +297,19 @@ public class ProductsFragment extends Fragment {
     }
 
     private void processingResponse(JSONObject response, boolean isRefresh) {
-        Log.d(TAG, "RESPONSE:" + response.toString());
+
         ArrayList<PublicationCardViewModel> new_products = null;
         try {
             // Obtener atributo "estado"
             String status = response.getString("status");
             switch (status) {
                 case "1": // SUCCESS
-                    JSONArray mensaje = response.getJSONArray("products");
+                    JSONArray mensaje = response.getJSONArray("result");
                     new_products = new ArrayList<>(Arrays.asList(gson.fromJson(mensaje.toString(), PublicationCardViewModel[].class)));
                     addNewElements(new_products,isRefresh);
                     break;
                 case "2": // NO DATA FOUND
                     String mensaje2 = response.getString("message");
-                    Log.d(TAG, "ProductsFragment.noData..." + mensaje2);
                     if (isRefresh && new_products == null && products.size()>Constants.cero ){products.clear();updateUI(false);}
                     break;
             }
@@ -305,8 +322,7 @@ public class ProductsFragment extends Fragment {
     }
     private void addNewElements(ArrayList<PublicationCardViewModel> new_publications,boolean isRefresh){
         if (new_publications!=null && new_publications.size()>Constants.cero) {
-            Log.d(TAG, "new_publications:" + new_publications.size());
-            if (isRefresh){Log.d(TAG, "isRefresh..");
+            if (isRefresh){
                 products.clear();
                 products.addAll(new_publications);
             }else{
@@ -315,7 +331,7 @@ public class ProductsFragment extends Fragment {
         }
     }
     private void notifyListChanged() {
-        Log.d(TAG, "notifyListChanged()...");
+
         //Load more data for reyclerview
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -327,14 +343,14 @@ public class ProductsFragment extends Fragment {
     }
 
     private void processingResponseInit(JSONObject response) {
-        Log.d(TAG, "processingResponse products initial....." + response.toString());
+
         try {
             // Obtener atributo "estado"
             String status = response.getString("status");
             switch (status) {
                 case "1": // SUCCESS
 
-                    JSONArray mensaje = response.getJSONArray("products");
+                    JSONArray mensaje = response.getJSONArray("result");
                     ArrayList<PublicationCardViewModel> new_products = new ArrayList<>(Arrays.asList(gson.fromJson(mensaje.toString(), PublicationCardViewModel[].class)));
                     if (new_products != null && new_products.size() > 0) {
                         products.addAll(new_products);
@@ -374,15 +390,44 @@ public class ProductsFragment extends Fragment {
             notifyListChanged();
         }
     }
-    public  void addToCart( final int position, final View v) {
+    public void startAddToCartActivity(final int position, final View v){
         UserItem user = GeneralFunctions.getCurrentUser(getContext());
-        CartRequest request = new CartRequest();
+        AddProductRequest request = new AddProductRequest();
         request.setId_product(products.get(position).getIdProduct());
-        request.setId_user(user!=null?user.getIdUser():"0");
+        request.setId_user(user != null ? user.getIdUser() : "0");
         request.setUnits("1");
         request.setOperation("add");
+        if (products.get(position).getOfferPrice()!=null && !products.get(position).getOfferPrice().isEmpty()) {//hay oferta, tomar precio oferta
+            request.setPrice_product(products.get(position).getOfferPrice());
+        }else {//tomar precio regular
+            request.setPrice_product(products.get(position).getRegularPrice());
+        }
 
-        RestServiceWrapper.shoppingCart(request,new Callback<GenericResponse>() {
+        Intent intent = new Intent(getActivity(), AddToCartActivity.class);
+        Bundle args = new Bundle();
+        args.putSerializable(CART_OBJECT,request);
+        args.putString(PRODUCT_NAME,products.get(position).getProduct());
+        intent.putExtras(args);
+        startActivityForResult(intent, ADD_TO_CART_INTENT);
+    }
+
+
+    public  void addToCart( final int position, final View v) {
+        UserItem user = GeneralFunctions.getCurrentUser(getContext());
+        AddProductRequest request = new AddProductRequest();
+        request.setId_product(products.get(position).getIdProduct());
+        request.setId_user(user != null ? user.getIdUser() : "0");
+        request.setUnits("1");
+        request.setOperation("add");
+        if (products.get(position).getOfferPrice()!=null && !products.get(position).getOfferPrice().isEmpty()) {
+            request.setTotal(products.get(position).getOfferPrice());
+            request.setPrice_product(products.get(position).getOfferPrice());
+        }else{
+            request.setTotal(products.get(position).getRegularPrice());
+            request.setPrice_product(products.get(position).getRegularPrice());
+        }
+
+        RestServiceWrapper.shoppingCart(request, new Callback<GenericResponse>() {
             @Override
             public void onResponse(Call<GenericResponse> call, retrofit2.Response<GenericResponse> response) {
                 Log.d(TAG, "Respuesta: " + response);
@@ -395,23 +440,24 @@ public class ProductsFragment extends Fragment {
                         adapter.notifyItemChanged(position);
                         ShowConfirmations.showConfirmationMessage(cart_response.getResult().getMessage(), getActivity());
 
-                    } else if (cart_response != null && cart_response.getStatus().equals(Constants.no_data)){
+                    } else if (cart_response != null && cart_response.getStatus().equals(Constants.no_data)) {
                         String response_error = response.body().getMessage();
                         Log.d(TAG, "Mensage:" + response_error);
                         ShowConfirmations.showConfirmationMessage(response_error, getActivity());
-                    }else{
+                    } else {
                         String response_error = response.message();
                         Log.d(TAG, "Error:" + response_error);
                         ShowConfirmations.showConfirmationMessage(response_error, getActivity());
                     }
 
-                }else{
-                    ShowConfirmations.showConfirmationMessage(getString(R.string.error_invalid_login,getString(R.string.error_generic)),getActivity());
+                } else {
+                    ShowConfirmations.showConfirmationMessage(getString(R.string.error_invalid_login, getString(R.string.error_generic)), getActivity());
                 }
             }
+
             @Override
             public void onFailure(Call<GenericResponse> call, Throwable t) {
-                Log.d(TAG,"ERROR: " +t.getStackTrace().toString() + " --->" + t.getCause() + "  -->" + t.getMessage() + " --->");
+                Log.d(TAG, "ERROR: " + t.getStackTrace().toString() + " --->" + t.getCause() + "  -->" + t.getMessage() + " --->");
                 ApiException apiException = new ApiException();
                 try {
                     apiException.setMessage(t.getMessage());
@@ -425,5 +471,32 @@ public class ProductsFragment extends Fragment {
 
 
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        switch(requestCode) {
+            case SELECT_CATEGORY:
+                if (resultCode == Activity.RESULT_OK){
+                    //*************************solo productos **********************************************
+                    category = (CategoryItem) data.getSerializableExtra(SelectCategoryActivity.CATEGORY_SELECTED);
+                    text_change_category.setText(category.getCategory());
+                    Log.d(TAG,"Filtro: cat id:" + category.getIdCategory()+" cat: "+category.getCategory());
+                    products.clear();
+                    loadingView();
+                    setupListItems(category,Constants.cero,Constants.load_more_tax,true,false);
+                    //*************************solo productos fin**********************************************
+                }
+                break;
+            case ADD_TO_CART_INTENT:
+                if (resultCode == Activity.RESULT_OK){
+                    //aqui
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
     }
 }

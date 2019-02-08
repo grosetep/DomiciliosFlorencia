@@ -1,17 +1,25 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.ui.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.PublicationCardViewModel;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.LoginActivity;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.activities.MainActivity;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.OfferFragment;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.interfaces.OnLoadMoreListener;
 
 import java.util.List;
@@ -34,36 +42,42 @@ public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private RecyclerView recyclerview;
     private static final String TAG = OfferAdapter.class.getSimpleName();
 
-    public OfferAdapter(Activity context, List<PublicationCardViewModel> itemList,RecyclerView list) {
-            publications = itemList;
-            this.activity = context;
-            recyclerview = list;
-            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerview.getLayoutManager();
-
-            listener = new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-
-                    totalItemCount = linearLayoutManager.getItemCount();
-                    lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+    private OfferFragment fragment;
 
 
-                    if (dy>0) {
-                        if (!isLoading && lastVisibleItem == totalItemCount - 1) {
-                            if (mOnLoadMoreListener != null) {
-                                isLoading = true;
-                                mOnLoadMoreListener.onLoadMore();
-                            }
 
+    public OfferAdapter(Activity context, List<PublicationCardViewModel> itemList,RecyclerView list,OfferFragment fr) {
+        publications = itemList;
+        this.activity = context;
+        recyclerview = list;
+        fragment = fr;
+
+        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerview.getLayoutManager();
+
+        listener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                totalItemCount = linearLayoutManager.getItemCount();
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+
+
+                if (dy>0) {
+                    if (!isLoading && lastVisibleItem == totalItemCount - 1) {
+                        if (mOnLoadMoreListener != null) {
+                            isLoading = true;
+                            mOnLoadMoreListener.onLoadMore();
                         }
+
                     }
-
                 }
-            };
+
+            }
+        };
 
 
-            recyclerview.addOnScrollListener(listener);
+        recyclerview.addOnScrollListener(listener);
     }
     public void clear(){ publications.clear();notifyDataSetChanged();}
     public void addAll(List<PublicationCardViewModel> list){
@@ -103,7 +117,24 @@ public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Glide.with(p_holder.image_card_cover.getContext())
                     .load(ImagePath)
                     .into(p_holder.image_card_cover);
+            p_holder.pbLoading.setVisibility(View.GONE);
 
+            p_holder.layout_add_offer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UserItem user = GeneralFunctions.getCurrentUser(activity);
+                    if (user!=null) {
+                        if (fragment != null) {
+                            p_holder.pbLoading.setVisibility(View.VISIBLE);
+                            fragment.addToCart(position, v);
+                        }
+                    }else{
+                        Intent i = new Intent(activity,LoginActivity.class);
+                        i.putExtra(Constants.flow, MainActivity.flow_no_registered);
+                        activity.startActivity(i);
+                    }
+                }
+            });
 
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
@@ -121,10 +152,14 @@ public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView image_card_cover;
+        public LinearLayout layout_add_offer;
+        public ProgressBar pbLoading;
 
         public ViewHolder(View v) {
             super(v);
             image_card_cover = (ImageView) v.findViewById(R.id.image_card_cover);
+            layout_add_offer = (LinearLayout) v.findViewById(R.id.layout_add_offer);
+            pbLoading = (ProgressBar) v.findViewById(R.id.pbLoading);
         }
     }
 

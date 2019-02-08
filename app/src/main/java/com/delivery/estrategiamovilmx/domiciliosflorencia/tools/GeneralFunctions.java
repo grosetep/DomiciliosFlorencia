@@ -12,6 +12,7 @@ import android.util.Log;
 
 
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.ConfigItem;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.items.MerchantItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.OrderItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ElementChanged;
@@ -37,7 +38,14 @@ public class GeneralFunctions {
         }
         return new_publications;
     }
-
+    public static ArrayList<MerchantItem> FilterMerchants(ArrayList<MerchantItem> publications, ArrayList<MerchantItem> new_publications){
+        Iterator<MerchantItem> iter = new_publications.iterator();
+        while (iter.hasNext()){
+            MerchantItem p = iter.next();
+            if (publications.contains(p)){ iter.remove();}
+        }
+        return new_publications;
+    }
     public static UserItem getCurrentUser(Context context){
         Gson gson = new Gson();
         UserItem user = null;

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.estrategiamovilmx.eats.elbuensaborarenales.ui.activities.AddToCartActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:id="@+id/container_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/loading"
+                style="?android:progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_below="@+id/loading"
+                android:textAlignment="center"
+                android:textColor="@color/negro"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/promt_loading"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            >
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:scrollbarThumbVertical="@drawable/scrolling"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="true"
+            android:scrollbarSize="4dp"
+            android:layout_below="@+id/appbar">
+
+            <include layout="@layout/layout_add_to_cart" android:layout_height="match_parent" android:layout_width="match_parent"/>
+        </android.support.v4.widget.NestedScrollView>
+
+        <!-- Buttons-->
+        <LinearLayout
+            android:id="@+id/layout_actions"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:weightSum="100"
+            android:showDividers="middle"
+            android:clickable="false"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/layout_button_1"
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_weight="30"
+                android:orientation="horizontal"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/text_number_prod_added"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:textAllCaps="true"
+                    android:text="@string/promt_add_to_cart"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <!-- texto total-->
+            <LinearLayout
+                android:id="@+id/layout_button_2"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="70"
+                android:background="@color/gray"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/text_total"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold"
+                    android:padding="@dimen/activity_horizontal_margin1"
+                    android:text="$ 5600.90"
+                    android:layout_height="wrap_content"/>
+                <ProgressBar
+                    android:id="@+id/pbLoading"
+                    android:visibility="invisible"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:indeterminateTint="@color/white"
+                    android:indeterminateTintMode="src_in"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <include layout="@layout/no_connection_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/appbar"/>
+
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

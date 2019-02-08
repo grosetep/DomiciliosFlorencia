@@ -165,7 +165,7 @@ public class AddShippingAddressActivity extends AppCompatActivity {
                     mPager.setCurrentItem(2);
                 }
             }else{
-                 ScreenSlidePagerAdapter adapter= (ScreenSlidePagerAdapter)mPager.getAdapter();
+                ScreenSlidePagerAdapter adapter= (ScreenSlidePagerAdapter)mPager.getAdapter();
                 Fragment fragment = (Fragment)adapter.getFragment(PAGE_CP);
                 ((SelectShippingPointFragment) fragment).setError(getString(R.string.error_field_required));
             }
@@ -190,8 +190,8 @@ public class AddShippingAddressActivity extends AppCompatActivity {
 
                 ScreenSlidePagerAdapter adapter= (ScreenSlidePagerAdapter)mPager.getAdapter();
                 Fragment fragment = (Fragment)adapter.getFragment(mPager.getCurrentItem());
-                    /**************Numero interior ***********/
-                 if(fragment instanceof NumIntFragment){
+                /**************Numero interior ***********/
+                if(fragment instanceof NumIntFragment){
                     if (((NumIntFragment) fragment).getData().isEmpty()){
                         shipping_point.setNum_int("");
                         nextPage();
@@ -199,7 +199,7 @@ public class AddShippingAddressActivity extends AppCompatActivity {
                         shipping_point.setNum_int(((NumIntFragment) fragment).getData());
                         nextPage();
                     }
-                     /**************Referencia ***********/
+                    /**************Referencia ***********/
                 }else if(fragment instanceof ReferenceFragment){
                     if (((ReferenceFragment) fragment).getData().isEmpty()){
                         ((ReferenceFragment) fragment).setError(getString(R.string.error_field_required));

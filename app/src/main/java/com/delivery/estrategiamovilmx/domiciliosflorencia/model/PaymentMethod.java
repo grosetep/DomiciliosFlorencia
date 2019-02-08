@@ -21,6 +21,18 @@ public class PaymentMethod implements Serializable {
     @SerializedName("isSelected")
     private boolean isSelected;
 
+    //no expuesto, solo usado para mostrar cambio de cuanto
+    @SerializedName("moneyBack")
+    private String moneyBack;
+
+    public String getMoneyBack() {
+        return moneyBack;
+    }
+
+    public void setMoneyBack(String moneyBack) {
+        this.moneyBack = moneyBack;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -67,5 +79,18 @@ public class PaymentMethod implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentMethod{" +
+                "idPaymentMethod='" + idPaymentMethod + '\'' +
+                ", method='" + method + '\'' +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                ", image='" + image + '\'' +
+                ", isSelected=" + isSelected +
+                ", moneyBack='" + moneyBack + '\'' +
+                '}';
     }
 }

@@ -29,6 +29,7 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.DestinyView;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.OrderDetailResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.retrofit.RestServiceWrapper;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ApplicationPreferences;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Connectivity;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
@@ -247,6 +248,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         return list_ordered;
     }
     private void setDetailedValues(OrderItem order, UserItem user, OrderDetail detail) {
+        String id_country = ApplicationPreferences.getLocalStringPreference(OrderDetailActivity.this, Constants.id_country);
         StringBuffer buffer = new StringBuffer();
         if (order != null) {
             //Log.d(TAG, "Generando lista de direcciones con detalles:" + detail.getDestinations());
@@ -258,10 +260,10 @@ public class OrderDetailActivity extends AppCompatActivity {
             text_email_view.setText(detail.getEmail());
             if (user.getProfile().equals(Constants.profile_deliver_man)) {
                 title_total.setText(getString(R.string.title_total_commission));
-                text_total.setText(StringOperations.getAmountFormat(order.getDeliverman_commision()));
+                text_total.setText(StringOperations.getAmountFormat(order.getDeliverman_commision(),id_country));
             } else {
                 title_total.setText(getString(R.string.title_conf_total));
-                text_total.setText(StringOperations.getAmountFormat(order.getTotal()));
+                text_total.setText(StringOperations.getAmountFormat(order.getTotal(),id_country));
             }
             //llenar campos del detalle
             text_hour.setText(detail.getHourCreation());

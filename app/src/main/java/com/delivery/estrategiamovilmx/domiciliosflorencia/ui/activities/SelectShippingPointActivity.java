@@ -48,7 +48,7 @@ public class SelectShippingPointActivity extends AppCompatActivity {
 
                 } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
                     e.printStackTrace();
-                    ShowConfirmations.showConfirmationMessage(getString(R.string.no_connection),SelectShippingPointActivity.this);
+                    ShowConfirmations.showConfirmationMessage(getString(R.string.no_connection), SelectShippingPointActivity.this);
 
                 }
             }
@@ -65,13 +65,13 @@ public class SelectShippingPointActivity extends AppCompatActivity {
                     Place place = PlacePicker.getPlace(SelectShippingPointActivity.this, data);
 
                     if (place != null && !place.getAddress().equals("")) {
-                        Log.d(TAG, place.getAddress() + " -> " + place.getLatLng() );
+                        Log.d(TAG, place.getAddress() + " -> " + place.getLatLng());
 
-                            text_location.setError(null);
-                            text_location.setText(place.getAddress());
-                            LatLng latlng = place.getLatLng();
-                            text_location_ltd.setText(latlng.latitude+"");
-                            text_location_lng.setText(latlng.longitude+"");
+                        text_location.setError(null);
+                        text_location.setText(place.getAddress());
+                        LatLng latlng = place.getLatLng();
+                        text_location_ltd.setText(latlng.latitude+"");
+                        text_location_lng.setText(latlng.longitude+"");
 
                     }
                 }

@@ -114,7 +114,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         String newPassword = text_new_password.getText().toString().trim();
         String encryptedPassword = "";
         try {
-            encryptedPassword =  AESCrypt.encrypt(Constants.seedValue,newPassword);//aqui
+            encryptedPassword =  AESCrypt.encrypt(Constants.seedValue, newPassword);//aqui
         } catch (Exception e) {
             e.printStackTrace();
         }

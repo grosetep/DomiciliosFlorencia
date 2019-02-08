@@ -3,17 +3,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/splash_screen"
-               >
+                android:background="@android:color/white">
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:id="@+id/image_logo"
+        android:layout_width="150dp"
         android:layout_centerInParent="true"
         android:layout_height="match_parent"
-        android:src="@mipmap/splash_3"
-        android:scaleType="centerCrop"/>
+        android:src="@mipmap/logo_florencia"
+        android:scaleType="centerInside"/>
+
+    <ProgressBar
+        android:id="@+id/loading_start"
+       android:layout_alignParentBottom="true"
+       android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:layout_width="wrap_content"
+        android:indeterminate="true"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,10 +34,10 @@
         android:gravity="center"
         android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/logo"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/titulo_domiflorencia_white"
+            android:id="@+id/logo" android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:src="@mipmap/titulo_domiflorencia"
             android:layout_marginBottom="0dp"
             />
         <TextView
@@ -55,16 +66,7 @@
             android:layout_marginRight="24dp"
             />
 
-       <!-- <ProgressBar
-            android:id="@+id/loading_start"
-            android:layout_marginTop="24dp"
-            android:visibility="visible"
-            android:layout_below="@+id/tip1_text2"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:indeterminate="true"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_height="wrap_content" /> -->
+
     </LinearLayout>
 
 

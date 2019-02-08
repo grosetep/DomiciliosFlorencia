@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_marginRight="@dimen/activity_horizontal_margin1"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- center aparece como ML-->
+
+    <LinearLayout
+        android:id="@+id/layout_normal"
+        android:background="@drawable/border_rounded_simple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/icon_item"
+            android:layout_height="@dimen/icon_item"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_directions"
+            />
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:textColor="@color/gray"
+            android:text="Pizza"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_pressed"
+        android:visibility="gone"
+        android:background="@drawable/border_rounded_simple_accent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_pressed"
+            android:layout_width="@dimen/icon_item"
+            android:layout_height="@dimen/icon_item"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_directions"
+            />
+
+        <TextView
+            android:id="@+id/text_title_pressed"
+            android:layout_marginRight="@dimen/activity_horizontal_margin1"
+            android:textColor="@color/gray"
+            android:text="Pizza"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</RelativeLayout>
+

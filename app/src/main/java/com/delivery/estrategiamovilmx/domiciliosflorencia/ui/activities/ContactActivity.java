@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.items.MerchantItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ApiException;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.Contact;
@@ -50,6 +51,7 @@ public class ContactActivity extends AppCompatActivity {
     private AppCompatButton button_next_contact;
     private AppCompatButton button_previous_contact;
     private final int NEW_CONTACT = 1;
+    private MerchantItem merchant;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +60,7 @@ public class ContactActivity extends AppCompatActivity {
         Intent i = getIntent();
         shopping_cart = (ShoppingCart)i.getSerializableExtra(Constants.SELECTED_SHOPPING_CART);
         shipping = (ShippingAddress) i.getSerializableExtra(Constants.SELECTED_SHIPPING);
+        merchant = (MerchantItem) i.getSerializableExtra(Constants.MERCHANT_OBJECT);
         init();
         final Toolbar toolbar_shipping = (Toolbar) findViewById(R.id.toolbar_contact);
         setSupportActionBar(toolbar_shipping);
@@ -74,7 +77,7 @@ public class ContactActivity extends AppCompatActivity {
     }
     private void getContacts(){
         UserItem user = GeneralFunctions.getCurrentUser(getApplicationContext());
-        RestServiceWrapper.getContactsByUser(user!=null?user.getIdUser():"0",new Callback<GetContactsResponse>() {
+        RestServiceWrapper.getContactsByUser(user != null ? user.getIdUser() : "0", new Callback<GetContactsResponse>() {
             @Override
             public void onResponse(Call<GetContactsResponse> call, retrofit2.Response<GetContactsResponse> response) {
                 Log.d(TAG, "Respuesta: " + response);
@@ -84,26 +87,27 @@ public class ContactActivity extends AppCompatActivity {
                         for (Contact p : products_response.getResult()) {
                             Log.d(TAG, p.toString());
                         }
-                        if (products_response.getResult().size()>0){
+                        if (products_response.getResult().size() > 0) {
                             contacts.addAll(products_response.getResult());
                         }
 
-                    } else if (products_response != null && products_response.getStatus().equals(Constants.no_data)){
+                    } else if (products_response != null && products_response.getStatus().equals(Constants.no_data)) {
                         String response_error = response.body().getMessage();
                         Log.d(TAG, "Mensage:" + response_error);
-                    }else{
+                    } else {
                         String response_error = response.message();
                         Log.d(TAG, "Error:" + response_error);
                     }
 
                     onSuccess();
-                }else{
-                    ShowConfirmations.showConfirmationMessage(getString(R.string.error_invalid_login,getString(R.string.error_generic)),ContactActivity.this);
+                } else {
+                    ShowConfirmations.showConfirmationMessage(getString(R.string.error_invalid_login, getString(R.string.error_generic)), ContactActivity.this);
                 }
             }
+
             @Override
             public void onFailure(Call<GetContactsResponse> call, Throwable t) {
-                Log.d(TAG,"ERROR: " +t.getStackTrace().toString() + " --->" + t.getCause() + "  -->" + t.getMessage() + " --->");
+                Log.d(TAG, "ERROR: " + t.getStackTrace().toString() + " --->" + t.getCause() + "  -->" + t.getMessage() + " --->");
                 ApiException apiException = new ApiException();
                 try {
                     apiException.setMessage(t.getMessage());
@@ -135,15 +139,16 @@ public class ContactActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                   if (getContact_position_selected()!=-1) {
-                       Intent i = new Intent(getApplicationContext(),PaymentMethodActivity.class);
-                       Bundle args = new Bundle();
-                       args.putSerializable(Constants.SELECTED_CONTACT,contacts.get(getContact_position_selected()));
-                       args.putSerializable(Constants.SELECTED_SHOPPING_CART,shopping_cart);
-                       args.putSerializable(Constants.SELECTED_SHIPPING,shipping);
-                       i.putExtras(args);
-                       startActivity(i);
-                   }
+                if (getContact_position_selected()!=-1) {
+                    Intent i = new Intent(getApplicationContext(),PaymentMethodActivity.class);
+                    Bundle args = new Bundle();
+                    args.putSerializable(Constants.SELECTED_CONTACT,contacts.get(getContact_position_selected()));
+                    args.putSerializable(Constants.SELECTED_SHOPPING_CART,shopping_cart);
+                    args.putSerializable(Constants.SELECTED_SHIPPING,shipping);
+                    args.putSerializable(Constants.MERCHANT_OBJECT,merchant);
+                    i.putExtras(args);
+                    startActivity(i);
+                }
 
             }
         });
@@ -156,9 +161,9 @@ public class ContactActivity extends AppCompatActivity {
         });
     }
     private void initProcess(boolean flag){
-        container_loading.setVisibility(flag?View.VISIBLE:View.GONE);
-        layout_actions.setVisibility(flag?View.GONE:View.VISIBLE);
-        recyclerview_contact.setVisibility(flag?View.GONE:View.VISIBLE);
+        container_loading.setVisibility(flag? View.VISIBLE: View.GONE);
+        layout_actions.setVisibility(flag? View.GONE: View.VISIBLE);
+        recyclerview_contact.setVisibility(flag? View.GONE: View.VISIBLE);
         no_connection_layout.setVisibility(View.GONE);
     }
     private void showNoConnectionLayout(){

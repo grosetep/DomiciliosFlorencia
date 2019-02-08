@@ -5,7 +5,7 @@
     android:id="@+id/card_view_add"
     android:clickable="true"
     android:background="?android:attr/selectableItemBackground"
-    android:layout_width="@dimen/item_shipping_heigth_selected"
+    android:layout_width="wrap_content"
     android:layout_height="@dimen/item_shipping_heigth_selected"
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="6dp"
@@ -29,11 +29,11 @@
             android:adjustViewBounds="true"/>
 
         <TextView
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/negro"
             android:paddingTop="@dimen/activity_horizontal_margin1"
             android:paddingLeft="@dimen/activity_horizontal_margin1"
             android:paddingRight="@dimen/activity_horizontal_margin1"
-            android:textStyle="normal"
+            android:textStyle="bold"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -42,12 +42,12 @@
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/text_available"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/negro"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/text_add_locations_edit"
-            android:textStyle="normal"
+            android:textStyle="bold"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 

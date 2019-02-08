@@ -16,10 +16,12 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.DetailProductsFragment;
 
+
 public class DetailPublicationActivity extends AppCompatActivity {
     public static String EXTRA_PRODUCT = "id_product";
     public static String EXTRA_IMAGEPATH="imagePath";
     public static String EXTRA_IMAGENAME="imageName";
+    public static String EXTRA_FLOW="flow";
     private FloatingActionButton button_add_to_cart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class DetailPublicationActivity extends AppCompatActivity {
         final String idProduct = intent.getStringExtra(EXTRA_PRODUCT);
         final String imagePath = intent.getStringExtra(EXTRA_IMAGEPATH);
         final String imageName = intent.getStringExtra(EXTRA_IMAGENAME);
+        final String flow = intent.getStringExtra(EXTRA_FLOW);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarDetail);
         setSupportActionBar(toolbar);
@@ -41,7 +44,11 @@ public class DetailPublicationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 UserItem user = GeneralFunctions.getCurrentUser(getApplicationContext());
                 if (user!=null) {
-                    addToCart();
+                    /*if (flow.equals(DrinksFragment.FLOW_DRINKS)) {
+                        addToCart();
+                    }else{*/
+                        addToCartActivity();
+                    //}
                 }else{
                     finish();
                     Intent i = new Intent(getBaseContext(),LoginActivity.class);
@@ -62,7 +69,7 @@ public class DetailPublicationActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.containerDetailPublication, DetailProductsFragment.createInstance(product), "DetailProductsFragment")
+                    .add(R.id.containerDetailPublication, DetailProductsFragment.createInstance(product, flow), "DetailProductsFragment")
                     .commit();
 
         }
@@ -71,6 +78,10 @@ public class DetailPublicationActivity extends AppCompatActivity {
     private void addToCart(){
         DetailProductsFragment fragment = (DetailProductsFragment)getSupportFragmentManager().findFragmentByTag("DetailProductsFragment");
         if (fragment!=null) fragment.addToCart();
+    }
+    private void addToCartActivity(){
+        DetailProductsFragment fragment = (DetailProductsFragment)getSupportFragmentManager().findFragmentByTag("DetailProductsFragment");
+        if (fragment!=null) fragment.startAddToCartActivity();
     }
 
     @Override

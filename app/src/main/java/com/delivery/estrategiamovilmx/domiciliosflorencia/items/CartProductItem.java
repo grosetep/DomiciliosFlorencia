@@ -39,6 +39,18 @@ public class CartProductItem implements Serializable{
     @SerializedName("image")
     @Expose
     private String image;
+    @SerializedName("total")
+    @Expose
+    private String total;
+    @SerializedName("variant")
+    @Expose
+    private String variant;
+    @SerializedName("additionals")
+    @Expose
+    private String additionals;
+
+
+
 
     public String getIdCart() {
         return idCart;
@@ -119,6 +131,30 @@ public class CartProductItem implements Serializable{
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
+    public String getVariant() {
+        return variant;
+    }
+
+    public void setVariant(String variant) {
+        this.variant = variant;
+    }
+
+    public String getAdditionals() {
+        return additionals;
+    }
+
+    public void setAdditionals(String additionals) {
+        this.additionals = additionals;
     }
 
     @Override
