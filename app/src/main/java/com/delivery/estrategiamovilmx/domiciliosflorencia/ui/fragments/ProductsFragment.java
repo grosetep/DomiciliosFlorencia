@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.CategoryItem;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.items.MerchantItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ApiException;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.PublicationCardViewModel;
@@ -80,28 +81,39 @@ public class ProductsFragment extends Fragment {
     public static final String CART_OBJECT = "cart_object";
     public static final String PRODUCT_NAME = "product_name";
     public final boolean load_initial = true;
-    private static HashMap<String, String> params = new HashMap<>();
     private CategoryItem category;
     private PublicationAdapter adapter;
+    private MerchantItem merchantItem;
 
+    public MerchantItem getMerchantItem() {
+        return merchantItem;
+    }
+
+    public void setMerchantItem(MerchantItem merchantItem) {
+        this.merchantItem = merchantItem;
+    }
 
     public ProductsFragment() {
         // Required empty public constructor
     }
-    public static ProductsFragment createInstance(HashMap<String, String> arguments) {
+    public static ProductsFragment createInstance(MerchantItem item) {
         ProductsFragment fragment = new ProductsFragment();
-        fragment.setParams(arguments);
+        Bundle args  = new Bundle();
+        args.putSerializable(Constants.MERCHANT_OBJECT,item);
+        fragment.setArguments(args);
         return fragment;
     }
-    public static void setParams(HashMap<String, String> params) {
-        ProductsFragment.params = params;
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_products, container, false);
+        if (getArguments() != null) {
+            setMerchantItem((MerchantItem) getArguments().get(Constants.MERCHANT_OBJECT));
+        }
+
         pbLoading_products = (ProgressBar) rootView.findViewById(R.id.pbLoading_products);
         no_connection_layout = (RelativeLayout) rootView.findViewById(R.id.no_connection_layout);
         layout_no_publications = (RelativeLayout) rootView.findViewById(R.id.layout_no_publications);
@@ -138,6 +150,7 @@ public class ProductsFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SelectCategoryActivity.class);
                 intent.putExtra(ProductsFragment.TYPE_FLOW_CATEGORY,ProductsFragment.FLOW_PRODUCTS);
+                intent.putExtra(Constants.MERCHANT_OBJECT,String.valueOf(merchantItem.getIdMerchant()));
                 startActivityForResult(intent, SELECT_CATEGORY);
             }
         });
@@ -214,9 +227,9 @@ public class ProductsFragment extends Fragment {
         Log.d(TAG, "setupListItems PRODUCTOS---------------------------------------------load_initial:" + load_initial);
         //validation
         if (category!=null && !category.getIdCategory().equals("0")){
-            VolleyGetRequest(newUrl + "?method=getProductsByCategory" + "&start=" + start + "&end=" + end + "&id_category="+category.getIdCategory(), load_initial, isRefresh);
+            VolleyGetRequest(newUrl + "?method=getProductsByCategory" + "&start=" + start + "&end=" + end + "&id_category="+category.getIdCategory()+"&id_merchant="+getMerchantItem().getIdMerchant(), load_initial, isRefresh);
         }else {
-            VolleyGetRequest(newUrl + "?method=getAllProducts" + "&start=" + start + "&end=" + end, load_initial, isRefresh);
+            VolleyGetRequest(newUrl + "?method=getAllProducts" + "&start=" + start + "&end=" + end + "&id_merchant="+getMerchantItem().getIdMerchant(), load_initial, isRefresh);
         }
     }
 
@@ -233,13 +246,14 @@ public class ProductsFragment extends Fragment {
         }
     }
     private void makeRequest(String url, final boolean load_initial, final boolean isRefresh) {
+        JSONObject jsonObject = null;
         VolleySingleton.
                 getInstance(getActivity()).
                 addToRequestQueue(
                         new JsonObjectRequest(
                                 Request.Method.GET,
                                 url,
-                                (String) null,
+                                jsonObject,
                                 new Response.Listener<JSONObject>() {
                                     @Override
                                     public void onResponse(final JSONObject response) {

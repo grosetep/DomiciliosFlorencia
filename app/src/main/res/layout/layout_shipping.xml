@@ -36,6 +36,7 @@
 
         <LinearLayout
             android:id="@+id/container_list"
+            android:padding="@dimen/activity_horizontal_margin1"
             android:layout_below="@+id/text_head"
             android:layout_width="match_parent"
             android:orientation="vertical"

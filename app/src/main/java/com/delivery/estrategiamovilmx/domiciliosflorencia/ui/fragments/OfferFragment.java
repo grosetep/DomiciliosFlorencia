@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.CategoryItem;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.items.MerchantItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ApiException;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.CategoryViewModel;
@@ -65,28 +66,41 @@ public class OfferFragment extends Fragment {
     private Gson gson = new Gson();
     private static final int SELECT_CATEGORY = 1;
     public final boolean load_initial = true;
-    private static CategoryItem params = null;
     private CategoryViewModel category;
     private OfferAdapter adapter;
     private AppCompatButton button_retry_search;
     private AppCompatButton button_retry;
+    private MerchantItem merchantItem;
+
+    public MerchantItem getMerchantItem() {
+        return merchantItem;
+    }
+
+    public void setMerchantItem(MerchantItem merchantItem) {
+        this.merchantItem = merchantItem;
+    }
+
     public OfferFragment() {
         // Required empty public constructor
     }
-    public static OfferFragment createInstance(CategoryItem arguments) {
+    public static OfferFragment createInstance(MerchantItem item) {
         OfferFragment fragment = new OfferFragment();
-        fragment.setParams(arguments);
+        Bundle args  = new Bundle();
+        args.putSerializable(Constants.MERCHANT_OBJECT,item);
+        fragment.setArguments(args);
         return fragment;
     }
-    public static void setParams(CategoryItem params) {
-        OfferFragment.params = params;
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_offer, container, false);
+        if (getArguments() != null) {
+            setMerchantItem((MerchantItem) getArguments().get(Constants.MERCHANT_OBJECT));
+        }
+
         pbLoading_offers = (ProgressBar) rootView.findViewById(R.id.pbLoading_offers);
         no_connection_layout = (RelativeLayout) rootView.findViewById(R.id.no_connection_layout);
         layout_no_publications = (RelativeLayout) rootView.findViewById(R.id.layout_no_publications);
@@ -191,7 +205,7 @@ public class OfferFragment extends Fragment {
         String newUrl = Constants.GET_PRODUCTS;
         Log.d(TAG, "setupListItems PRODUCTOS---------------------------------------------load_initial:" + load_initial);
         //validation
-        VolleyGetRequest(newUrl + "?method=getAllOffers" + "&start=" + start + "&end=" + end, load_initial, isRefresh);
+        VolleyGetRequest(newUrl + "?method=getAllOffers" + "&start=" + start + "&end=" + end + "&id_merchant="+getMerchantItem().getIdMerchant(), load_initial, isRefresh);
     }
 
     public void VolleyGetRequest(final String url, boolean load_initial,boolean isRefresh) {
@@ -207,13 +221,14 @@ public class OfferFragment extends Fragment {
         }
     }
     private void makeRequest(String url, final boolean load_initial, final boolean isRefresh) {
+        JSONObject jsonObject = null;
         VolleySingleton.
                 getInstance(getActivity()).
                 addToRequestQueue(
                         new JsonObjectRequest(
                                 Request.Method.GET,
                                 url,
-                                (String) null,
+                                jsonObject,
                                 new Response.Listener<JSONObject>() {
 
                                     @Override

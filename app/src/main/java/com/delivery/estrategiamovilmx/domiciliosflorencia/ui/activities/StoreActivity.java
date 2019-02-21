@@ -175,8 +175,8 @@ public class StoreActivity extends AppCompatActivity {
         }
 
         // adapter.addFragment(MenuFragment.createInstance("init"),"MENU");
-        adapter.addFragment(OfferFragment.createInstance(null),"PROMOCIONES");
-        adapter.addFragment(ProductsFragment.createInstance(null),tabTitle);
+        adapter.addFragment(OfferFragment.createInstance(merchant),"PROMOCIONES");
+        adapter.addFragment(ProductsFragment.createInstance(merchant),tabTitle);
         //adapter.addFragment(DrinksFragment.createInstance(null),"BEBIDAS");
 
         viewPager.setAdapter(adapter);

@@ -28,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ApiException;
@@ -168,12 +169,13 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
 
     public void loadInformation() {
         // Añadir parámetro a la URL del web service
+        JSONObject jsonObject = null;
         String newURL = Constants.GET_PRODUCTS + "?method=getDetailProduct" + "&idProduct=" + product_detail.getIdProduct();
         Log.d(TAG, "newURL:" + newURL);
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
                 newURL,
-                (String) null,
+                jsonObject,
                 new Response.Listener<JSONObject>() {
 
                     @Override
@@ -535,7 +537,7 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
             ImageSliderPublication temp =  gallery[position];
             Glide.with(cardImageView.getContext())
                     .load(temp.getPath()+temp.getImageName())
-                    .centerCrop()
+                    .apply(new RequestOptions().centerCrop())
                     .into(cardImageView);
 
             cardImageView.setTag(position);

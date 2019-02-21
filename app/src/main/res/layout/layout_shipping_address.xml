@@ -5,8 +5,8 @@
     android:id="@+id/card_view"
     android:clickable="true"
     android:background="?android:attr/selectableItemBackground"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="@dimen/item_shipping_width_selected"
+    android:layout_height="@dimen/item_shipping_heigth_selected"
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="6dp"
     android:foreground="?android:attr/selectableItemBackground">
@@ -24,7 +24,7 @@
             android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin1"
+            android:padding="@dimen/activity_horizontal_margin4"
             android:src="@drawable/ic_location_on"
             android:tint="@color/colorAccent"
             android:scaleType="centerInside"
@@ -40,13 +40,13 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:text="Direccion..."
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/text_detail"
                 android:textColor="@color/colorPrimaryDark"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:textSize="12sp"
                 android:text="detalle"
                 android:layout_height="wrap_content"/>

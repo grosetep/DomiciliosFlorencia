@@ -167,10 +167,10 @@ public class RestServiceWrapper {
         Call<MerchantsByServiceResponse> call = client.getMerchantsByService(type_service, classificationKey, id_country, start, end);
         call.enqueue(function);
     }
-    public static void getCategories( Callback function){
+    public static void getCategories( String id_merchant,Callback function){
         //
         WebServicesInterface client = RetrofitClient.getClient(Constants.RETROFIT_SERVICE_REST).create(WebServicesInterface.class);
-        Call<CategoryResponse> call = client.getCategories();
+        Call<CategoryResponse> call = client.getCategories(id_merchant);
         call.enqueue(function);
     }
 

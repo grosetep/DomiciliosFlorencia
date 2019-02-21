@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.OrderItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
@@ -334,30 +335,30 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         //delivery fields
         //si hay valor en originalDestinations entonces ponerlo y sino poner totalDestinarions
         String text_destinies_extra = model.getIsCircularTour()==1?(" (").concat(activity.getString(R.string.prompt_circular_tour)).concat(")"):"";
-        text_total_destinations.setText(activity.getString(R.string.promt_total_destinations, model.getOriginalDestinations()).concat(text_destinies_extra));
+        text_total_destinations.setText(activity.getString(R.string.promt_total_destinations,String.valueOf( model.getOriginalDestinations())).concat(text_destinies_extra));
         text_origin_hours_html.setText(GeneralFunctions.fromHtml(activity.getString(R.string.promt_origin_hours_html, model.getTimeFromOrigin(), model.getTimeToOrigin())));
         text_content.setText(activity.getString(R.string.promt_content, model.getContent()));
         //image vehicle
         //image_vehicle.setImageResource(R.drawable.ic_action_camera);
         if (model.getVehicle().toLowerCase().contains("Bibi".toLowerCase())) {
-            Glide.with(activity)
-                    .load(R.mipmap.if_bicycle_103274).asBitmap()
-                    .error(R.drawable.ic_motorcycle)
+            Glide.with(activity).asBitmap()
+                    .load(R.mipmap.if_bicycle_103274)
+                    .apply(new RequestOptions().error(R.drawable.ic_motorcycle))
                     .into(image_vehicle);
         }else if(model.getVehicle().toLowerCase().contains("Moto".toLowerCase())){
-            Glide.with(activity)
-                    .load(R.mipmap.moto).asBitmap()
-                    .error(R.drawable.ic_motorcycle)
+            Glide.with(activity).asBitmap()
+                    .load(R.mipmap.moto)
+                    .apply(new RequestOptions().error(R.drawable.ic_motorcycle))
                     .into(image_vehicle);
         }else if(model.getVehicle().toLowerCase().contains("Auto".toLowerCase())){
-            Glide.with(activity)
-                    .load(R.mipmap.beetle).asBitmap()
-                    .error(R.drawable.ic_motorcycle)
+            Glide.with(activity).asBitmap()
+                    .load(R.mipmap.beetle)
+                    .apply(new RequestOptions().error(R.drawable.ic_motorcycle))
                     .into(image_vehicle);
         }else{
-            Glide.with(activity)
-                    .load(R.mipmap.van).asBitmap()
-                    .error(R.drawable.ic_motorcycle)
+            Glide.with(activity).asBitmap()
+                    .load(R.mipmap.van)
+                    .apply(new RequestOptions().error(R.drawable.ic_motorcycle))
                     .into(image_vehicle);
         }
 

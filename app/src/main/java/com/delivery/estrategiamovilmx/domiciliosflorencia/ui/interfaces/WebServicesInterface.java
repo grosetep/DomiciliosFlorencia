@@ -74,11 +74,11 @@ public interface WebServicesInterface {
 
     @GET("getOrders/{id_user}/{id_profile}/{start}/{end}/{days}")
     Call<GetOrdersResponse> getOrders(
-            @Path("id_user") String id_user, @Path("id_profile") String id_profile, @Path("start") int start, @Path("end") int end, @Path("days") String days);
+            @Path("id_user") String id_user, @Path("id_profile") String id_profile, @Path("start") int start, @Path("end") int end,@Path("days") String days);
 
     @GET("getDeliverManOrders/{id_user}/{id_profile}/{type_query}/{start}/{end}/{days}")
     Call<GetOrdersResponse> getDeliverManOrders(
-            @Path("id_user") String id_user, @Path("id_profile") String id_profile, @Path("type_query") String type_query, @Path("start") int start, @Path("end") int end, @Path("days") String days);
+            @Path("id_user") String id_user, @Path("id_profile") String id_profile,@Path("type_query") String type_query, @Path("start") int start, @Path("end") int end, @Path("days") String days );
 
     @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
     @POST("userOperation")
@@ -89,7 +89,7 @@ public interface WebServicesInterface {
 
     @GET("recoveryPassword/{email}/{newPassword}/{encrypted}")
     Call<GenericResponse> recoveryPassword(
-            @Path("email") String email, @Path("newPassword") String newPassword, @Path("encrypted") String encrypted);
+            @Path("email") String email,@Path("newPassword") String newPassword,@Path("encrypted") String encrypted);
 
     @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
     @POST("changeStatusOrder")
@@ -97,7 +97,7 @@ public interface WebServicesInterface {
 
     @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
     @POST("registerDevice")
-    Call<GenericResponse> registerDevice(@Body RegisterDeviceRequest request);
+    Call<GenericResponse> registerDevice( @Body RegisterDeviceRequest request);
 
     @GET("getDetailOrder/{id_order}")
     Call<OrderDetailResponse> getDetailOrder(
@@ -108,34 +108,34 @@ public interface WebServicesInterface {
 
     @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
     @POST("budget")
-    Call<BudgetResponse> budget(@Body ShippingBudgetRequest request);
+    Call<BudgetResponse> budget( @Body ShippingBudgetRequest request);
 
     @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
     @POST("createShippingOrder")
-    Call<GenericResponse> createShippingOrder(@Body ShippingOrderRequest request);
+    Call<GenericResponse> createShippingOrder( @Body ShippingOrderRequest request);
 
     @Headers({"Content-Type: application/json", "Cache-Control: max-age=640000"})
     @POST("shippingAddressOperation")
     Call<GenericResponse> shippingAddressOperation(@Body UpdateLocationRequest request);
 
-    @GET("getCategories")
-    Call<CategoryResponse> getCategories();
+    @GET("getCategories/{id_merchant}")
+    Call<CategoryResponse> getCategories(@Path("id_merchant") String id_merchant);
 
     @GET("getInitialRate/{id_country}")
-        Call<RatesResponse> getInitialRate(@Path("id_country") String id_country);
+    Call<RatesResponse> getInitialRate( @Path("id_country") String id_country );
 
     @GET("getHelpTexts/{id_country}")
-    Call<HelpTextsResponse> getHelpTexts(@Path("id_country") String id_country);
+    Call<HelpTextsResponse> getHelpTexts( @Path("id_country") String id_country );
 
     /*inicio cambios para domicilios*/
     @GET("getClassificationsByService/{type_service}")
-    Call<ClassificationsResponse> getClassificationsByService(@Path("type_service") String type_service);
+    Call<ClassificationsResponse> getClassificationsByService( @Path("type_service") String type_service );
 
     @GET("getMerchantsByService/{type_service}/{classificationKey}/{id_country}/{start}/{end}")
-    Call<MerchantsByServiceResponse> getMerchantsByService(@Path("type_service") String type_service,
-                                                           @Path("classificationKey") String classificationKey,
-                                                           @Path("id_country") String id_country,
-                                                           @Path("start") int start,
-                                                           @Path("end") int end);
+    Call<MerchantsByServiceResponse> getMerchantsByService( @Path("type_service") String type_service,
+                                                            @Path("classificationKey") String classificationKey,
+                                                            @Path("id_country") String id_country,
+                                                            @Path("start") int start,
+                                                            @Path("end") int end  );
     /*fin cambios para domicilios*/
 }

@@ -27,8 +27,8 @@
 
     <dimen name="list_shipping_width_selected">140dp</dimen>
     <dimen name="item_image_publication_selected">130dp</dimen>
-    <dimen name="item_shipping_heigth_selected">120dp</dimen>
-    <dimen name="item_shipping_width_selected">330dp</dimen>
+    <dimen name="item_shipping_heigth_selected">60dp</dimen>
+    <dimen name="item_shipping_width_selected">320dp</dimen>
 
     <dimen name="icon_layout_location_size">35dip</dimen>
 

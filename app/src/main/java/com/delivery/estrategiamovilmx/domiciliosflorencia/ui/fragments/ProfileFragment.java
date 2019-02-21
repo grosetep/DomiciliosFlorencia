@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.UserOperationRequest;
@@ -119,7 +120,7 @@ public class ProfileFragment extends Fragment {
         if (user.getAvatarImage()!=null && user.getAvatarPath()!=null){
             Glide.with(getActivity())
                     .load(user.getAvatarPath()+user.getAvatarImage())
-                    .error(R.drawable.ic_account_circle)
+                    .apply(new RequestOptions().error(R.drawable.ic_account_circle))
                     .into(header_imageview);
         }
         initProcess(false);
