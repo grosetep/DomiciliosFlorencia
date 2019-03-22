@@ -1,6 +1,10 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.ui.adapters;
 
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -59,54 +63,67 @@ public class ShippingAddressAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView text_shipping_address;
-        private ImageView image;
+        private ImageView image_gray;
+        private ImageView image_green;
 
         public ViewHolder(View v) {
             super(v);
             text_shipping_address = (TextView) v.findViewById(R.id.text_shipping_address);
-            image = (ImageView) v.findViewById(R.id.image);
+            image_gray = (ImageView) v.findViewById(R.id.image_gray);
+            image_green = (ImageView) v.findViewById(R.id.image_green);
         }
+
+
         public void bind(ShippingAddress model) {
-            String show_address  = model.getGooglePlace().length()> Constants.address_max_length?model.getGooglePlace().substring(0,Constants.address_max_length)+"...,":model.getGooglePlace();
-            text_shipping_address.setText(show_address.concat(model.getNum_int()!=null && !model.getNum_int().isEmpty()?model.getNum_int():"").concat(", ").concat(model.getReference()));
-            if (model.isSelected()){
-                image.setColorFilter(ContextCompat.getColor(activity, R.color.colorAccent));
-            } else if (model.getIsNew().equals(String.valueOf(true))){
-                image.setColorFilter(Color.parseColor(Constants.colorSuccess));
+            //String show_address  = model.getGooglePlace().length()> Constants.address_max_length?model.getGooglePlace().substring(0,Constants.address_max_length)+"...,":model.getGooglePlace();
+            //text_shipping_address.setText(show_address.concat(model.getNum_int()!=null && !model.getNum_int().isEmpty()?model.getNum_int():"").concat(", ").concat(model.getReference()));
+            text_shipping_address.setText(model.getAddressForUser());
+
+            if (!model.isSelected()){
+                image_gray.setVisibility(View.VISIBLE);
+                image_green.setVisibility(View.GONE);
+            }else if (model.isSelected() || model.getIsNew().equals(String.valueOf(true))) {
+                image_gray.setVisibility(View.GONE);
+                image_green.setVisibility(View.VISIBLE);
+            }else {
+                image_gray.setVisibility(View.VISIBLE);
+                image_green.setVisibility(View.GONE);
             }
-            else {image.setColorFilter(ContextCompat.getColor(activity, R.color.gray));}
+
+
         }
     }
-    @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        if(holder instanceof ShippingAddressAdapter.ViewHolder) {
-            final ShippingAddressAdapter.ViewHolder p_holder = (ShippingAddressAdapter.ViewHolder) holder;
-            final ShippingAddress ship = list.get(position);
-            p_holder.bind(ship);
+        @Override
+        public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+            if (holder instanceof ShippingAddressAdapter.ViewHolder) {
+                final ShippingAddressAdapter.ViewHolder p_holder = (ShippingAddressAdapter.ViewHolder) holder;
+                final ShippingAddress ship = list.get(position);
+                p_holder.bind(ship);
 
 
-            p_holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //reset old element selected
-                    Log.d(TAG, "Reset old element: " + activity.getAddress_position_selected());
-                    activity.resetElement(activity.getAddress_position_selected());
+                p_holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //reset old element selected
+                        //Log.d(TAG, "Reset old element: " + activity.getAddress_position_selected());
+                        activity.resetElement(activity.getAddress_position_selected());
+                        list.get(position).setSelected(true);
+                        //Log.d(TAG, "before---------    ship.isNew():" + ship.getIsNew() + " isSelected:" + ship.isSelected());
+                        activity.setShippingAddressSelected(position);
+                    }
+                });
 
-                    Log.d(TAG, "before---------    ship.isNew():" + ship.getIsNew() + " isSelected:" + ship.isSelected());
-                    activity.setShippingAddressSelected(position);
-                }
-            });
 
-
-        }else if(holder instanceof AddViewHolder){
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    activity.startAddShippingAddress();
-                }
-            });
+            } else if (holder instanceof AddViewHolder) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        activity.startAddShippingAddress();
+                    }
+                });
+            }
         }
-    }
+
     static class AddViewHolder extends RecyclerView.ViewHolder {
         CardView card_view_add;
 

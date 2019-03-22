@@ -28,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ApiException;
@@ -84,7 +85,7 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
     private AppCompatButton button_order;
     private static int METHOD_GET_PRODUCT_IMAGES = 1;
     private static int METHOD_SHIPPING = 2;
-    private static String PRODUCT_DETAIL = "product_detail";
+    public static String PRODUCT_DETAIL = "product_detail";
     private static String TYPE_FLOW = "type_flow";
     private String id_country = "";
     //Carroussell
@@ -167,13 +168,14 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
     }
 
     public void loadInformation() {
+        JSONObject jsonObject = null;
         // Añadir parámetro a la URL del web service
         String newURL = Constants.GET_PRODUCTS + "?method=getDetailProduct" + "&idProduct=" + product_detail.getIdProduct();
-        Log.d(TAG, "newURL:" + newURL);
+        //Log.d(TAG, "newURL:" + newURL);
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
                 newURL,
-                (String) null,
+                jsonObject,
                 new Response.Listener<JSONObject>() {
 
                     @Override
@@ -210,7 +212,7 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
 
     public void VolleyPostRequest(String url, HashMap<String, String> params, final int callback){
         JSONObject jobject = new JSONObject(params);
-        Log.d(TAG, "VolleyPostRequest:" + jobject.toString());
+        //Log.d(TAG, "VolleyPostRequest:" + jobject.toString());
 
         VolleySingleton.getInstance(getActivity()).addToRequestQueue(
                 new JsonObjectRequest(
@@ -371,7 +373,7 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
         Intent intent = new Intent(getActivity(), AddToCartActivity.class);
         Bundle args = new Bundle();
         args.putSerializable(ProductsFragment.CART_OBJECT,request);
-        args.putString(ProductsFragment.PRODUCT_NAME,detail.getProduct());
+        args.putSerializable(ProductsFragment.PRODUCT_NAME,detail.getProduct());
         intent.putExtras(args);
         startActivityForResult(intent, ProductsFragment.ADD_TO_CART_INTENT);
     }
@@ -535,10 +537,10 @@ public class DetailProductsFragment extends Fragment implements  ViewPager.OnPag
             ImageSliderPublication temp =  gallery[position];
             Glide.with(cardImageView.getContext())
                     .load(temp.getPath()+temp.getImageName())
-                    .centerCrop()
+                    .apply(new RequestOptions().centerCrop())
                     .into(cardImageView);
 
-            cardImageView.setTag(position);
+            //cardImageView.setTag(position);
             cardImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

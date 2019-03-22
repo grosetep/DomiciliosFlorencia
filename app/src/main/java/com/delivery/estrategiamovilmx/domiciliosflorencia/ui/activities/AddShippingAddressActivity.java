@@ -21,6 +21,7 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ShippingAddress;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.UpdateLocationRequest;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.AddressOperationResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GenericResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.retrofit.RestServiceWrapper;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
@@ -62,6 +63,8 @@ public class AddShippingAddressActivity extends AppCompatActivity {
     public static ShippingAddress shipping_point = new ShippingAddress();
     private boolean update_address = false;
     private int index_address = 0;
+    private String flow="";
+
 
     public boolean isUpdate_address() {
         return update_address;
@@ -84,6 +87,8 @@ public class AddShippingAddressActivity extends AppCompatActivity {
         Intent i = getIntent();
         ShippingAddress address_param = (ShippingAddress)i.getSerializableExtra(ManageLocationsActivity.ADDRESS_EDITABLE);
         index_address = i.getIntExtra(ManageLocationsActivity.INDEX_ADDRESS,0);
+        flow = i.getStringExtra(Constants.flow);
+
         if (address_param!=null){//viene una ubicacion para editar
             shipping_point = address_param;
             setUpdate_address(true);
@@ -154,8 +159,9 @@ public class AddShippingAddressActivity extends AppCompatActivity {
                         initProcess(true);
                         updateLocation(getShipping_point());
                     }else{//alta de direccion
-                        //Log.d(TAG,"Exito en validaciones, regresar a principal y crear nueva direcion en lista....");
-                        finishActivity();
+                        Log.d(TAG,"Exito en validaciones, regresar a principal y crear nueva direcion en lista....");
+                        createNewShippingAddress(getShipping_point());
+                        //finishActivity();
                     }
 
                 }else{
@@ -216,18 +222,61 @@ public class AddShippingAddressActivity extends AppCompatActivity {
         return valid;
     }
 
+    private void createNewShippingAddress(ShippingAddress ship){
+        UserItem user = GeneralFunctions.getCurrentUser(getApplicationContext());
+        UpdateLocationRequest request = new UpdateLocationRequest();
+        request.setUser(user);
+        request.setAddress(ship);
+        request.setOperation(ManageLocationsActivity.CREATE_OPERATION);
+
+        RestServiceWrapper.shippingAddressOperation(request, new Callback<AddressOperationResponse>() {
+            @Override
+            public void onResponse(Call<AddressOperationResponse> call, retrofit2.Response<AddressOperationResponse> response) {
+                //Log.d(TAG, "Respuesta createNewShippingAddress: " + response.body());
+                if (response != null && response.isSuccessful()) {
+                    AddressOperationResponse operation_response = response.body();
+
+                    if (operation_response != null && operation_response.getStatus().equals(Constants.success)) {
+                        //Log.d(TAG, "Asignando id creado: " + operation_response.getResult().getId());
+                        getShipping_point().setId_location(operation_response.getResult().getId());
+                        finishActivity();
+
+                    } else if (operation_response != null && operation_response.getStatus().equals(Constants.no_data)) {
+                        String response_error = operation_response.getMessage();
+                        Log.d(TAG, "Mensage:" + response_error);
+                        onError(getString(R.string.error_invalid_login, response_error));
+                    } else {
+                        String response_error = operation_response.getMessage();
+                        Log.d(TAG, "Error:" + response_error);
+                        onError(getString(R.string.error_invalid_login, response_error));
+                    }
+
+
+                } else {
+                    onError(getString(R.string.error_invalid_login, getString(R.string.error_generic)));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddressOperationResponse> call, Throwable t) {
+                Log.d(TAG, "ERROR: " + t.getStackTrace().toString() + " --->" + t.getCause() + "  -->" + t.getMessage() + " --->");
+                onError(getString(R.string.error_invalid_login, t.getMessage()));
+            }
+        });
+    }
+
     private void updateLocation(ShippingAddress ship){
         UserItem user = GeneralFunctions.getCurrentUser(getApplicationContext());
         UpdateLocationRequest request = new UpdateLocationRequest();
         request.setUser(user);
         request.setAddress(ship);
         request.setOperation(ManageLocationsActivity.UPDATE_OPERATION);
-        RestServiceWrapper.shippingAddressOperation(request, new Callback<GenericResponse>() {
+        RestServiceWrapper.shippingAddressOperation(request, new Callback<AddressOperationResponse>() {
             @Override
-            public void onResponse(Call<GenericResponse> call, retrofit2.Response<GenericResponse> response) {
-                Log.d(TAG, "Respuesta: " + response);
+            public void onResponse(Call<AddressOperationResponse> call, retrofit2.Response<AddressOperationResponse> response) {
+                //Log.d(TAG, "updateLocation Respuesta: " + response);
                 if (response != null && response.isSuccessful()) {
-                    GenericResponse operation_response = response.body();
+                    AddressOperationResponse operation_response = response.body();
 
                     if (operation_response != null && operation_response.getStatus().equals(Constants.success)) {
                         finishActivity();
@@ -248,7 +297,7 @@ public class AddShippingAddressActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<GenericResponse> call, Throwable t) {
+            public void onFailure(Call<AddressOperationResponse> call, Throwable t) {
                 Log.d(TAG, "ERROR: " + t.getStackTrace().toString() + " --->" + t.getCause() + "  -->" + t.getMessage() + " --->");
                 onError(getString(R.string.error_invalid_login, t.getMessage()));
             }

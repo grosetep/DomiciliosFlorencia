@@ -12,7 +12,7 @@
             <!-- #3bbdfa -->
             <stroke
                 android:width="1dp"
-                android:color="@color/colorAccent"
+                android:color="@color/colorPrimary"
                 />
         </shape>
     </item>

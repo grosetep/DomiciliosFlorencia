@@ -5,8 +5,8 @@
     android:id="@+id/card_view"
     android:clickable="true"
     android:background="?android:attr/selectableItemBackground"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="@dimen/item_shipping_width_selected"
+    android:layout_height="@dimen/item_shipping_heigth_selected_purchase"
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="6dp"
     android:foreground="?android:attr/selectableItemBackground">
@@ -21,12 +21,23 @@
         android:layout_height="wrap_content">
         <!-- imagen-->
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/image_gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin1"
+            android:padding="@dimen/activity_horizontal_margin4"
             android:src="@drawable/ic_location_on"
-            android:tint="@color/colorAccent"
+            android:tint="@color/gray"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"/>
+        <ImageView
+            android:id="@+id/image_green"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_horizontal_margin4"
+            android:src="@drawable/ic_location_on"
+            android:tint="@android:color/holo_green_light"
             android:scaleType="centerInside"
             android:layout_gravity="center"
             android:adjustViewBounds="true"/>

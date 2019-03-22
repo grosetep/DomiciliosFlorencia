@@ -58,6 +58,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private Float total = 0f;
     private String id_country;
     private MerchantItem merchant;
+    public static String ID_MERCHANT = "merchant_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,6 +166,16 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG,"onBackPressed...");
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(this.ID_MERCHANT, products!=null && products.size()>0?products.get(0).getIdMerchant():null);//si hay productos regresa el idMerchant y sino null
+        setResult(RESULT_CANCELED, returnIntent);
+        finish();
+    }
+
     private void setupAdapter(){
         // Set the adapter
         mAdapter = new ShoppingCartAdapter(this,products);
@@ -223,7 +234,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                     GenericResponse update_response = response.body();
                     if (update_response != null && update_response.getStatus().equals(Constants.success)) {
                         if (update_response.getResult() != null && update_response.getResult().getStatus().equals(String.valueOf(Constants.uno))) {
-                            Log.d(TAG, "Respuesta:" + update_response.getResult().getMessage());
+                            //Log.d(TAG, "Respuesta:" + update_response.getResult().getMessage());
                             initProcessUpdate(false);
                             startShipping();
                         } else {

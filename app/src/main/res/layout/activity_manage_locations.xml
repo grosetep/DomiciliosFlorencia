@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context="com.estrategiamovilmx.sales.weespareenvios.ui.activities.ManageLocationsActivity">
+    tools:context=".ui.activities.ManageLocationsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -23,12 +22,15 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/layout_manage_locations" android:layout_below="@+id/appbar" android:layout_height="match_parent" android:layout_width="match_parent"/>
-
-
-    <include layout="@layout/no_connection_layout"
+    <!--  <include layout="@layout/layout_manage_locations" android:layout_below="@+id/appbar" android:layout_height="match_parent" android:layout_width="match_parent"/> -->
+    <FrameLayout
+        android:id="@+id/container_locations"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        />
+        android:layout_below="@+id/appbar">
+
+    </FrameLayout>
+
+
+
 </RelativeLayout>

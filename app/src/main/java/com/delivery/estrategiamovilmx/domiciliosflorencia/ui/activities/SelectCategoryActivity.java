@@ -46,6 +46,7 @@ public class SelectCategoryActivity extends AppCompatActivity {
     private CategoryViewModel category_selected;
     private LinearLayout layout_all_subcategories;
     private String type_flow;
+    private String id_merchant;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,7 @@ public class SelectCategoryActivity extends AppCompatActivity {
         /*getting type flow to show or hide options*/
         Intent i = getIntent();
         type_flow = i.getStringExtra(ProductsFragment.TYPE_FLOW_CATEGORY);
+        id_merchant = (String )i.getStringExtra(Constants.MERCHANT_OBJECT);
         if (type_flow.equals(ProductsFragment.FLOW_PRODUCTS)) {//show all_categories layout
             layout_all_subcategories.setVisibility(View.VISIBLE);
         }
@@ -106,7 +108,7 @@ public class SelectCategoryActivity extends AppCompatActivity {
     }
 
     public void getCategories() {//obtener datos de la publicacion mas datos de las url de imagenes
-        RestServiceWrapper.getCategories(new Callback<CategoryResponse>() {
+        RestServiceWrapper.getCategories(id_merchant,new Callback<CategoryResponse>() {
             @Override
             public void onResponse(Call<CategoryResponse> call, retrofit2.Response<CategoryResponse> response) {
                 Log.d(TAG, "Respuesta: " + response);

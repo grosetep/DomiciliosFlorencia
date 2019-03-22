@@ -1,5 +1,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Domicilios Florencia</string>
+    <string name="app_name">ok!</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -9,8 +9,11 @@
     <string name="action_session">Inicia Sesión o Regístrate</string>
     <string name="action_edit_profile">Perfil</string>
     <string name="action_location">Ubicación</string>
-    <string name="action_orders">Pedidos</string>
+    <string name="action_orders_purchase">Mis Pedidos</string>
+    <string name="action_orders">Mis Envíos</string>
+    <string name="action_locations">Direcciones</string>
     <string name="action_shipping">Entregas</string>
+    <string name="action_shipping_purchase">Pedidos</string>
     <string name="action_close">Cerrar Sesión</string>
     <string name="prompt_send_something">Enviar algo</string>
     <string name="action_new_order_courier_express">Puedes mover casi cualquier objeto de un lugar a otro en tu ciudad. Tarifa justa por distacia.</string>
@@ -232,9 +235,9 @@
     <!-- create order-->
     <string name="prompt_additionals">Extras:</string>
     <!-- redes sociales -->
-    <string name="facebook_app_key">200771450687686</string>
-    <string name="facebook_app_secret">2938640b7f61f19ecbeddc433d092c9f</string>
-    <string name="fb_login_protocol_scheme">fb200771450687686</string><!-- pendiente eliminacion-->
+    <string name="facebook_app_key">2187018768294060</string>
+    <string name="facebook_app_secret">5cbe78a1f23932140fa41507d7a942f0</string>
+    <string name="fb_login_protocol_scheme">fb2187018768294060</string><!-- pendiente eliminacion-->
     <string name="facebook_email_error">Confirma o haz publico tu email en Facebook para poder registrarte</string>
     <string name="facebook_title">Facebook</string>
 
@@ -356,6 +359,12 @@
     <string name="title_restaurants">Restaurantes</string>
     <string name="title_anything">Lo que sea</string>
     <string name="title_activity_main_clasifications">MainClasificationsActivity</string>
+
+    <!-- servicios en singular -->
+    <string name="title_farmacy_singular">Farmacia</string>
+    <string name="title_super_singular">Super</string>
+    <string name="title_restaurants_singular">Restaurante</string>
+
     <!-- Clasificaciones -->
     <string name="title_total_elements"> <xliff:g id="num">%1$s</xliff:g>  <xliff:g id="giro">%2$s</xliff:g></string>
     <string name="prompt_shipping_cost"> Envío <xliff:g id="shipping">%1$s</xliff:g></string>
@@ -363,7 +372,6 @@
     <string name="title_activity_store">StoreActivity</string>
     <string name="title_menu">MENU</string>
     <string name="title_aisle">PASILLOS</string>
-
 
 
     <string name="large_text">
@@ -456,6 +464,16 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
-
-
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="button_add_product">Agregar</string>
+    <string name="link_show_store">Ver <xliff:g id="num">%1$s</xliff:g> ">" </string>
+    <string name="title_results_merchants">Resultados en:</string>
+    <string name="title_see_more">Ver todo</string>
+    <string name="promt_object_not_found">Datos no completos. Intenta de nuevo</string>
+    <string name="prompt_cant_add_product">Tienes productos agregados de otro comercio en tu orden. Quitalos para poder agrear este.</string>
+    <string name="app_message_init_login">Registrate con Facebook</string>
+    <string name="text_header_admin_locations">Que tal <xliff:g id="num">%1$s</xliff:g>\n¿A donde enviamos tu pedido?</string>
+    <string name="order_payment">Pago</string>
+    <string name="currency_sign">"$"</string>
 </resources>

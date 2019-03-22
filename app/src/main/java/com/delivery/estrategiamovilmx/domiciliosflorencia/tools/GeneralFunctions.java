@@ -11,9 +11,11 @@ import android.text.Spanned;
 import android.util.Log;
 
 
+import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.ConfigItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.MerchantItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.OrderItem;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.items.OrderPurchaseItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ElementChanged;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.PickupAddress;
@@ -75,6 +77,20 @@ public class GeneralFunctions {
         Iterator<OrderItem> iter = new_elements.iterator();
         while (iter.hasNext()){
             OrderItem p = iter.next();
+            for (int i = 0;i<elements.size();i++) {
+                if (elements.get(i).getIdOrder().equals(p.getIdOrder())) {
+                    //si cambio una orden de estatus dejar el mas actualizado y borrar el viejo
+                    elements.remove(i);
+                    //iter.remove();EN LUGAR DE ELIMINAR EL NUEVO AHORA SE ELIMINA EL VIEJO Y SE CONSERVA EN NUEVO
+                }
+            }
+        }
+        return new_elements;
+    }
+    public static List<OrderPurchaseItem> FilterPurchases(ArrayList<OrderPurchaseItem> elements, List<OrderPurchaseItem> new_elements){
+        Iterator<OrderPurchaseItem> iter = new_elements.iterator();
+        while (iter.hasNext()){
+            OrderPurchaseItem p = iter.next();
             for (int i = 0;i<elements.size();i++) {
                 if (elements.get(i).getIdOrder().equals(p.getIdOrder())) {
                     //si cambio una orden de estatus dejar el mas actualizado y borrar el viejo
@@ -179,5 +195,47 @@ public class GeneralFunctions {
         int color = ContextCompat.getColor(ctx, colorResId);
         clone.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         return clone;
+    }
+    public static String getTitleByServiceSelected(String type_service, Context ctx){
+        String service_name = "";
+        switch (type_service) {
+            case Constants.service_supers:
+                service_name = ctx.getString(R.string.title_super);
+                break;
+            case Constants.service_restaurants:
+                service_name = ctx.getString(R.string.title_restaurants);
+                break;
+            case Constants.service_custom:
+                service_name = ctx.getString(R.string.title_anything);
+                break;
+            case Constants.service_mototaxi:
+                service_name = ctx.getString(R.string.title_mototaxi);
+                break;
+            case Constants.service_drugstore:
+                service_name = ctx.getString(R.string.title_farmacy);
+                break;
+        }
+        return service_name;
+    }
+    public static String getTitleByServiceSelectedOnMoreOption(String type_service, Context ctx){
+        String service_name = "";
+        switch (type_service) {
+            case Constants.service_supers:
+                service_name = ctx.getString(R.string.title_super_singular);
+                break;
+            case Constants.service_restaurants:
+                service_name = ctx.getString(R.string.title_restaurants_singular);
+                break;
+            case Constants.service_custom:
+                service_name = ctx.getString(R.string.title_anything);
+                break;
+            case Constants.service_mototaxi:
+                service_name = ctx.getString(R.string.title_mototaxi);
+                break;
+            case Constants.service_drugstore:
+                service_name = ctx.getString(R.string.title_farmacy_singular);
+                break;
+        }
+        return service_name;
     }
 }

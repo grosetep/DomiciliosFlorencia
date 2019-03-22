@@ -24,6 +24,7 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ShowConfirmations;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.adapters.ManageAddressAdapter;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.ManageLocationsFragment;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.PickupPointFragment;
 
 import java.util.ArrayList;
@@ -47,6 +48,9 @@ public class ManageLocationsActivity extends AppCompatActivity {
 
     //operations
     public static final String UPDATE_OPERATION = "update";
+    public static final String DELETE_OPERATION = "delete";
+    public static final String CREATE_OPERATION = "create";
+    public static final String ASSIGN_ADDRESS_OPERATION = "assign_address";
 
     //public static int has_address_updated  = 0;//indica si se actualizaron direcciones para que se actualice lista en pantalla previa
     @Override
@@ -59,8 +63,16 @@ public class ManageLocationsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.title_fav));
 
+        if (savedInstanceState == null){
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container_locations, ManageLocationsFragment.createInstance(), "ManageLocationsFragment")
+                    .commit();
+
+        }
+
         //init elements
-        recyclerview_manage_locations = findViewById(R.id.recyclerview_manage_locations);
+        /*recyclerview_manage_locations = findViewById(R.id.recyclerview_manage_locations);
         container_loading = findViewById(R.id.container_loading);
         no_connection_layout = findViewById(R.id.no_connection_layout);
 
@@ -75,9 +87,10 @@ public class ManageLocationsActivity extends AppCompatActivity {
             getShippingAddresses(TYPE_QUERY);
         }else{
             showNoConnectionLayout();
-        }
+        }*/
 
     }
+    /*
     private void getShippingAddresses(String type_query) {
         UserItem user = GeneralFunctions.getCurrentUser(getApplicationContext());
         RestServiceWrapper.getLocationsByUser(user != null ? user.getIdUser() : "0", type_query, new Callback<GetShippingAddressResponse>() {
@@ -87,9 +100,7 @@ public class ManageLocationsActivity extends AppCompatActivity {
                 if (response != null && response.isSuccessful()) {
                     GetShippingAddressResponse products_response = response.body();
                     if (products_response != null && products_response.getStatus().equals(Constants.success)) {
-                        /*for (ShippingAddress p : products_response.getResult()) {
-                            Log.d(TAG, p.toString());
-                        }*/
+
                         if (products_response.getResult().size() > 0) {
                             locations.addAll(products_response.getResult());
                         }
@@ -116,7 +127,7 @@ public class ManageLocationsActivity extends AppCompatActivity {
                     apiException.setMessage(t.getMessage());
 
                 } catch (Exception ex) {
-                    // do nothing
+
                 }
             }
         });
@@ -126,7 +137,6 @@ public class ManageLocationsActivity extends AppCompatActivity {
         setupAdapter();
     }
     private void setupAdapter(){
-        // Set the adapter
         mAdapter = new ManageAddressAdapter(ManageLocationsActivity.this,locations);
         recyclerview_manage_locations.setAdapter(mAdapter);
         recyclerview_manage_locations.invalidate();
@@ -162,22 +172,18 @@ public class ManageLocationsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case PickupPointFragment.NEW_ADDRESS:
-                if (resultCode == Activity.RESULT_OK) {//NEW_SHIPPING_ADDRESS
+                if (resultCode == Activity.RESULT_OK) {
                     ShippingAddress ship = (ShippingAddress) data.getExtras().get(AddShippingAddressActivity.NEW_SHIPPING_ADDRESS);
                     String update_address = (String)data.getExtras().get(AddShippingAddressActivity.EDITED_ADDRESS);
                     int position = data.getExtras().getInt(ManageLocationsActivity.INDEX_ADDRESS);
-                    //check if update or new address
-                    if (update_address.equals(String.valueOf(true))){//edited address:: update on db
+
+                    if (update_address.equals(String.valueOf(true))){
                         locations.set(position,ship);
                         mAdapter.notifyItemChanged(position);
-                        //setting flag to indicate one or more addresses updated
-                        //ManageLocationsActivity.has_address_updated = 1;
-                    }else{//new address::create element on list
+                    }else{
                         ship.setIsNew(String.valueOf(true));
                         mAdapter.addItem(0, ship);
                         setShippingAddressSelected(0);
-                        //recyclerview_manage_locations.scrollToPosition(0);
-                        //return new location to activity
                         returnAddressSelected(ship);
                     }
 
@@ -194,7 +200,7 @@ public class ManageLocationsActivity extends AppCompatActivity {
         data.putExtra(AddShippingAddressActivity.NEW_SHIPPING_ADDRESS, ship);
         setResult(Activity.RESULT_OK, data);
         finish();
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

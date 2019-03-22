@@ -18,7 +18,7 @@ public class ReplyActivity extends AppCompatActivity {
 
     public static Intent getReplyMessageIntent(Context context, int notifyId, int messageId, UserItem user) {
         Log.d(flow_notification,"getReplyMessageIntent..."+user.toString());
-        Intent intent = new Intent(context, OrdersDeliverActivity.class);
+        Intent intent = new Intent(context, OrdersDeliverPurchaseActivity.class);
 
         intent.setAction(MyFirebaseMessagingService.REPLY_ACTION);
         Log.d(flow_notification,"getReplyMessageIntent...ok");

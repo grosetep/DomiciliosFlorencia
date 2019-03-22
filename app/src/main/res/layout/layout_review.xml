@@ -441,7 +441,7 @@
         android:layout_width="match_parent"
         android:weightSum="100"
         android:showDividers="middle"
-        android:background="@color/colorSecondary"
+        android:background="@color/colorAccent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/button_previous"

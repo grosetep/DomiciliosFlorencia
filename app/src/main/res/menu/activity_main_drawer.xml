@@ -4,11 +4,20 @@
     <group android:checkableBehavior="none">
         <item android:id="@+id/nav_login" android:icon="@drawable/ic_action_users"
               android:title="@string/action_session" />
+
         <item android:id="@+id/nav_profile" android:icon="@drawable/ic_action_user"
             android:title="@string/action_edit_profile" />
-        <item android:id="@+id/nav_location" android:icon="@drawable/ic_action_location"
+
+        <item android:id="@+id/nav_locations" android:icon="@drawable/ic_action_location"
+            android:title="@string/action_locations" />
+
+        <item android:id="@+id/nav_location" android:icon="@drawable/ic_hot_tub"
             android:title="@string/action_location" />
-        <item android:id="@+id/nav_orders" android:icon="@drawable/ic_local_shipping"
+
+        <item android:id="@+id/nav_orders_purchase" android:icon="@drawable/ic_local_shipping"
+            android:title="@string/action_orders_purchase" />
+
+        <item android:id="@+id/nav_orders" android:icon="@drawable/ic_assignment"
             android:title="@string/action_orders" />
         <!-- -->
     </group>

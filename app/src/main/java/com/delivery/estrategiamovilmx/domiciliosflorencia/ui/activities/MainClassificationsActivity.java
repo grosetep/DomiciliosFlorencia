@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.ClassificationItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.MerchantItem;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ShippingAddress;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.ClassificationsResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.MerchantsByServiceResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.retrofit.RestServiceWrapper;
@@ -34,8 +35,10 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ShowConfirmations;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.adapters.ClassificationsAdapter;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.adapters.MerchantsAdapter;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.BottomSheetFragment;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.PrincipalMenuFragment;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.interfaces.OnLoadMoreListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -51,7 +54,6 @@ public class MainClassificationsActivity extends AppCompatActivity {
     private LinearLayoutManager llm;
     private AppCompatButton button_retry_search;
     private AppCompatButton button_retry;
-    private LinearLayout layout_search;
     private ImageButton button_select_filters;
 
     public final boolean load_initial = true;
@@ -70,6 +72,9 @@ public class MainClassificationsActivity extends AppCompatActivity {
     private View mCustomView;
     private int classification_position_selected = -1;
     private static final String TAG = MainClassificationsActivity.class.getSimpleName();
+
+    //texto direccion favorita
+    private TextView text_shipping_address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,11 +95,20 @@ public class MainClassificationsActivity extends AppCompatActivity {
         LayoutInflater mInflater = LayoutInflater.from(this);
         mCustomView = mInflater.inflate(R.layout.actionbar_custom_view_change_address_action, null);
 
+        text_shipping_address = mCustomView.findViewById(R.id.text_shipping_address);
+
+        String json_address_favorite = ApplicationPreferences.getLocalStringPreference(getApplicationContext(),Constants.FAVORITE_ADDRESS_SELECTED);
+        if (json_address_favorite!=null && !json_address_favorite.isEmpty()){//establece direccion favorita si ya existe una
+            Gson gson = new Gson();
+            ShippingAddress ship = gson.fromJson(json_address_favorite,ShippingAddress.class);
+            if (ship!=null){text_shipping_address.setText(ship.getAddressResumed()); Log.d(TAG,"ASIGNA DIRECION:"+ship.getAddressResumed());}
+        }
+
         mCustomView.findViewById(R.id.layout_change_address).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // show shipping address administration
+                        showBottomSheetDialogFragment();
 
                     }
                 });
@@ -108,7 +122,7 @@ public class MainClassificationsActivity extends AppCompatActivity {
 
         type_service = getIntent().getStringExtra(PrincipalMenuFragment.BUSINESS_AREA);
         init();
-        text_service.setText(getTitleByServiceSelected(type_service));
+        text_service.setText(GeneralFunctions.getTitleByServiceSelected(type_service,MainClassificationsActivity.this));
 
         if (Connectivity.isNetworkAvailable(getApplicationContext())) {
             clasifications.clear();
@@ -181,8 +195,16 @@ public class MainClassificationsActivity extends AppCompatActivity {
         );
         text_service = findViewById(R.id.text_service);
         layout_searching_content = findViewById(R.id.layout_searching_content);
+        layout_searching_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i  = new Intent(MainClassificationsActivity.this,SearchActivity.class);
+                i.putExtra(Constants.TYPE_SERVICE,type_service);
+                startActivity(i);
+
+            }
+        });
         layout_content = findViewById(R.id.layout_content);
-        layout_search = findViewById(R.id.layout_search);
         button_select_filters = findViewById(R.id.button_select_filters);
 
         //Boton Reintento: Sin resultados
@@ -219,16 +241,16 @@ public class MainClassificationsActivity extends AppCompatActivity {
         RestServiceWrapper.getClassificationsByService(type_service, new Callback<ClassificationsResponse>() {
             @Override
             public void onResponse(Call<ClassificationsResponse> call, retrofit2.Response<ClassificationsResponse> response) {
-                Log.d(TAG, "Respuesta getClassificationsByService: " + response);
+                // Log.d(TAG, "Respuesta getClassificationsByService: " + response);
                 if (response != null && response.isSuccessful()) {
                     ClassificationsResponse cl_response = response.body();
 
                     if (cl_response != null && cl_response.getStatus().equals(Constants.success)) {//procesa respuesta y almacena en lista para proceder a segundo llamado
                         //onSuccess(login_response);
                         clasifications = new ArrayList(cl_response.getResult());
-                        for (int i = 0; i < clasifications.size(); i++) {
+                        /*for (int i = 0; i < clasifications.size(); i++) {
                             Log.d(TAG, clasifications.get(i).toString());
-                        }
+                        }*/
                         setupAdapterClassifications();
                         processRequestGetMerchantsByService(type_service, getClassificationSelected() != -1 ? clasifications.get(getClassificationSelected()) : null, start, end, load_initial, isRefresh);
                     } else if (cl_response != null && cl_response.getStatus().equals(Constants.no_data)) {
@@ -272,7 +294,7 @@ public class MainClassificationsActivity extends AppCompatActivity {
 
     }
     private void processRequestGetMerchantsByService(String type_service,ClassificationItem classifitetionItem,int start, int end, boolean load_initial, boolean isRefresh){
-        Log.d(TAG, "processRequestGetMerchantsByService....load_initial:" + load_initial);
+        // Log.d(TAG, "processRequestGetMerchantsByService....load_initial:" + load_initial);
         if (isRefresh) {
             getMerchantsByService(type_service, classifitetionItem,start,end, load_initial, isRefresh);
         }else if (!load_initial) {
@@ -283,7 +305,7 @@ public class MainClassificationsActivity extends AppCompatActivity {
     }
 
     private void processingResponseInit(ArrayList<MerchantItem> new_merchants) {//mostrar clasificaciones y cargar merchants por primera vez, en la siguiente solo actualizar merchants.
-        Log.d(TAG, "processingResponse merchants initial....." + new_merchants.size());
+        // Log.d(TAG, "processingResponse merchants initial....." + new_merchants.size());
 
         if (new_merchants != null && new_merchants.size() > 0) {
             merchants.addAll(new_merchants);
@@ -340,7 +362,18 @@ public class MainClassificationsActivity extends AppCompatActivity {
             }
         }, Constants.cero);
     }
-    private String getTitleByServiceSelected(String type_service){
+    private void notifyListChangedClassifications() {
+        //Load more data for reyclerview
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+                adapter.setLoaded();
+            }
+        }, Constants.cero);
+    }
+
+    /*private String getTitleByServiceSelected(String type_service){
         String service_name = "";
         switch (type_service) {
             case Constants.service_supers:
@@ -360,7 +393,7 @@ public class MainClassificationsActivity extends AppCompatActivity {
                 break;
         }
         return service_name;
-    }
+    }*/
     private void getMerchantsByService( final String type_service,ClassificationItem classifitetionItem,int start, int end, final boolean load_initial, final boolean isRefresh){
         //Log.d(TAG, "getMerchantsByService load_initial: "+load_initial);
         String id_country = ApplicationPreferences.getLocalStringPreference(getApplicationContext(),Constants.id_country);
@@ -376,7 +409,13 @@ public class MainClassificationsActivity extends AppCompatActivity {
                         //onSuccess(login_response);
                         ArrayList<MerchantItem> new_merchants = new ArrayList(cl_response.getResult());
                         //setting total merchants
-                        text_number_elements.setText(getString(R.string.title_total_elements, cl_response.getTotal(), getTitleByServiceSelected(type_service)));
+                        text_number_elements.setText(getString(R.string.title_total_elements, cl_response.getTotal(), GeneralFunctions.getTitleByServiceSelected(type_service,MainClassificationsActivity.this)));
+
+                        Log.d(TAG,"--------------------------- COMERCIOS-----------------------------");
+                        for(MerchantItem m:new_merchants){
+                            Log.d(TAG,""+m.toString());
+                        }
+
                         if (isRefresh) {//only update list
                             processingResponse(new_merchants, isRefresh);
                             swipeRefresh_merchants.setRefreshing(false);
@@ -432,54 +471,52 @@ public class MainClassificationsActivity extends AppCompatActivity {
                               Runnable() {
                                   @Override
                                   public void run() {
-              if (connection_error) {
-                  no_connection_layout.setVisibility(View.VISIBLE);
-                  text_service.setVisibility(View.GONE);
-                  layout_searching_content.setVisibility(View.GONE);
-                  classifications_recycler.setVisibility(View.GONE);
-                  layout_content.setVisibility(View.INVISIBLE);
-                  swipeRefresh_merchants.setVisibility(View.INVISIBLE);
-                  layout_no_publications.setVisibility(View.GONE);
-                  pbLoading_products.setVisibility(View.GONE);
-              } else if (getMerchants() != null && getMerchants().size() > 0) {//hay publicaciones de establecimientos
-                  no_connection_layout.setVisibility(View.GONE);
-                  text_service.setVisibility(View.VISIBLE);
-                  layout_searching_content.setVisibility(View.VISIBLE);
-                  classifications_recycler.setVisibility(View.VISIBLE);
-                  layout_content.setVisibility(View.VISIBLE);
-                  swipeRefresh_merchants.setVisibility(View.VISIBLE);
-                  layout_no_publications.setVisibility(View.GONE);
-                  pbLoading_products.setVisibility(View.GONE);
+                                      if (connection_error) {
+                                          no_connection_layout.setVisibility(View.VISIBLE);
+                                          text_service.setVisibility(View.GONE);
+                                          layout_searching_content.setVisibility(View.GONE);
+                                          classifications_recycler.setVisibility(View.GONE);
+                                          layout_content.setVisibility(View.INVISIBLE);
+                                          swipeRefresh_merchants.setVisibility(View.INVISIBLE);
+                                          layout_no_publications.setVisibility(View.GONE);
+                                          pbLoading_products.setVisibility(View.GONE);
+                                      } else if (getMerchants() != null && getMerchants().size() > 0) {//hay publicaciones de establecimientos
+                                          no_connection_layout.setVisibility(View.GONE);
+                                          text_service.setVisibility(View.VISIBLE);
+                                          layout_searching_content.setVisibility(View.VISIBLE);
+                                          classifications_recycler.setVisibility(View.VISIBLE);
+                                          layout_content.setVisibility(View.VISIBLE);
+                                          swipeRefresh_merchants.setVisibility(View.VISIBLE);
+                                          layout_no_publications.setVisibility(View.GONE);
+                                          pbLoading_products.setVisibility(View.GONE);
 
-              } else {//no hubo resultados
-                  no_connection_layout.setVisibility(View.GONE);
-                  text_service.setVisibility(View.VISIBLE);
-                  layout_searching_content.setVisibility(View.VISIBLE);
-                  classifications_recycler.setVisibility(View.VISIBLE);
-                  layout_content.setVisibility(View.INVISIBLE);
-                  swipeRefresh_merchants.setVisibility(View.INVISIBLE);
-                  layout_no_publications.setVisibility(View.VISIBLE);
-                  pbLoading_products.setVisibility(View.GONE);
-              }
-          }
-      });
+                                      } else {//no hubo resultados
+                                          no_connection_layout.setVisibility(View.GONE);
+                                          text_service.setVisibility(View.VISIBLE);
+                                          layout_searching_content.setVisibility(View.VISIBLE);
+                                          classifications_recycler.setVisibility(View.VISIBLE);
+                                          layout_content.setVisibility(View.INVISIBLE);
+                                          swipeRefresh_merchants.setVisibility(View.INVISIBLE);
+                                          layout_no_publications.setVisibility(View.VISIBLE);
+                                          pbLoading_products.setVisibility(View.GONE);
+                                      }
+                                  }
+                              });
     }
 
     private void setupAdapterClassifications(){
-
-
         runOnUiThread(new
-              Runnable() {
-                  @Override
-                  public void run() {
-                      if (classifications_recycler.getAdapter()==null) {
-                          adapterClassifications = new ClassificationsAdapter(clasifications, MainClassificationsActivity.this);
-                          classifications_recycler.setAdapter(adapterClassifications);
-                      }else{
-                          notifyListChanged();
-                      }
-                  }
-              });
+                              Runnable() {
+                                  @Override
+                                  public void run() {
+                                      if (classifications_recycler.getAdapter()==null) {
+                                          adapterClassifications = new ClassificationsAdapter(clasifications, MainClassificationsActivity.this);
+                                          classifications_recycler.setAdapter(adapterClassifications);
+                                      }else{
+                                          notifyListChangedClassifications();
+                                      }
+                                  }
+                              });
     }
 
     @Override
@@ -538,5 +575,13 @@ public class MainClassificationsActivity extends AppCompatActivity {
         args.putString(Constants.TYPE_SERVICE,type_service);
         i.putExtras(args);
         startActivity(i);
+    }
+    public void showBottomSheetDialogFragment() {// al cerrar deberia establecer en la cabecera la direccion seleccionada
+        BottomSheetFragment bottomSheetFragment = BottomSheetFragment.createInstance();
+        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+    }
+    public void assignAddressSelected(ShippingAddress ship){
+
+        text_shipping_address.setText(ship.getAddressResumed());
     }
 }

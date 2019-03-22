@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_height="match_parent" android:layout_width="match_parent"
-            xmlns:android="http://schemas.android.com/apk/res/android">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:fitsSystemWindows="true">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
 
         <!-- logo-->
@@ -13,12 +14,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="@dimen/activity_horizontal_margin2"
+            android:paddingTop="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="16dp">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="110dp"
                 android:id="@+id/logo"
                 android:src="@mipmap/logo_florencia"
                 android:layout_gravity="center_horizontal"
@@ -29,58 +30,150 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/app_message_splash"
+                android:text="@string/app_message_init_login"
                 android:id="@+id/tip2_text"
-                android:textColor="@color/negro_semitransparente"
+                android:textColor="@color/com_facebook_blue"
                 android:layout_marginTop="8dp"
-                android:textStyle="normal"
+                android:textStyle="bold"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
+        <!-- social login-->
+        <LinearLayout
+            android:id="@+id/layout_social"
+
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_below="@+id/layout_logo"
+            android:layout_height="wrap_content">
+
+            <!--facebook -->
+
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin1"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin1"
+
+                android:onClick="onFblogin"
+                android:clickable="true"
+                android:gravity="center"
+                android:foreground="?attr/selectableItemBackground"
+                android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:tint="@color/com_facebook_blue"
+                        android:layout_margin="@dimen/activity_horizontal_margin1"
+                        android:layout_gravity="center|start"
+                        android:src="@drawable/com_facebook_button_icon"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin1"
+                        android:layout_width="@dimen/list_item_category_size"
+                        android:layout_height="@dimen/list_item_category_size" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:text="@string/facebook_title"
+                        android:layout_margin="@dimen/activity_horizontal_margin1"
+                        android:textColor="@color/com_facebook_blue"
+                        android:textAllCaps="false"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/com_facebook_loginview_default_style"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!-- division-->
+        <LinearLayout
+            android:id="@+id/layout_division"
+            android:layout_width="match_parent"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_below="@+id/layout_social"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/fab_margin"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:background="@color/gray_ligth" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="O"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginRight="@dimen/fab_margin"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:background="@color/gray_ligth" />
+
+        </LinearLayout>
 
         <!-- form-->
         <LinearLayout
-                android:id="@+id/email_login_form"
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_division"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <!--                                            email app:met_maxCharacters="20"-->
+
+            <EditText
+                android:id="@+id/text_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layout_logo"
-                android:orientation="vertical"
-                android:padding="@dimen/activity_horizontal_margin">
-
-                <!--                                            email app:met_maxCharacters="20"-->
-
-                <EditText
-                    android:id="@+id/text_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_text_email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                 />
+                android:hint="@string/hint_text_email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true"
+                />
 
 
-                <!--                                            password -->
+            <!--                                            password -->
 
-                <EditText
-                    android:id="@+id/text_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_text_pwd"
-                    android:imeActionId="@+id/login"
-                    android:inputType="textPassword"
-                   />
+            <EditText
+                android:id="@+id/text_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_text_pwd"
+                android:inputType="textPassword"
+                />
 
-                <android.support.v7.widget.AppCompatCheckBox
-                    android:id="@+id/checkbox_show_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/negro_semitransparente"
-                    android:text="@string/prompt_show_password"
-                    />
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/checkbox_show_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/negro_semitransparente"
+                android:text="@string/prompt_show_password"
+                />
 
-            </LinearLayout>
+        </LinearLayout>
 
 
         <LinearLayout
@@ -94,14 +187,13 @@
 
             <!--                                       button ingresar -->
 
-        <LinearLayout
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="24dp"
-            android:showDividers="middle"
-            android:background="@drawable/gradient"
-            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="24dp"
+                android:showDividers="middle"
+                android:background="@color/colorPrimary"
+                android:layout_height="wrap_content">
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/email_sign_in_button"
                     style="?android:textAppearanceSmall"
@@ -115,7 +207,6 @@
             </LinearLayout>
             <!--                                       button registrar -->
             <LinearLayout
-                android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:weightSum="100"
                 android:showDividers="middle"
@@ -131,7 +222,7 @@
                     android:textColor="@color/colorAccent"
                     android:text="@string/prompt_button_signup"
                     android:textStyle="bold" />
-                </LinearLayout>
+            </LinearLayout>
             <!--                        seccion recuperar contraseña y registrar como empresa-->
 
             <TextView
@@ -153,5 +244,5 @@
 
 
 
-</RelativeLayout>
+    </RelativeLayout>
 </ScrollView>

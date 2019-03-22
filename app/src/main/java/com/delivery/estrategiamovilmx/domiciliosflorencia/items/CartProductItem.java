@@ -12,6 +12,9 @@ public class CartProductItem implements Serializable{
     @SerializedName("idCart")
     @Expose
     private String idCart;
+    @SerializedName("idMerchant")
+    @Expose
+    private String idMerchant;
     @SerializedName("idProduct")
     @Expose
     private String idProduct;
@@ -157,9 +160,31 @@ public class CartProductItem implements Serializable{
         this.additionals = additionals;
     }
 
+    public String getIdMerchant() {
+        return idMerchant;
+    }
+
+    public void setIdMerchant(String idMerchant) {
+        this.idMerchant = idMerchant;
+    }
+
     @Override
     public String toString() {
-        return "idCarrito:"+idCart+"producto:"+idProduct+":"+product + " descripción:" + description + " units: " + units +
-                " regularPrice:"+regularPrice+ ",offerPrice: "+offerPrice+"stock:"+stock+"image:"+route+image;
+        return "CartProductItem{" +
+                "idCart='" + idCart + '\'' +
+                ", idMerchant='" + idMerchant + '\'' +
+                ", idProduct='" + idProduct + '\'' +
+                ", product='" + product + '\'' +
+                ", description='" + description + '\'' +
+                ", units='" + units + '\'' +
+                ", regularPrice='" + regularPrice + '\'' +
+                ", offerPrice='" + offerPrice + '\'' +
+                ", stock='" + stock + '\'' +
+                ", route='" + route + '\'' +
+                ", image='" + image + '\'' +
+                ", total='" + total + '\'' +
+                ", variant='" + variant + '\'' +
+                ", additionals='" + additionals + '\'' +
+                '}';
     }
 }

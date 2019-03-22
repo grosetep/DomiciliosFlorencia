@@ -28,6 +28,7 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ApplicationPreferences;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ShowConfirmations;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.StringOperations;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.UtilPermissions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.OfferFragment;
@@ -63,25 +64,12 @@ public class StoreActivity extends AppCompatActivity {
         Intent i = getIntent();
         merchant = (MerchantItem) i.getExtras().getSerializable(Constants.MERCHANT_OBJECT);
         type_service = i.getExtras().getString(Constants.TYPE_SERVICE);
-        Log.d(TAG,"establecimiento:"+merchant!=null?merchant.toString():"null");
+        //Log.d(TAG,"establecimiento:"+merchant!=null?merchant.toString():"null");
 
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setDisplayShowTitleEnabled(true);
         ab.setTitle("");
-
-
-        /*FloatingActionButton fab =  findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ConfigItem config = GeneralFunctions.getConfiguration(getApplicationContext());
-                if (config!=null)
-                    makeCall(config.getPhone());
-                else
-                    makeCall(getString(R.string.shipping_phone));
-            }
-        });*/
 
         initGUI();
         loadMerchantProfile(merchant);
@@ -159,10 +147,13 @@ public class StoreActivity extends AppCompatActivity {
     }
     private void loadMerchantProfile(MerchantItem item){
         String id_country = ApplicationPreferences.getLocalStringPreference(getApplicationContext(),Constants.id_country);
-        text_name_bussiness.setText(item.getNameBussiness());
-        text_important.setText(item.getImportant());
-        text_cost_delivery.setText(getString(R.string.prompt_shipping_cost, StringOperations.getAmountFormat(item.getDeliveryCost(), id_country)));
-        text_tpo_delivery.setText(getString(R.string.prompt_shipping_time, item.getTpoDelivery()));
+        if (item!=null) {
+            text_name_bussiness.setText(item.getNameBussiness());
+            text_important.setText(item.getImportant());
+            text_cost_delivery.setText(getString(R.string.prompt_shipping_cost, StringOperations.getAmountFormat(item.getDeliveryCost(), id_country)));
+            text_tpo_delivery.setText(getString(R.string.prompt_shipping_time, item.getTpoDelivery()));
+        }else{ShowConfirmations.showConfirmationMessage(getString(R.string.promt_object_not_found),StoreActivity.this);
+        }
     }
     private void setupViewPager(ViewPager viewPager) {
         Adapter  adapter = new Adapter (getSupportFragmentManager());
@@ -175,8 +166,8 @@ public class StoreActivity extends AppCompatActivity {
         }
 
         // adapter.addFragment(MenuFragment.createInstance("init"),"MENU");
-        adapter.addFragment(OfferFragment.createInstance(null),"PROMOCIONES");
-        adapter.addFragment(ProductsFragment.createInstance(null),tabTitle);
+        adapter.addFragment(ProductsFragment.createInstance(merchant),tabTitle);
+        adapter.addFragment(OfferFragment.createInstance(merchant),"PROMOCIONES");
         //adapter.addFragment(DrinksFragment.createInstance(null),"BEBIDAS");
 
         viewPager.setAdapter(adapter);

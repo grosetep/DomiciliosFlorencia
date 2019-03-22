@@ -9,6 +9,7 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.ShippingOrder
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.UpdateLocationRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.UpdateShoppingCartRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.UserOperationRequest;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.AddressOperationResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.BudgetResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.CategoryResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.ClassificationsResponse;
@@ -17,17 +18,22 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.CreateOrderR
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GenericResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetCartResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetContactsResponse;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetOrdersPurchaseResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetOrdersResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetPaymentMethodResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetProductsResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetShippingAddressResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GetVariantAdditionalResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.HelpTextsResponse;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.LookForProductsResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.MerchantsByServiceResponse;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.OrderDetailPurchaseResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.OrderDetailResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.RatesResponse;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.StringResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.SubscriptionStatusResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.UserResponse;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.lookForStoresResponse;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.interfaces.WebServicesInterface;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.interfaces.WebServicesMembersInterface;
@@ -97,6 +103,11 @@ public class RestServiceWrapper {
         Call<GetOrdersResponse> call = client.getDeliverManOrders(id_user, id_profile, type_query, start, end, days);
         call.enqueue(function);
     }
+    public  static void getDeliverManOrdersPurchase(String id_user,String id_profile,String type_query ,int start, int end,String days,Callback function){
+        WebServicesInterface client = RetrofitClient.getClient(Constants.RETROFIT_SERVICE_REST).create(WebServicesInterface.class);
+        Call<GetOrdersPurchaseResponse> call = client.getDeliverManOrdersPurchase(id_user, id_profile, type_query, start, end, days);
+        call.enqueue(function);
+    }
     public  static void userOperation(UserOperationRequest request, Callback function){
         WebServicesInterface client = RetrofitClient.getClient(Constants.RETROFIT_SERVICE_REST).create(WebServicesInterface.class);
         Call<UserResponse> call = client.userOperation(request);
@@ -127,6 +138,11 @@ public class RestServiceWrapper {
         Call<OrderDetailResponse> call = client.getDetailOrder(id_user);
         call.enqueue(function);
     }
+    public  static void getDetailOrderPurchase(String id_user, Callback function){
+        WebServicesInterface client = RetrofitClient.getClient(Constants.RETROFIT_SERVICE_REST).create(WebServicesInterface.class);
+        Call<OrderDetailPurchaseResponse> call = client.getDetailOrderPurchase(id_user);
+        call.enqueue(function);
+    }
     public  static void budget(ShippingBudgetRequest request, Callback function){
         WebServicesInterface client = RetrofitClient.getClient(Constants.RETROFIT_SERVICE_REST).create(WebServicesInterface.class);
         Call<BudgetResponse> call = client.budget(request);
@@ -140,7 +156,7 @@ public class RestServiceWrapper {
 
     public  static void shippingAddressOperation(UpdateLocationRequest request, Callback function){
         WebServicesInterface client = RetrofitClient.getClient(Constants.RETROFIT_SERVICE_REST).create(WebServicesInterface.class);
-        Call<GenericResponse> call = client.shippingAddressOperation(request);
+        Call<AddressOperationResponse> call = client.shippingAddressOperation(request);
         call.enqueue(function);
     }
     public  static void getInitialRate(String id_country,Callback function){
@@ -167,10 +183,10 @@ public class RestServiceWrapper {
         Call<MerchantsByServiceResponse> call = client.getMerchantsByService(type_service, classificationKey, id_country, start, end);
         call.enqueue(function);
     }
-    public static void getCategories( Callback function){
+    public static void getCategories( String id_merchant,Callback function){
         //
         WebServicesInterface client = RetrofitClient.getClient(Constants.RETROFIT_SERVICE_REST).create(WebServicesInterface.class);
-        Call<CategoryResponse> call = client.getCategories();
+        Call<CategoryResponse> call = client.getCategories(id_merchant);
         call.enqueue(function);
     }
 
@@ -179,6 +195,24 @@ public class RestServiceWrapper {
         Call<GetVariantAdditionalResponse> call = client.getVariantsXProduct(id_product);
         call.enqueue(function);
     }
+
+    public  static void lookForStores(String query, String type_service, String id_country,int start, int end,Callback function){
+        WebServicesInterface client = RetrofitClient.getClient(Constants.RETROFIT_SERVICE_REST).create(WebServicesInterface.class);
+        Call<lookForStoresResponse> call = client.lookForStores(query, type_service,id_country, start, end);
+        call.enqueue(function);
+    }
+    public  static void executeLookForProducts(String query, String type_service, String id_country,int start, int end,Callback function){
+        WebServicesInterface client = RetrofitClient.getClient(Constants.RETROFIT_SERVICE_REST).create(WebServicesInterface.class);
+        Call<LookForProductsResponse> call = client.executeLookForProducts(query, type_service,id_country, start, end);
+        call.enqueue(function);
+    }
+
+    public  static void getExistingMerchantOnCart(String id_user, Callback function){
+        WebServicesInterface client = RetrofitClient.getClient(Constants.RETROFIT_SERVICE_REST).create(WebServicesInterface.class);
+        Call<StringResponse> call = client.getExistingMerchantOnCart(id_user);
+        call.enqueue(function);
+    }
+
 
     /*fin cambios para domicilios*/
 

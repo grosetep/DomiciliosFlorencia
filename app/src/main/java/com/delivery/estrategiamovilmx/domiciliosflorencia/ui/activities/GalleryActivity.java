@@ -16,8 +16,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
@@ -124,12 +125,11 @@ public class GalleryActivity extends AppCompatActivity {
             // Asynchronously load the image and set the thumbnail and pager view
             //check if resource is local or remote
             if (_images[position].getResource().equals(Constants.resource_remote)) {
-                Glide.with(_context)
+                Glide.with(_context).asBitmap()
                         .load(_images[position].getPath() + _images[position].getImageName())
-                        .asBitmap()
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                            public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
                                 imageView.setImage(ImageSource.bitmap(bitmap));
                                 thumbView.setImageBitmap(bitmap);
                             }
@@ -138,12 +138,12 @@ public class GalleryActivity extends AppCompatActivity {
                 File file = new File(_images[position].getPath());
                 if(file.exists()) {//load file from local
                     Log.d(TAG, "load file from local");
-                    Glide.with(_context)
-                            .load(new File(_images[position].getPath())).asBitmap()
-                            .error(R.drawable.ic_account_circle)
+                    Glide.with(_context).asBitmap()
+                            .load(new File(_images[position].getPath()))
+                            .apply(new RequestOptions().error(R.drawable.ic_account_circle))
                             .into(new SimpleTarget<Bitmap>() {
                                 @Override
-                                public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                                public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
                                     imageView.setImage(ImageSource.bitmap(bitmap));
                                     thumbView.setImageBitmap(bitmap);
                                 }

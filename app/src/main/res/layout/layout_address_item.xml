@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:clickable="true"
+    android:focusable="true"
     android:background="?android:attr/selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,9 +21,21 @@
         android:background="@drawable/gradient_menu_over"
         android:padding="@dimen/activity_horizontal_margin1"
         android:orientation="horizontal"
-        android:gravity="right"
+        android:gravity="end|center"
         android:layout_gravity="center"
         android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_delete"
+            android:elevation="1dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin2"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_delete"
+            android:tint="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/image_edit"
@@ -30,7 +43,7 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin2"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
-            android:src="@drawable/ic_action_edit"
+            android:src="@drawable/ic_edit"
             android:tint="@color/colorAccent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -54,11 +67,23 @@
         android:layout_height="wrap_content">
         <!-- imagen-->
         <ImageView
+            android:id="@+id/image_star_gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/activity_horizontal_margin1"
             android:src="@drawable/ic_star"
             android:tint="@color/gray"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"/>
+        <ImageView
+            android:id="@+id/image_star_yellow"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_horizontal_margin1"
+            android:src="@drawable/ic_star"
+            android:tint="@android:color/holo_orange_light"
             android:scaleType="centerInside"
             android:layout_gravity="center"
             android:adjustViewBounds="true"/>

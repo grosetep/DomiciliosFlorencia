@@ -12,9 +12,11 @@ import android.view.View;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ProductModel;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.model.PublicationCardViewModel;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.DetailProductsFragment;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.ProductsFragment;
 
 
 public class DetailPublicationActivity extends AppCompatActivity {
@@ -23,6 +25,7 @@ public class DetailPublicationActivity extends AppCompatActivity {
     public static String EXTRA_IMAGENAME="imageName";
     public static String EXTRA_FLOW="flow";
     private FloatingActionButton button_add_to_cart;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +37,12 @@ public class DetailPublicationActivity extends AppCompatActivity {
         final String imageName = intent.getStringExtra(EXTRA_IMAGENAME);
         final String flow = intent.getStringExtra(EXTRA_FLOW);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarDetail);
+
+        final Toolbar toolbar = findViewById(R.id.toolbarDetail);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        button_add_to_cart = (FloatingActionButton) findViewById(R.id.button_add_to_cart);
+        button_add_to_cart = findViewById(R.id.button_add_to_cart);
         button_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +51,7 @@ public class DetailPublicationActivity extends AppCompatActivity {
                     /*if (flow.equals(DrinksFragment.FLOW_DRINKS)) {
                         addToCart();
                     }else{*/
-                        addToCartActivity();
+                    addToCartActivity();
                     //}
                 }else{
                     finish();
@@ -58,8 +62,7 @@ public class DetailPublicationActivity extends AppCompatActivity {
             }
         });
 
-        CollapsingToolbarLayout collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("");
 
         ProductModel product = new ProductModel();

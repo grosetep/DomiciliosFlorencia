@@ -1,5 +1,8 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.tools;
 
+import android.text.Html;
+import android.text.Spanned;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -34,6 +37,9 @@ public class StringOperations {
             return null;
         }
     }*/
+
+
+
     public static String getAmountFormat(String amount,String id_country){
         int pais = 0;
 
@@ -65,7 +71,7 @@ public class StringOperations {
     public static String getPercentageFormat(String number){
         return number.concat(" %");
     }
-    public static String getStringWithDe(String s){return "De: " + s + " A Solo";}
+    public static String getStringWithDe(String s){return "De: " + s + " A";}
     public static String getStringWithA(String s){return "" + s;}
     public static String getDecimalFormat(String amount){
         DecimalFormat df = new DecimalFormat();
@@ -112,6 +118,16 @@ public class StringOperations {
         } catch (NumberFormatException e) {
             return pickup_number.equals("0") ? "" : distance_string + " km";
         }
+    }
+    @SuppressWarnings("deprecation")
+    public static Spanned fromHtml(String html){
+        Spanned result;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            result = Html.fromHtml(html);
+        }
+        return result;
     }
 
 }

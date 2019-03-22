@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.enums.LoginType;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.items.UserItem;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ApiException;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.UserOperationRequest;
@@ -35,8 +37,23 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ApplicationPrefe
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.FireBaseOperations;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ShowConfirmations;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
 import com.scottyab.aescrypt.AESCrypt;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,14 +69,23 @@ public class LoginActivity extends AppCompatActivity {
     private static TextView link_password;
     private ProgressDialog progressDialog;
     private final String USER_NORMAL="user";
-    private final String NEW_USER="new_user";
     private final String operation_login ="login";
     private final String operation_new_user ="new";
     private String flow_previous = "";
+
+    /*redes sociales*/
+    private CallbackManager callbackmanager;
+    public static final String TYPE_LOGIN = "type_login";
+    private final String generic_facebook_password = "facebook";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        /*redes sociales*/
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        /*redes sociales fin*/
+
         Intent i = getIntent();
         flow_previous = i.getStringExtra(Constants.flow);
         Log.d(TAG,"flow_previous:"+flow_previous);
@@ -77,14 +103,138 @@ public class LoginActivity extends AppCompatActivity {
         text_email = (EditText) findViewById(R.id.text_email);
         text_password = (EditText) findViewById(R.id.text_password);
         link_password = (TextView) findViewById(R.id.link_password);
+        ApplicationPreferences.saveLocalPreference(this, LoginActivity.TYPE_LOGIN, String.valueOf(LoginType.NATIVE));
+    }
+    public void revokeAccessFacebook(View view) {
+        //LoginManager.getInstance().logOut();
+
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
+        }
+
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+                .Callback() {
+            @Override
+            public void onCompleted(GraphResponse graphResponse) {
+
+                LoginManager.getInstance().logOut();
+
+            }
+        }).executeAsync();
+    }
+
+    public void onFblogin(View view)
+    {
+        Log.d(TAG,"onFblogin...");
+
+        ApplicationPreferences.saveLocalPreference(LoginActivity.this, LoginActivity.TYPE_LOGIN, String.valueOf(LoginType.FACEBOOK));
+        callbackmanager = CallbackManager.Factory.create();
+
+        // Set permissions
+        LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email","public_profile"));
+
+        LoginManager.getInstance().registerCallback(callbackmanager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+
+                        GraphRequest request = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(
+                                            JSONObject json,
+                                            GraphResponse response) {
+                                        if (response.getError() != null) {
+                                            // handle error
+                                            ShowConfirmations.showConfirmationMessage(response.getError().getErrorMessage(), LoginActivity.this);
+                                        } else {
+
+
+                                            String str_firstname, str_email, str_lastname, str_name = "";
+                                            String name_user = "";
+                                            String jsonresult = String.valueOf(json);
+                                            //Log.d(TAG, "jsonresult:" + jsonresult);
+                                            //ShowConfirmations.showConfirmationMessage("JSON Result" + jsonresult,LoginActivity.this);
+                                            try {
+                                                str_email = json.getString("email");
+                                            } catch (JSONException e) {//el usuario no tiene email publico o es un usuario nuevo en facebook y no ha confirmado su email
+                                                e.printStackTrace();
+                                                str_email = "";
+                                                ShowConfirmations.showConfirmationMessage(getString(R.string.facebook_email_error), LoginActivity.this);
+                                                revokeAccessFacebook(null);
+                                                //reset login type method
+                                                ApplicationPreferences.saveLocalPreference(LoginActivity.this, LoginActivity.TYPE_LOGIN, String.valueOf(LoginType.NATIVE));
+                                            }
+
+                                                /*try {
+                                                    str_firstname = json.getString("first_name");
+                                                } catch (JSONException e) {
+                                                    str_firstname = "";
+                                                }
+                                                try {
+                                                    str_lastname = json.getString("last_name");
+                                                } catch (JSONException e) {
+                                                    str_lastname = "";
+                                                }*/
+
+                                            try {
+                                                str_name = json.getString("name");
+                                            } catch (JSONException e) {//el usuario no tiene email publico o es un usuario nuevo en facebook y no ha confirmado su email
+                                                str_name = "";
+                                            }
+
+
+                                            //curso normal, proceder al login / registro, pendiente actualizar nombre del usuario
+                                            //guardar el tipo de login FACEBOOK
+                                            UserItem user_facebook = new UserItem();
+                                            user_facebook.setEmail(str_email);
+
+                                            if (str_name != null && !str_name.isEmpty()) {
+                                                name_user = str_name;
+                                            }
+
+                                                /*if (str_firstname != null && !str_firstname.isEmpty()){
+                                                    name_user += " "+str_firstname;
+                                                }
+                                                if (str_lastname!=null && !str_lastname.isEmpty()) {
+                                                    name_user += " "+str_lastname;
+                                                }*/
+                                            user_facebook.setName(name_user);
+                                            user_facebook.setPassword(generic_facebook_password);
+                                            signup(user_facebook, LoginType.FACEBOOK);
+
+
+                                        }
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,first_name,last_name,email");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        ApplicationPreferences.saveLocalPreference(LoginActivity.this, LoginActivity.TYPE_LOGIN, String.valueOf(LoginType.NATIVE));
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        ShowConfirmations.showConfirmationMessage(error.toString(), LoginActivity.this);
+                        revokeAccessFacebook(null);
+                        ApplicationPreferences.saveLocalPreference(LoginActivity.this, LoginActivity.TYPE_LOGIN, String.valueOf(LoginType.NATIVE));
+                    }
+                });
     }
     private void assignActions(){
         checkbox_show_password.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkbox_show_password.isChecked()){
+                if (checkbox_show_password.isChecked()) {
                     text_password.setTransformationMethod(null);
-                }else{
+                } else {
                     text_password.setTransformationMethod(new PasswordTransformationMethod());
                 }
             }
@@ -93,7 +243,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                recovery_Popup(v.getContext(),LoginActivity.this);
+                recovery_Popup(v.getContext(), LoginActivity.this);
             }
         });
         email_sign_in_button.setOnClickListener(new OnClickListener() {
@@ -105,28 +255,39 @@ public class LoginActivity extends AppCompatActivity {
         button_signup.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validate()){
-                    signup();
+                if (validate()) {
+                    String email = text_email.getText().toString().trim();
+                    String password = text_password.getText().toString().trim();
+                    //guardar el tipo de login
+                    ApplicationPreferences.saveLocalPreference(LoginActivity.this, LoginActivity.TYPE_LOGIN, String.valueOf(LoginType.NATIVE));
+                    UserItem user_native = new UserItem();
+                    user_native.setEmail(email);
+                    user_native.setName("");
+                    user_native.setPassword(password);
+                    signup(user_native, LoginType.NATIVE);
+
                 }
             }
         });
     }
 
-    private void signup(){
+    private void signup(UserItem userItem, Enum typelogin){
         createProgressDialog(getString(R.string.promt_loading));
         String token = ApplicationPreferences.getLocalStringPreference(getApplicationContext(), Constants.firebase_token);
-        String email = text_email.getText().toString().trim();
-        String password = text_password.getText().toString().trim();
+        userItem.setToken(token);
         String encryptedPassword = "";
         try {
-            encryptedPassword =  AESCrypt.encrypt(Constants.seedValue, password);//aqui
+            encryptedPassword =  AESCrypt.encrypt(Constants.seedValue, userItem.getPassword());//aqui
+            userItem.setPassword(encryptedPassword);
         } catch (Exception e) {
             e.printStackTrace();
+            userItem.setPassword("encrypt_error");
         }
-
+        //Log.d(TAG,"TOKEN:"+userItem.getToken());
         UserOperationRequest request = new UserOperationRequest();
-        request.setUser(new UserItem(email, encryptedPassword, token));
+        request.setUser(userItem);
         request.setOperation(operation_new_user);
+        request.setOperationSecondary(String.valueOf(typelogin));//tipo de loggin(google , facebook, nativo)
         createUser(request);
     }
     private void onSuccess(UserResponse login_response ){
@@ -155,16 +316,18 @@ public class LoginActivity extends AppCompatActivity {
                         String response_error = login_response.getMessage();
                         Log.d(TAG, "Mensage:" + response_error);
                         onError(getString(R.string.error_invalid_login, response_error));
+                        ApplicationPreferences.saveLocalPreference(LoginActivity.this, LoginActivity.TYPE_LOGIN, String.valueOf(LoginType.NATIVE));
                     } else {
-                        Log.d(TAG, "11");
+
                         String response_error = login_response.getMessage();
                         Log.d(TAG, "Error:" + response_error);
+                        ApplicationPreferences.saveLocalPreference(LoginActivity.this, LoginActivity.TYPE_LOGIN, String.valueOf(LoginType.NATIVE));
                         onError(getString(R.string.error_invalid_login, response_error));
                     }
 
 
                 } else {
-                    Log.d(TAG, "33");
+                    ApplicationPreferences.saveLocalPreference(LoginActivity.this, LoginActivity.TYPE_LOGIN, String.valueOf(LoginType.NATIVE));
                     onError(getString(R.string.error_invalid_login, getString(R.string.error_generic)));
                 }
             }
@@ -233,7 +396,7 @@ public class LoginActivity extends AppCompatActivity {
             email = text_email.getText().toString().trim();
             password = text_password.getText().toString().trim();
             try {
-                encryptedPassword =  AESCrypt.encrypt(Constants.seedValue, password);//aqui
+                encryptedPassword =  AESCrypt.encrypt(Constants.seedValue,password);//aqui
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -257,7 +420,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response != null && response.isSuccessful()) {
                     UserResponse login_response = response.body();
                     if (login_response != null && login_response.getStatus().equals(Constants.success)) {
-                       // Log.d(TAG, "UserResponse:" + login_response.toString() + "  condicion:" + (login_response != null && login_response.getStatus().equals(Constants.success)));
+                        // Log.d(TAG, "UserResponse:" + login_response.toString() + "  condicion:" + (login_response != null && login_response.getStatus().equals(Constants.success)));
                         onSuccess(login_response);
                     } else if (login_response != null && login_response.getStatus().equals(Constants.no_data)) {
                         String response_error = login_response.getMessage();
@@ -327,8 +490,8 @@ public class LoginActivity extends AppCompatActivity {
         final TextView layout_text_error = (TextView) mView.findViewById(R.id.layout_text_error);
         //customize title
         ((TextView)mView.findViewById(R.id.text_title)).setText(getResources().getString(R.string.promt_password_recovery_title));
-        ((TextView)mView.findViewById(R.id.text_title)).setBackgroundColor(ContextCompat.getColor(activity, R.color.colorPrimary));//primary
-        ((TextView)mView.findViewById(R.id.text_title)).setTextColor(ContextCompat.getColor(activity, R.color.white_all));
+        ((TextView)mView.findViewById(R.id.text_title)).setBackgroundColor(ContextCompat.getColor(activity,R.color.colorPrimary));//primary
+        ((TextView)mView.findViewById(R.id.text_title)).setTextColor(ContextCompat.getColor(activity,R.color.white_all));
         AppCompatButton button = (AppCompatButton) mView.findViewById(R.id.button_password_recovery);
         final AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
         alertDialogAndroid.show();
@@ -353,7 +516,7 @@ public class LoginActivity extends AppCompatActivity {
                     String password = Constants.reset_password + (int)Math.floor((Math.random() * 365) + 1);
                     String encryptedPassword = "";
                     try {
-                        encryptedPassword =  AESCrypt.encrypt(Constants.seedValue, password);//aqui
+                        encryptedPassword =  AESCrypt.encrypt(Constants.seedValue,password);//aqui
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -390,7 +553,7 @@ public class LoginActivity extends AppCompatActivity {
                             onError(getString(R.string.error_invalid_login,config_response.getMessage()));
                         }
 
-                    } else if (config_response != null && config_response.getStatus().equals(Constants.no_data)){Log.d(TAG, "10");
+                    } else if (config_response != null && config_response.getStatus().equals(Constants.no_data)) {
                         String response_error = config_response.getMessage();
                         Log.d(TAG, "Mensage:" + response_error);
                         onError(getString(R.string.error_invalid_login,response_error));
@@ -432,6 +595,27 @@ public class LoginActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        redirectToMain();
+        if (flow_previous.equals(MainActivity.flow_no_registered)){
+            finish();
+            NavUtils.navigateUpTo(LoginActivity.this, new Intent(getApplicationContext(), MainActivity.class));
+        }else if (flow_previous.equals(MainActivity.flow_main)){
+            super.onBackPressed();
+        }else {
+            finish();
+            NavUtils.navigateUpTo(LoginActivity.this, new Intent(getApplicationContext(), MainActivity.class));
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        String login_type_request = ApplicationPreferences.getLocalStringPreference(this, LoginActivity.TYPE_LOGIN);
+        Log.d(TAG, "requestCode:::::::::::" + requestCode+ "     login_type_request:"+login_type_request);
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if(login_type_request.equals(String.valueOf(LoginType.FACEBOOK))){Log.d(TAG, "onActivityResult CASO Facebook");
+
+            callbackmanager.onActivityResult(requestCode, resultCode, data);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

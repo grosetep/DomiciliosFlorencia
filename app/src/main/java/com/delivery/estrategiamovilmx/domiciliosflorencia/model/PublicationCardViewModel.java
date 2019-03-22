@@ -1,19 +1,55 @@
 package com.delivery.estrategiamovilmx.domiciliosflorencia.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 /**
  * Created by administrator on 10/07/2017.
  */
-public class PublicationCardViewModel {
+public class PublicationCardViewModel implements Serializable {
+    @SerializedName("idProduct")
+    @Expose
     private String idProduct;
+    @SerializedName("idMerchant")
+    @Expose
+    private String idMerchant;
+    @SerializedName("product")
+    @Expose
     private String product;
+    @SerializedName("description")
+    @Expose
     private String description;
+    @SerializedName("regularPrice")
+    @Expose
     private String regularPrice;
+    @SerializedName("offerPrice")
+    @Expose
     private String offerPrice;
+    @SerializedName("discount")
+    @Expose
     private String discount;
+    @SerializedName("stock")
+    @Expose
     private String stock;
+    @SerializedName("path")
+    @Expose
     private String path;
+    @SerializedName("image")
+    @Expose
     private String image;
+    @SerializedName("added")
+    @Expose
     private boolean added;
+
+    public String getIdMerchant() {
+        return idMerchant;
+    }
+
+    public void setIdMerchant(String idMerchant) {
+        this.idMerchant = idMerchant;
+    }
 
     public boolean isAdded() {
         return added;
@@ -94,4 +130,22 @@ public class PublicationCardViewModel {
     public void setImage(String image) {
         this.image = image;
     }
+
+    @Override
+    public String toString() {
+        return "PublicationCardViewModel{" +
+                "idProduct='" + idProduct + '\'' +
+                ", idMerchant='" + idMerchant + '\'' +
+                ", product='" + product + '\'' +
+                ", description='" + description + '\'' +
+                ", regularPrice='" + regularPrice + '\'' +
+                ", offerPrice='" + offerPrice + '\'' +
+                ", discount='" + discount + '\'' +
+                ", stock='" + stock + '\'' +
+                ", path='" + path + '\'' +
+                ", image='" + image + '\'' +
+                ", added=" + added +
+                '}';
+    }
+
 }

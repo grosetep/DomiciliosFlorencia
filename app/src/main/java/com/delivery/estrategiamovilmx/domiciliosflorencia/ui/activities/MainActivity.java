@@ -35,6 +35,7 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.FireBaseOperations;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.GeneralFunctions;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.UtilPermissions;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.BottomSheetFragment;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.HowToFragment;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.PrincipalMenuFragment;
 import com.google.gson.Gson;
@@ -72,26 +73,6 @@ public class MainActivity extends AppCompatActivity
         ab.setDisplayHomeAsUpEnabled(true);
 
 
-       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String json_user = ApplicationPreferences.getLocalStringPreference(getApplicationContext(), Constants.user_object);
-                Log.d(TAG,"json_object:"+json_user);
-                if (json_user==null || json_user.isEmpty()){
-                    finish();
-                    Intent i = new Intent(getBaseContext(),LoginActivity.class);
-                    i.putExtra(Constants.flow,MainActivity.flow_no_registered);
-                    startActivity(i);
-                }else {
-                    Intent i = new Intent(getApplicationContext(), NewOrderActivity.class);
-                    startActivity(i);
-                }
-            }
-        });*/
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -103,7 +84,8 @@ public class MainActivity extends AppCompatActivity
         initGUI();
         loadProfile();
         subscribeUser();
-
+        UserItem user = GeneralFunctions.getCurrentUser(getApplicationContext());
+        if (user!=null) {  showBottomSheetDialogFragment(); }
     }
     private void prepareCall(){
         ConfigItem config = GeneralFunctions.getConfiguration(getApplicationContext());
@@ -316,7 +298,7 @@ public class MainActivity extends AppCompatActivity
                 Intent i = new Intent(getApplicationContext(), ShoppingCartActivity.class);
                 startActivity(i);
             }else{
-                Log.d(TAG,"onOptionsItemSelected CASO 1");
+                //Log.d(TAG,"onOptionsItemSelected CASO 1");
                 Intent i = new Intent(getBaseContext(),LoginActivity.class);
                 i.putExtra(Constants.flow,flow_no_registered);
                 startActivity(i);
@@ -335,7 +317,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_login) {
             redirectToLogin();
 
-        }else if (id == R.id.nav_profile) {
+        } else if (id == R.id.nav_profile) {
             Intent i = new Intent(this, ProfileActivity.class);
             i.putExtra(Constants.flow, flow_main);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -344,32 +326,41 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_orders) {
             UserItem user = GeneralFunctions.getCurrentUser(getApplicationContext());
             if (user != null && user.getIdUser() != null) {
-                Intent i;
-
-                //if ((Constants.app_label+user.getProfile()).equals(Constants.profile_deliver_man)) {
-                    i = new Intent(this, OrdersDeliverActivity.class);
-                //} else {
-                  //  i = new Intent(this, OrdersActivity.class);
-                //}
+                Intent i = new Intent(this, OrdersDeliverActivity.class);
                 i.putExtra(Constants.flow, flow_main);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
+            } else {
+                startLogin();
             }
-            else {
+        }else if(id == R.id.nav_orders_purchase){
+            UserItem user = GeneralFunctions.getCurrentUser(getApplicationContext());
+            if (user != null && user.getIdUser() != null) {
+                Intent i = new Intent(this, OrdersDeliverPurchaseActivity.class);
+                i.putExtra(Constants.flow, flow_main);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+            } else {
+                startLogin();
+            }
 
-                Intent intent = new Intent(this, LoginActivity.class);
-                intent.putExtra(Constants.flow, MainActivity.flow_no_registered);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        }
-        else if (id == R.id.nav_location) {
-            Intent i = new Intent(this,LocationActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
+        }else if (id == R.id.nav_location) {
+            Intent i = new Intent(this, LocationActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
+        }else if(id == R.id.nav_locations){
+            UserItem user = GeneralFunctions.getCurrentUser(getApplicationContext());
+            if (user != null && user.getIdUser() != null) {
+                Intent i = new Intent(this, ManageLocationsActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+            }else{
+                startLogin();
+            }
         }else if(id == R.id.nav_exit){
             Intent i = new Intent(this,SignOutActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
@@ -388,6 +379,13 @@ public class MainActivity extends AppCompatActivity
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
+    }
+    private void startLogin(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra(Constants.flow, MainActivity.flow_no_registered);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
     static class Adapter extends FragmentStatePagerAdapter {
         //FragmentPagerAdapter : Mantiene datos en memoria, destruye fragment cuando no son visibles.
@@ -418,5 +416,14 @@ public class MainActivity extends AppCompatActivity
         public CharSequence getPageTitle(int position) {
             return mFragmentTitles.get(position); //Solo texto en tabs
         }
+    }
+
+
+
+    public void showBottomSheetDialogFragment() {
+        BottomSheetFragment bottomSheetFragment = BottomSheetFragment.createInstance( );//se abre en pagina principal, al cerrar solo se asigna la direccion favorita
+        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+
+
     }
 }

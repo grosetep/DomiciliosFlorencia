@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_total"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="6dp"
+    android:foreground="?android:attr/selectableItemBackground">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <!-- center aparece como ML-->
+            <LinearLayout
+                android:layout_width="wrap_content" android:background="@drawable/gradient" android:orientation="vertical"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/image_total"
+                    android:layout_width="@dimen/order_layout_size"
+                    android:layout_height="@dimen/order_layout_size"
+                    android:src="@drawable/ic_local_shipping"
+                    android:scaleType="centerInside"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"/>
+                <TextView
+                    android:id="@+id/text_day"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/text_num_day"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/text_num_order"
+                    android:textColor="@color/negro"
+                    android:paddingTop="@dimen/activity_horizontal_margin1"
+                    android:paddingLeft="@dimen/activity_horizontal_margin1"
+                    android:paddingRight="@dimen/activity_horizontal_margin1"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/image"
+                    android:text="Pedido: 4"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/text_total"
+                    android:textColor="@color/colorAccent"
+                    android:paddingTop="@dimen/activity_horizontal_margin1"
+                    android:paddingLeft="@dimen/activity_horizontal_margin1"
+                    android:paddingRight="@dimen/activity_horizontal_margin1"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textStyle="normal"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/text_money_back_order"
+                    android:textColor="@color/negro"
+                    android:paddingLeft="@dimen/activity_horizontal_margin1"
+                    android:paddingRight="@dimen/activity_horizontal_margin1"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent" android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <!-- En revision-->
+                    <LinearLayout
+                        android:paddingLeft="@dimen/activity_horizontal_margin1"
+                        android:paddingRight="@dimen/status_deliver_length"
+                        android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/image_review"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_description"
+                            android:tint="@android:color/holo_green_light"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+                            android:textColor="@color/negro_semitransparente"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textSize="10dp"
+                            android:textAlignment="center"
+                            android:text="@string/promt_review"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                    <!-- Aceptado-->
+                    <LinearLayout
+                        android:paddingLeft="@dimen/status_deliver_length"
+                        android:paddingRight="@dimen/status_deliver_length"
+                        android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/image_accepted"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+
+                            android:layout_height="wrap_content"/>
+
+
+                        <TextView
+                            android:id="@+id/text_accepted"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/negro_semitransparente"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:textSize="10dp"
+                            android:text="@string/promt_accepted"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                    <!-- En camino-->
+                    <LinearLayout
+                        android:paddingLeft="@dimen/status_deliver_length"
+                        android:paddingRight="@dimen/status_deliver_length"
+                        android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/image_on_way"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:id="@+id/text_on_way"
+                            android:textSize="10dp"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/negro_semitransparente"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:text="@string/promt_on_way"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                    <!-- Entregado-->
+                    <LinearLayout
+                        android:paddingLeft="@dimen/status_deliver_length"
+                        android:paddingRight="@dimen/status_deliver_length"
+                        android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/image_deliver"
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+
+                            android:layout_height="wrap_content"/>
+
+
+                        <TextView
+                            android:id="@+id/text_deliver"
+                            android:textSize="10dp"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/negro_semitransparente"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:text="@string/promt_delivered"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <EditText
+                    android:id="@+id/text_problem"
+                    android:visibility="gone"
+                    android:textColor="@color/gray"
+                    android:paddingTop="@dimen/activity_horizontal_margin1"
+                    android:paddingLeft="@dimen/activity_horizontal_margin1"
+                    android:paddingRight="@dimen/activity_horizontal_margin1"
+                    android:paddingBottom="@dimen/activity_horizontal_margin1"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textStyle="normal"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/promt_hint_comment"
+                    android:inputType="textCapSentences"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+                <!-- barra botones accion-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <!-- buttons admin-->
+                    <LinearLayout
+                        android:id="@+id/layout_admin_buttons"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:id="@+id/button_accept"
+                            android:clickable="true"
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_marginRight="@dimen/status_deliver_length"
+                            android:background="@drawable/button_background_green"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="@string/promt_button_accept_order"
+                                android:textAllCaps="true"
+                                android:textColor="@android:color/white"
+                                android:padding="8dp"
+                                android:background="?android:attr/selectableItemBackground"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/button_reject"
+                            android:clickable="true"
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:background="@drawable/button_background_red"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="@string/promt_button_recject_order"
+                                android:textAllCaps="true"
+                                android:textColor="@android:color/white"
+                                android:padding="8dp"
+                                android:background="?android:attr/selectableItemBackground"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <!-- buttons deliver man-->
+                    <LinearLayout
+                        android:id="@+id/layout_deliver_buttons"
+                        android:orientation="horizontal"
+                        android:visibility="visible"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:id="@+id/button_take"
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:clickable="true"
+                            android:layout_marginRight="@dimen/status_deliver_length"
+                            android:background="@drawable/button_background_green"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="@string/promt_button_take_order"
+                                android:textAllCaps="true"
+                                android:textColor="@android:color/white"
+                                android:padding="8dp"
+                                android:background="?android:attr/selectableItemBackground"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/button_delivered"
+                            android:clickable="true"
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_marginRight="@dimen/status_deliver_length"
+                            android:background="@drawable/button_background_green"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="@string/promt_button_delivered_order"
+                                android:textAllCaps="true"
+                                android:textColor="@android:color/white"
+                                android:padding="8dp"
+                                android:background="?android:attr/selectableItemBackground"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/button_no_delivered"
+                            android:clickable="true"
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:background="@drawable/button_background_orange"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="@string/promt_button_no_delivered_order"
+                                android:textAllCaps="true"
+                                android:textColor="@android:color/white"
+                                android:padding="8dp"
+                                android:background="?android:attr/selectableItemBackground"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <!-- buttons client-->
+                    <LinearLayout
+                        android:id="@+id/layout_client_buttons"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/button_cancel"
+                            android:clickable="true"
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:background="@drawable/button_background_red"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="@string/promt_button_cancel_order"
+                                android:textAllCaps="true"
+                                android:textColor="@android:color/white"
+                                android:padding="8dp"
+                                android:background="?android:attr/selectableItemBackground"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <!-- barra loading -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/activity_horizontal_margin1">
+                    <ProgressBar
+                        android:id="@+id/pbLoading"
+                        android:visibility="invisible"
+                        android:indeterminate="true"
+                        android:layout_centerInParent="true"
+                        android:layout_width="match_parent"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/overflow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:layout_gravity="end|top"
+        android:scaleType="centerCrop"
+        android:tint="@color/negro_semitransparente"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp"
+        android:src="@drawable/ic_action_info" />
+
+</android.support.v7.widget.CardView>

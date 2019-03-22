@@ -192,7 +192,7 @@ public class ShippingAddress implements Serializable {
 
     @Override
     public String toString() {
-        return "id location: "+id_location + " googlePlace: "+ googlePlace + " , Numero interior: " + num_int + " referencia: "+ reference;
+        return "id location: "+id_location + " googlePlace: "+ googlePlace + " , Numero interior: " + num_int + " referencia: "+ reference + ", seleccionada:"+isSelected;
     }
     public String getAddressForUser(){
         StringBuffer show_address  = new StringBuffer();
@@ -212,6 +212,11 @@ public class ShippingAddress implements Serializable {
         show_address.append((getNum_int()!=null && !getNum_int().isEmpty())?getNum_int()+", ":"");
         show_address.append(getReference());
         return show_address.toString();
+    }
+    public String getAddressResumed(){
+        int index_of_comma = getGooglePlace().indexOf(",");
+        String show_address  = getGooglePlace().length()> Constants.address_min_length?getGooglePlace().substring(0,index_of_comma):getGooglePlace();
+        return show_address;
     }
 
 }

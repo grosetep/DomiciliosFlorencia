@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    tools:context="com.estrategiamovilmx.sales.weespareenvios.ui.fragments.ShippingServicesFragment">
+    tools:context=".ui.fragments.ShippingServicesFragment">
 
 
 
@@ -53,16 +53,18 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin_services"
                         android:layout_height="30dp"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center_vertical"
                         android:scaleType="centerCrop"
                         android:src="@mipmap/supers_title"
                         android:adjustViewBounds="true"/>
                     <ImageView
                         android:layout_marginTop="@dimen/activity_horizontal_margin1"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin_services"
                         android:layout_width="wrap_content"
                         android:layout_height="15dp"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center_vertical"
                         android:scaleType="centerCrop"
                         android:src="@mipmap/supers_title_secundario"
                         android:adjustViewBounds="true"/>
@@ -110,7 +112,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="26dp"
-                        android:layout_gravity="center"
+                        android:layout_marginStart="32dp"
+                        android:layout_gravity="center_vertical"
                         android:scaleType="centerCrop"
                         android:src="@mipmap/title_restaurantes"
                         android:adjustViewBounds="true"/>
@@ -118,7 +121,8 @@
                         android:layout_marginTop="@dimen/activity_horizontal_margin1"
                         android:layout_width="wrap_content"
                         android:layout_height="13dp"
-                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin_services"
+                        android:layout_gravity="center_vertical"
                         android:scaleType="centerCrop"
                         android:src="@mipmap/title_restaurantes_secundario"
                         android:adjustViewBounds="true"/>
@@ -168,8 +172,9 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
+                        android:layout_marginStart="32dp"
                         android:layout_height="30dp"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center_vertical"
                         android:scaleType="centerCrop"
                         android:src="@mipmap/title_lo_que_sea"
                         android:adjustViewBounds="true"/>
@@ -177,7 +182,8 @@
                         android:layout_marginTop="@dimen/activity_horizontal_margin1"
                         android:layout_width="wrap_content"
                         android:layout_height="15dp"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin_services"
                         android:scaleType="centerCrop"
                         android:src="@mipmap/title_lo_que_sea_secundario"
                         android:adjustViewBounds="true"/>
@@ -234,13 +240,14 @@
 
                         <ImageView
                             android:layout_width="wrap_content"
-                            android:layout_height="20dp"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            android:layout_height="12dp"
                             android:layout_gravity="center"
-
                             android:scaleType="centerCrop"
-                            android:src="@mipmap/title_mototaxi"
+                            android:src="@mipmap/title_puerta_a_puerta"
                             android:adjustViewBounds="true"/>
                         <ImageView
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
                             android:layout_marginTop="@dimen/activity_horizontal_margin1"
                             android:layout_width="wrap_content"
                             android:layout_height="10dp"
@@ -292,13 +299,15 @@
 
                         <ImageView
                             android:layout_width="wrap_content"
-                            android:layout_height="20dp"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            android:layout_height="12dp"
                             android:layout_gravity="center"
                             android:scaleType="centerCrop"
                             android:src="@mipmap/title_farmacia"
                             android:adjustViewBounds="true"/>
                         <ImageView
                             android:layout_marginTop="@dimen/activity_horizontal_margin1"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
                             android:layout_width="wrap_content"
                             android:layout_height="10dp"
                             android:layout_gravity="center"

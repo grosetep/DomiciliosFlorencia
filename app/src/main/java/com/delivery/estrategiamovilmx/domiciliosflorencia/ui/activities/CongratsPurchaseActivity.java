@@ -67,7 +67,7 @@ public class CongratsPurchaseActivity extends AppCompatActivity {
             config = gson.fromJson(json_config, ConfigItem.class);
         }
 
-        text_shipping_message.setText(getString(R.string.shipping_message, ((shipping != null) ? shipping.getAddressShort() : getString(R.string.shipping_address))));
+        text_shipping_message.setText(getString(R.string.shipping_message_purchase, ((shipping != null) ? shipping.getAddressShort() :"")));
         text_shipping_message_extra_info.setText(shipping.getAddressShortExtra());
         String order_no = (order!=null)?order:"0000";
         text_order.setText(getString(R.string.congrats_order,order_no));
@@ -85,8 +85,8 @@ public class CongratsPurchaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                Intent i = new Intent( context , OrdersDeliverActivity.class);
-                i.putExtra(Constants.flow,CongratsActivity.flow_congrats);
+                Intent i = new Intent( context , OrdersDeliverPurchaseActivity.class);
+                i.putExtra(Constants.flow,CongratsPurchaseActivity.flow_congrats);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
@@ -122,7 +122,7 @@ public class CongratsPurchaseActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Context context = getApplicationContext();
-        Intent i = new Intent( context , OrdersActivity.class);
+        Intent i = new Intent( context , OrdersDeliverPurchaseActivity.class);
         i.putExtra(Constants.flow,CongratsActivity.flow_congrats);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

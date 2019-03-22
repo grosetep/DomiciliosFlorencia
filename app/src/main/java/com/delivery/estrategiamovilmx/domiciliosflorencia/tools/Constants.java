@@ -39,6 +39,8 @@ public class Constants {
     public static final int cero = 0;
     public static final int uno = 1;
     public static final int load_more_tax_extended = 15;
+    public static final int load_more_tax_large = 30;
+    public static final int address_min_length = 22;
     public static final int address_max_length = 30;
     public static final int detail_max_length = 45;
 
@@ -164,4 +166,6 @@ public class Constants {
 
     public static final String MERCHANT_OBJECT = "merchant_object";
     public static final String TYPE_SERVICE = "type_service";
+    public static final int max_elements_on_search = 5;
+    public static final String FAVORITE_ADDRESS_SELECTED = "favorite_address_selected";
 }

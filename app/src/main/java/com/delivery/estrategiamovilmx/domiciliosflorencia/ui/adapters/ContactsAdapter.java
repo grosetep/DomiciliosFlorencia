@@ -58,7 +58,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return list == null ? 0 : list.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView image;
+        private ImageView image_gray;
+        private ImageView image_green;
         private TextView text_name;
         private TextView text_number;
 
@@ -66,14 +67,25 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(v);
             text_name = (TextView) v.findViewById(R.id.text_name);
             text_number = (TextView) v.findViewById(R.id.text_number);
-            image = (ImageView) v.findViewById(R.id.image);
+            image_gray = (ImageView) v.findViewById(R.id.image_gray);
+            image_green = (ImageView) v.findViewById(R.id.image_green);
         }
         public void bind(Contact model) {
             //Log.d(TAG, "isSelected:" + model.isSelected() + " isNew:" + model.isNew());
             text_number.setText(model.getPhone());
             text_name.setText(model.getName());
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (!model.isSelected()){
+                image_gray.setVisibility(View.VISIBLE);
+                image_green.setVisibility(View.GONE);
+            }else if (model.isSelected() || model.isNew()) {
+                image_gray.setVisibility(View.GONE);
+                image_green.setVisibility(View.VISIBLE);
+            }else {
+                image_gray.setVisibility(View.VISIBLE);
+                image_green.setVisibility(View.GONE);
+            }
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Drawable clone = ContextCompat.getDrawable(activity, R.drawable.ic_account_circle_big).getConstantState().newDrawable().mutate();
                 if (model.isSelected()){
                     image.setImageDrawable(GeneralFunctions.getTintedDrawable(clone, R.color.colorAccent, activity));
@@ -93,7 +105,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 else {
                     //Log.d(TAG, "-------nothing");
                     image.setColorFilter(ContextCompat.getColor(activity, R.color.gray));}
-            }
+            }*/
         }
 
     }
@@ -110,6 +122,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 public void onClick(View v) {
                     //reset old element selected
                     activity.resetElement(activity.getContact_position_selected());
+                    list.get(position).setSelected(true);
                     activity.setContactSelected(position);
                 }
             });

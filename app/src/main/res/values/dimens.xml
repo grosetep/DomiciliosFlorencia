@@ -27,8 +27,9 @@
 
     <dimen name="list_shipping_width_selected">140dp</dimen>
     <dimen name="item_image_publication_selected">130dp</dimen>
-    <dimen name="item_shipping_heigth_selected">120dp</dimen>
-    <dimen name="item_shipping_width_selected">330dp</dimen>
+    <dimen name="item_shipping_heigth_selected">60dp</dimen>
+    <dimen name="item_shipping_heigth_selected_purchase">120dp</dimen>
+    <dimen name="item_shipping_width_selected">320dp</dimen>
 
     <dimen name="icon_layout_location_size">35dip</dimen>
 
@@ -56,4 +57,13 @@
 
     <dimen name="image_header_toolbar">200dp</dimen>
     <dimen name="image_header_toolbar_min_heigth">150dp</dimen>
+
+    <dimen name="icon_toolbar_size">24dp</dimen>
+
+    <dimen name="icon_layout_merchant_size">60dip</dimen>
+    <dimen name="list_merchants_size">130dp</dimen>
+    <dimen name="list_merchants_size_container">145dp</dimen>
+    <dimen name="list_product_search_size">100dp</dimen>
+
+    <dimen name="activity_horizontal_margin_services">40dp</dimen>
 </resources>

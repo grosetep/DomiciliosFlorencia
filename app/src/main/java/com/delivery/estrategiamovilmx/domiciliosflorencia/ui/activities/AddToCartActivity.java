@@ -26,6 +26,8 @@ import android.widget.TextView;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.R;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.Additional;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.ApiException;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.model.DetailPublication;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.model.PublicationCardViewModel;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.model.Variant;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.requests.AddProductRequest;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.responses.GenericResponse;
@@ -35,6 +37,7 @@ import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ApplicationPrefe
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.Constants;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.ShowConfirmations;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.tools.StringOperations;
+import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.DetailProductsFragment;
 import com.delivery.estrategiamovilmx.domiciliosflorencia.ui.fragments.ProductsFragment;
 
 import java.util.ArrayList;
@@ -87,7 +90,7 @@ public class AddToCartActivity extends AppCompatActivity {
         id_country = ApplicationPreferences.getLocalStringPreference(getApplicationContext(),Constants.id_country);
         Intent i = getIntent();
         cart = (AddProductRequest) i.getExtras().get(ProductsFragment.CART_OBJECT);
-        String product = i.getExtras().getString(ProductsFragment.PRODUCT_NAME);
+        String product =  i.getExtras().getString(ProductsFragment.PRODUCT_NAME);
         init();
         initProcess(true);
 
@@ -263,7 +266,7 @@ public class AddToCartActivity extends AppCompatActivity {
         return -1;
     }
     private void getVariantsXProduct(String id_product) {
-        Log.d(TAG,"getVariantsXProduct....."+id_product);
+        //Log.d(TAG,"getVariantsXProduct....."+id_product);
         //consultar variantes y adicionales
         additionals_added = new ArrayList<>();
         variants_added = false;
